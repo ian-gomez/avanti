@@ -15,6 +15,10 @@ class CreateStockDetalleTable extends Migration
     {
         Schema::create('stock_detalle', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('stock_cabecera_id');
+            $table->bigInteger('articulo_id');
+            $table->integer('cantidad');
+            $table->integer('precio');
             $table->timestamps();
         });
     }

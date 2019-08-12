@@ -14,7 +14,9 @@ class CreateArticulosInsumosTable extends Migration
     public function up()
     {
         Schema::create('articulos_insumos', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigInteger('articulo_id');
+            $table->bigInteger('insumo_id');
+            $table->integer('cantidad');
             $table->timestamps();
         });
     }

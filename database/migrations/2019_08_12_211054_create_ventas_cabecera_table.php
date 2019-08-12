@@ -15,6 +15,9 @@ class CreateVentasCabeceraTable extends Migration
     {
         Schema::create('ventas_cabecera', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('cliente_id');
+            $table->bigInteger('user_id');
+            $table->float('importe');
             $table->timestamps();
         });
     }

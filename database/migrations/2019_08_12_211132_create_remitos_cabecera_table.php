@@ -15,6 +15,9 @@ class CreateRemitosCabeceraTable extends Migration
     {
         Schema::create('remitos_cabecera', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('proveedor_id');
+            $table->bigInteger('user_id');
+            $table->float('importe');
             $table->timestamps();
         });
     }
