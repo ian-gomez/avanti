@@ -19,7 +19,6 @@ class CreateRemitosDetalleTable extends Migration
             $table->bigInteger('articulo_id')->unsigned();
             $table->integer('cantidad');
             $table->float('precio');
-            $table->timestamps();
         });
     }
 

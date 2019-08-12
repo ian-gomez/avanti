@@ -18,7 +18,6 @@ class CreateArticulosInsumosTable extends Migration
             $table->bigInteger('articulo_id')->unsigned();
             $table->bigInteger('insumo_id')->unsigned();
             $table->integer('cantidad');
-            $table->timestamps();
         });
     }
 

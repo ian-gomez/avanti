@@ -20,7 +20,6 @@ class CreateVentasDetalleTable extends Migration
             $table->integer('cantidad');
             $table->float('precio');
             $table->float('costo');
-            $table->timestamps();
         });
     }
 

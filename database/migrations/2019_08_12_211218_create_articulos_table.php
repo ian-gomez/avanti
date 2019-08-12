@@ -18,7 +18,6 @@ class CreateArticulosTable extends Migration
             $table->string('nombre');
             $table->float('precio');
             $table->float('costo');
-            $table->timestamps();
         });
     }
 

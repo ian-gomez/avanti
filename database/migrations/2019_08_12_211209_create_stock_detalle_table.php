@@ -19,7 +19,6 @@ class CreateStockDetalleTable extends Migration
             $table->bigInteger('articulo_id')->unsigned();
             $table->integer('cantidad');
             $table->integer('precio');
-            $table->timestamps();
         });
     }
 
