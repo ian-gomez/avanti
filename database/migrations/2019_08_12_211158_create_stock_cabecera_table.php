@@ -15,7 +15,7 @@ class CreateStockCabeceraTable extends Migration
     {
         Schema::create('stock_cabecera', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('user_id');
+            $table->bigInteger('user_id')->unsigned();
             $table->float('importe');
             $table->timestamps();
         });

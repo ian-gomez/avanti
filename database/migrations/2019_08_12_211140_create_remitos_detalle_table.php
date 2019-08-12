@@ -15,8 +15,8 @@ class CreateRemitosDetalleTable extends Migration
     {
         Schema::create('remitos_detalle', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigIncrements('remito_cabecera_id');
-            $table->bigInteger('articulo_id');
+            $table->biginteger('remito_cabecera_id')->unsigned();
+            $table->bigInteger('articulo_id')->unsigned();
             $table->integer('cantidad');
             $table->float('precio');
             $table->timestamps();
