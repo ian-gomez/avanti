@@ -18,6 +18,8 @@ class CreateStockCabeceraTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->float('importe');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

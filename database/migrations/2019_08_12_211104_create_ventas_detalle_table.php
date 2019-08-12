@@ -20,6 +20,9 @@ class CreateVentasDetalleTable extends Migration
             $table->integer('cantidad');
             $table->float('precio');
             $table->float('costo');
+
+            $table->foreign('venta_cabecera_id')->references('id')->on('ventas_cabecera');
+            $table->foreign('articulo_id')->references('id')->on('articulos');
         });
     }
 
