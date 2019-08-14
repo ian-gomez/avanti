@@ -18,6 +18,7 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function() {
     Route::resource('articulos-insumos', 'Articulo_InsumoController');
     Route::resource('articulos', 'ArticuloController');
+    Route::get('articulos-vista', 'ArticuloController@vista');
     Route::resource('clientes', 'ClienteController');
     Route::resource('proveedores', 'ProveedorController');
     Route::resource('remitos-cabecera', 'Remito_CabeceraController');

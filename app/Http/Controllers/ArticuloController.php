@@ -12,9 +12,16 @@ class ArticuloController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function vista()
+    {
+        return view('articulos');
+    }
+
     public function index()
     {
-        //
+        $articulo = Articulo::get();
+        return $articulo;
     }
 
     /**
@@ -35,7 +42,13 @@ class ArticuloController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $articulo = Articulo::create(array(
+            'nombre'=>$request->nombre,
+            'tipo'=>$request->tipo,
+            'precio'=>$request->precio,
+            'costo'=>$request->costo,
+        ));
+        return $articulo;
     }
 
     /**
@@ -69,7 +82,13 @@ class ArticuloController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $articulo = Articulo::find($id);
+        $articulo->nombre = $request->nombre;
+        $articulo->tipo = $request->tipo;
+        $articulo->precio = $request->precio;
+        $articulo->costo = $request->costo;
+        $articulo->save();
+        return $articulo;
     }
 
     /**
@@ -80,6 +99,8 @@ class ArticuloController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $articulo = Articulo::find($id);
+        $articulo->delete();
+        return back();
     }
 }

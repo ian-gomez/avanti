@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    <a href="articulos-vista">Articulos</a>
                 </div>
             </div>
         </div>
