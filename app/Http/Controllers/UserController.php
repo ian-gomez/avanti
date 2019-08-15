@@ -14,7 +14,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $user = User::get();
+        return $user;            
+    }
+    public function userView()
+    {
+        
+        return view('user');        
     }
 
     /**
@@ -35,7 +41,12 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User();
+        $user->name = $request->name;
+        $user->email =$request->email;
+        $user->password =$request->password;
+        $user->save();
+        return $user;
     }
 
     /**
@@ -69,7 +80,10 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user= User::find($id);
+        $user->name =$request->name;
+        $cliente->save();
+        return $user;
     }
 
     /**
@@ -80,6 +94,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $cliente->delete();
     }
 }
