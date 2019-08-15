@@ -1954,14 +1954,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['articuloRegistro', 'formulario'],
   data: function data() {
     return {
-      titulo: ''
+      titulo: '',
+      opcionTipo: 1,
+      tipos: []
     };
   },
   mounted: function mounted() {
+    this.cargarTipos();
+
     if (this.formulario == 1) {
       this.titulo = 'Ingresar nuevo articulo';
     }
@@ -1981,6 +2010,13 @@ __webpack_require__.r(__webpack_exports__);
     ;
   },
   methods: {
+    cargarTipos: function cargarTipos() {
+      var _this = this;
+
+      axios.get('tipos').then(function (response) {
+        _this.tipos = response.data;
+      });
+    },
     operacion: function operacion() {
       if (this.formulario == 1) {
         this.alta();
@@ -2001,28 +2037,28 @@ __webpack_require__.r(__webpack_exports__);
       ;
     },
     alta: function alta() {
-      var _this = this;
-
-      var formdata = new FormData();
-      formdata.append("nombre", this.articuloRegistro.nombre);
-      formdata.append("tipo", this.articuloRegistro.tipo);
-      formdata.append("precio", this.articuloRegistro.precio);
-      formdata.append("costo", this.articuloRegistro.costo);
-      axios.post('articulos', formdata).then(function (response) {
-        _this.$emit('alta', response.data);
-      });
-    },
-    modificar: function modificar() {
       var _this2 = this;
 
       var formdata = new FormData();
       formdata.append("nombre", this.articuloRegistro.nombre);
-      formdata.append("tipo", this.articuloRegistro.tipo);
+      formdata.append("tipo_id", this.opcionTipo);
+      formdata.append("precio", this.articuloRegistro.precio);
+      formdata.append("costo", this.articuloRegistro.costo);
+      axios.post('articulos', formdata).then(function (response) {
+        _this2.$emit('alta', response.data);
+      });
+    },
+    modificar: function modificar() {
+      var _this3 = this;
+
+      var formdata = new FormData();
+      formdata.append("nombre", this.articuloRegistro.nombre);
+      formdata.append("tipo_id", this.articuloRegistro.tipo_id);
       formdata.append("precio", this.articuloRegistro.precio);
       formdata.append("costo", this.articuloRegistro.costo);
       formdata.append("_method", "PATCH");
       axios.post('articulos/' + this.articuloRegistro.id, formdata).then(function (response) {
-        _this2.$emit('modificar');
+        _this3.$emit('modificar');
       });
     },
     eliminar: function eliminar() {
@@ -6526,7 +6562,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.contenedor {\n\tposition: fixed;\n\ttop: 0;\n\tleft: 0;\n\twidth: 100%;\n\theight: 100%;\n\tbackground-color: rgba(0,0,0,0.5);\n}\n.cuadro {\n\twidth: 80%;\n\tmargin: 20% auto;\n}\n.titulo {\n\tbackground-color: burlywood;\n}\n.datos {\n\tbackground-color: lemonchiffon;\n}\n.cierre {\n\tfloat: right;\n}\n.aceptar {\n\ttext-align: center;\n\tbackground-color: mediumspringgreen;\n}\n", ""]);
+exports.push([module.i, "\n.contenedor {\n        display: grid;\n        grid-template-columns: 1fr 3fr 1fr;\n        grid-template-rows: 1fr 1fr 3fr 1fr 1fr;\n        grid-template-areas: \n        \" . . .\"\n        \" . titulo .\"\n        \" . datos .\"\n        \" . aceptar .\"\n        \" . . .\";\n        position: fixed;\n\t\ttop: 0;\n\t\tleft: 0;\n        width: 100%;\n\t\theight: 100%;\n\t\tbackground-color: rgba(0,0,0,0.5);\n}\n.titulo {\n\t\tbackground-color: burlywood;\n        grid-area: titulo;\n}\n.datos {\n\t\tbackground-color: lemonchiffon;\n        grid-area: datos;\n}\n.cierre {\n\t\tfloat: right;\n}\n.aceptar {\n\t\ttext-align: center;\n        grid-area: aceptar;\n}\n", ""]);
 
 // exports
 
@@ -38042,7 +38078,7 @@ var render = function() {
                 return _c("tr", [
                   _c("td", [_vm._v(_vm._s(articulo.nombre))]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(articulo.tipo))]),
+                  _c("td", [_vm._v(_vm._s(articulo.titulo))]),
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(articulo.precio))]),
                   _vm._v(" "),
@@ -38167,142 +38203,308 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "contenedor" }, [
-    _c("div", { staticClass: "cuadro" }, [
-      _c("div", { staticClass: "titulo" }, [
-        _c("label", [_vm._v(_vm._s(_vm.titulo))]),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-danger cierre",
-            on: {
-              click: function($event) {
-                return _vm.$emit("cerrar-ventana")
-              }
-            }
-          },
-          [_vm._v("X")]
-        )
-      ]),
+    _c("div", { staticClass: "titulo" }, [
+      _c("label", [_vm._v(_vm._s(_vm.titulo))]),
       _vm._v(" "),
-      _c("div", { staticClass: "datos" }, [
-        _c("label", [_vm._v("Nombre:")]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.articuloRegistro.nombre,
-              expression: "articuloRegistro.nombre"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { required: "", type: "text" },
-          domProps: { value: _vm.articuloRegistro.nombre },
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger cierre",
           on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.articuloRegistro, "nombre", $event.target.value)
+            click: function($event) {
+              return _vm.$emit("cerrar-ventana")
             }
           }
-        }),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("label", [_vm._v("Tipo:")]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.articuloRegistro.tipo,
-              expression: "articuloRegistro.tipo"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { required: "", type: "text" },
-          domProps: { value: _vm.articuloRegistro.tipo },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+        },
+        [_vm._v("X")]
+      )
+    ]),
+    _vm._v(" "),
+    _vm.formulario == 1
+      ? _c("div", { staticClass: "datos" }, [
+          _c("label", [_vm._v("Nombre:")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.articuloRegistro.nombre,
+                expression: "articuloRegistro.nombre"
               }
-              _vm.$set(_vm.articuloRegistro, "tipo", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("label", [_vm._v("Precio")]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.articuloRegistro.precio,
-              expression: "articuloRegistro.precio"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { required: "", step: "0.01", type: "number" },
-          domProps: { value: _vm.articuloRegistro.precio },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.articuloRegistro, "precio", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("label", [_vm._v("Costo:")]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.articuloRegistro.costo,
-              expression: "articuloRegistro.costo"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { required: "", step: "0.01", type: "number" },
-          domProps: { value: _vm.articuloRegistro.costo },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.articuloRegistro, "costo", $event.target.value)
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "aceptar" }, [
-        _c(
-          "button",
-          {
-            staticClass: "bnt btn-success btn-block",
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.articuloRegistro.nombre },
             on: {
-              click: function($event) {
-                return _vm.operacion()
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.articuloRegistro, "nombre", $event.target.value)
               }
             }
-          },
-          [_vm._v("Aceptar")]
-        )
-      ])
+          }),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("label", [_vm._v("Tipo:")]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.opcionTipo,
+                  expression: "opcionTipo"
+                }
+              ],
+              staticClass: "form-control",
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.opcionTipo = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                }
+              }
+            },
+            _vm._l(_vm.tipos, function(tipo) {
+              return _c(
+                "option",
+                {
+                  domProps: {
+                    value: tipo.id,
+                    selected: tipo.id == _vm.opcionTipo
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(tipo.titulo) +
+                      "\n            "
+                  )
+                ]
+              )
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _c("label", [_vm._v("Precio")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.articuloRegistro.precio,
+                expression: "articuloRegistro.precio"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { step: "0.01", type: "number" },
+            domProps: { value: _vm.articuloRegistro.precio },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.articuloRegistro, "precio", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("label", [_vm._v("Costo:")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.articuloRegistro.costo,
+                expression: "articuloRegistro.costo"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { step: "0.01", type: "number" },
+            domProps: { value: _vm.articuloRegistro.costo },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.articuloRegistro, "costo", $event.target.value)
+              }
+            }
+          })
+        ])
+      : _vm.formulario == 2
+      ? _c("div", { staticClass: "datos" }, [
+          _c("label", [_vm._v("Nombre:")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.articuloRegistro.nombre,
+                expression: "articuloRegistro.nombre"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.articuloRegistro.nombre },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.articuloRegistro, "nombre", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("label", [_vm._v("Tipo:")]),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.articuloRegistro.tipo_id,
+                  expression: "articuloRegistro.tipo_id"
+                }
+              ],
+              staticClass: "form-control",
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.$set(
+                    _vm.articuloRegistro,
+                    "tipo_id",
+                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                  )
+                }
+              }
+            },
+            _vm._l(_vm.tipos, function(tipo) {
+              return _c(
+                "option",
+                {
+                  domProps: {
+                    value: tipo.id,
+                    selected: tipo.id == _vm.articuloRegistro.tipo_id
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(tipo.titulo) +
+                      "\n            "
+                  )
+                ]
+              )
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("label", [_vm._v("Precio")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.articuloRegistro.precio,
+                expression: "articuloRegistro.precio"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { step: "0.01", type: "number" },
+            domProps: { value: _vm.articuloRegistro.precio },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.articuloRegistro, "precio", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("label", [_vm._v("Costo:")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.articuloRegistro.costo,
+                expression: "articuloRegistro.costo"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { step: "0.01", type: "number" },
+            domProps: { value: _vm.articuloRegistro.costo },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.articuloRegistro, "costo", $event.target.value)
+              }
+            }
+          })
+        ])
+      : _c("div", { staticClass: "datos" }, [
+          _vm._v(
+            "\n        ¿Está seguro que desea eliminar " +
+              _vm._s(_vm.articuloRegistro.nombre) +
+              "?\n    "
+          )
+        ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "aceptar" }, [
+      _c(
+        "button",
+        {
+          staticClass: "bnt btn-success btn-block",
+          on: {
+            click: function($event) {
+              return _vm.operacion()
+            }
+          }
+        },
+        [_vm._v("Aceptar")]
+      )
     ])
   ])
 }
@@ -50598,14 +50800,15 @@ if (token) {
 /*!*******************************************************!*\
   !*** ./resources/js/components/ArticuloComponent.vue ***!
   \*******************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ArticuloComponent_vue_vue_type_template_id_57015a87___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ArticuloComponent.vue?vue&type=template&id=57015a87& */ "./resources/js/components/ArticuloComponent.vue?vue&type=template&id=57015a87&");
 /* harmony import */ var _ArticuloComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ArticuloComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ArticuloComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _ArticuloComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _ArticuloComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -50635,7 +50838,7 @@ component.options.__file = "resources/js/components/ArticuloComponent.vue"
 /*!********************************************************************************!*\
   !*** ./resources/js/components/ArticuloComponent.vue?vue&type=script&lang=js& ***!
   \********************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -50837,8 +51040,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /opt/lampp/htdocs/avanti/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /opt/lampp/htdocs/avanti/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\avanti\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\avanti\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

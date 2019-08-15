@@ -1,26 +1,51 @@
 <template>
     <div class="contenedor">
-        <div class="cuadro">
-            <div class="titulo">
-                <label>{{titulo}}</label>
-                <button class="btn btn-danger cierre" @click="$emit('cerrar-ventana')">X</button>
-            </div>
-            <div class="datos">
-                <label>Nombre:</label>
-                <input required class="form-control" type="text" v-model="articuloRegistro.nombre">
-                <br>
-                <label>Tipo:</label>
-                <input required class="form-control" type="text" v-model="articuloRegistro.tipo">
-                <br>
-                <label>Precio</label>
-                <input required class="form-control" step="0.01" type="number" v-model="articuloRegistro.precio">
-                <br>
-                <label>Costo:</label>
-                <input required class="form-control" step="0.01" type="number" v-model="articuloRegistro.costo">
-            </div>
-            <div class="aceptar">
-                <button class="bnt btn-success btn-block" @click="operacion()">Aceptar</button>
-            </div>
+        <div class="titulo">
+            <label>{{titulo}}</label>
+            <button class="btn btn-danger cierre" @click="$emit('cerrar-ventana')">X</button>
+        </div>
+        <!-- En caso de alta -->
+        <div class="datos" v-if="formulario==1">
+            <label>Nombre:</label>
+            <input class="form-control" type="text" v-model="articuloRegistro.nombre">
+            <br>
+            <label>Tipo:</label>
+            <br>
+            <select class="form-control" v-model="opcionTipo">
+                <option v-for="tipo in tipos" v-bind:value="tipo.id" v-bind:selected="(tipo.id == opcionTipo)">
+                    {{tipo.titulo}}
+                </option>
+            </select>
+            <label>Precio</label>
+            <input class="form-control" step="0.01" type="number" v-model="articuloRegistro.precio">
+            <br>
+            <label>Costo:</label>
+            <input class="form-control" step="0.01" type="number" v-model="articuloRegistro.costo">
+        </div>
+        <!-- En caso de modificacion -->
+        <div class="datos" v-else-if="formulario==2">
+            <label>Nombre:</label>
+            <input class="form-control" type="text" v-model="articuloRegistro.nombre">
+            <br>
+            <label>Tipo:</label>
+            <select class="form-control" v-model="articuloRegistro.tipo_id">
+                <option v-for="tipo in tipos" v-bind:value="tipo.id" v-bind:selected="(tipo.id == articuloRegistro.tipo_id)">
+                    {{tipo.titulo}}
+                </option>
+            </select>
+            <br>
+            <label>Precio</label>
+            <input class="form-control" step="0.01" type="number" v-model="articuloRegistro.precio">
+            <br>
+            <label>Costo:</label>
+            <input class="form-control" step="0.01" type="number" v-model="articuloRegistro.costo">
+        </div>
+        <!-- En caso de baja -->
+        <div class="datos" v-else>
+            ¿Está seguro que desea eliminar {{articuloRegistro.nombre}}?
+        </div>
+        <div class="aceptar">
+            <button class="bnt btn-success btn-block" @click="operacion()">Aceptar</button>
         </div>
     </div>
 </template>
@@ -30,10 +55,13 @@
         props: ['articuloRegistro', 'formulario'],
         data: function() {
             return{
-                titulo:''
+                titulo:'',
+                opcionTipo:1,
+                tipos:[]
             }
         },
         mounted() {
+            this.cargarTipos();
             if (this.formulario==1) {
                 this.titulo='Ingresar nuevo articulo'
             };
@@ -45,6 +73,11 @@
             };
         },
         methods: {
+            cargarTipos:function() {
+                axios.get('tipos').then(response=>{
+                    this.tipos = response.data
+                })
+            },
             operacion:function(){
                 if (this.formulario==1) {
                     this.alta()
@@ -59,7 +92,7 @@
             alta:function(){
                 let formdata = new FormData();
                 formdata.append("nombre", this.articuloRegistro.nombre);
-                formdata.append("tipo", this.articuloRegistro.tipo);
+                formdata.append("tipo_id", this.opcionTipo);
                 formdata.append("precio", this.articuloRegistro.precio);
                 formdata.append("costo", this.articuloRegistro.costo);
                 axios.post('articulos', formdata).then(response => {
@@ -69,7 +102,7 @@
             modificar:function(){
                 let formdata = new FormData();
                 formdata.append("nombre", this.articuloRegistro.nombre);
-                formdata.append("tipo", this.articuloRegistro.tipo);
+                formdata.append("tipo_id", this.articuloRegistro.tipo_id);
                 formdata.append("precio", this.articuloRegistro.precio);
                 formdata.append("costo", this.articuloRegistro.costo);
                 formdata.append("_method", "PATCH");
@@ -87,28 +120,35 @@
 
 <style>
 	.contenedor {
-		position: fixed;
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
+        grid-template-rows: 1fr 1fr 3fr 1fr 1fr;
+        grid-template-areas: 
+        " . . ."
+        " . titulo ."
+        " . datos ."
+        " . aceptar ."
+        " . . .";
+        position: fixed;
 		top: 0;
 		left: 0;
-		width: 100%;
+        width: 100%;
 		height: 100%;
 		background-color: rgba(0,0,0,0.5);
 	}
-	.cuadro {
-		width: 80%;
-		margin: 20% auto;
-	}
 	.titulo {
 		background-color: burlywood;
+        grid-area: titulo;
 	}
 	.datos {
 		background-color: lemonchiffon;
+        grid-area: datos;
 	}
 	.cierre {
 		float: right;
 	}
 	.aceptar {
 		text-align: center;
-		background-color: mediumspringgreen;
+        grid-area: aceptar;
 	}
 </style>

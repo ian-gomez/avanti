@@ -17,7 +17,7 @@
                 <tbody>
                     <tr v-for="(articulo, index) in articulos">
                         <td>{{articulo.nombre}}</td>
-                        <td>{{articulo.tipo}}</td>
+                        <td>{{articulo.titulo}}</td>
                         <td>{{articulo.precio}}</td>
                         <td>{{articulo.costo}}</td>
                         <td>

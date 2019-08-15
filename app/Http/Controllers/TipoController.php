@@ -3,29 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Articulo;
+use App\Tipo;
 
-class ArticuloController extends Controller
+class TipoController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function vista()
-    {
-        return view('articulos');
-    }
-
     public function index()
     {
-        $articulo = DB::table('articulos')
-                    ->join('tipos', 'articulos.tipo_id', '=', 'tipos.id')
-                    ->select('articulos.*', 'tipos.titulo')
-                    ->get();
-        return $articulo;
+        $tipo = Tipo::get();
+        return $tipo;
     }
 
     /**
@@ -46,13 +36,7 @@ class ArticuloController extends Controller
      */
     public function store(Request $request)
     {
-        $articulo = new Articulo();
-        $articulo->nombre=$request->nombre;
-        $articulo->tipo_id=$request->tipo_id;
-        $articulo->precio=$request->precio;
-        $articulo->costo=$request->costo;
-        $articulo->save();
-        return $articulo;
+        //
     }
 
     /**
@@ -86,13 +70,7 @@ class ArticuloController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $articulo = Articulo::find($id);
-        $articulo->nombre = $request->nombre;
-        $articulo->tipo_id = $request->tipo_id;
-        $articulo->precio = $request->precio;
-        $articulo->costo = $request->costo;
-        $articulo->save();
-        return $articulo;
+        //
     }
 
     /**
@@ -103,8 +81,6 @@ class ArticuloController extends Controller
      */
     public function destroy($id)
     {
-        $articulo = Articulo::find($id);
-        $articulo->delete();
-        return back();
+        //
     }
 }
