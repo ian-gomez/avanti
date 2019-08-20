@@ -1886,6 +1886,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     console.log('Component mounted.');
+    this.mostraruser();
   },
   computed: {
     buscausers: function buscausers() {
@@ -2015,6 +2016,8 @@ __webpack_require__.r(__webpack_exports__);
       formdata.append("password", this.registrousers.password);
       formdata.append("_method", "PATCH");
       axios.post('users/' + this.registrousers.id, formdata).then(function (response) {
+        console.log(response.data);
+
         _this2.$emit('usereditar', response.data);
       });
     },

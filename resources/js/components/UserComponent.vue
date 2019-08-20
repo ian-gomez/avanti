@@ -46,7 +46,8 @@
             }
         },
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component mounted.');
+            this.mostraruser();
         },
         computed:{
             buscausers:function(){
