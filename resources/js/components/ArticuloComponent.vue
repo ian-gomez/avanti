@@ -4,7 +4,7 @@
             <div>
                 <button class="btn btn-primary btn-block" @click="formulario=1">Ingresar</button>
             </div>
-            <table class="table table-bordered table-striped table-dark table-hover display">
+            <table class="display" id="tabla">
                 <thead>
                     <tr>
                         <td>Nombre</td>
@@ -45,6 +45,7 @@
 </template>
 
 <script>
+    import datatables from "datatables"
     export default {
         data: function() {
             return{
@@ -60,7 +61,8 @@
         methods: {
             mostrar:function() {
                 axios.get('articulos').then(response=>{
-                    this.articulos = response.data
+                    this.articulos = response.data;
+                    this.tabla();
                 })
             },
             asignar:function(datos) {
@@ -71,6 +73,38 @@
             },
             eliminar:function() {
                 this.articulos.splice(this.pos, 1)
+            },
+            tabla:function() {
+                $(document).ready(function() {
+                    $('#tabla').DataTable({
+                        "lengthMenu": [[5, 25, 50], [5, 25, 50]],
+                        "pagingType": "full_numbers",
+                        language: {
+                            "sProcessing":     "Procesando...",
+                            "sLengthMenu":     "Mostrar _MENU_ registros",
+                            "sZeroRecords":    "No se encontraron resultados",
+                            "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                            "sInfoPostFix":    "",
+                            "sSearch":         "Buscar:",
+                            "sUrl":            "",
+                            "sInfoThousands":  ",",
+                            "sLoadingRecords": "Cargando...",
+                            "oPaginate": {
+                                "sFirst":    "Primero",
+                                "sLast":     "Último",
+                                "sNext":     "Siguiente",
+                                "sPrevious": "Anterior"
+                            },
+                            "oAria": {
+                                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                            }
+                        }
+                    });
+                });
             }
         }
     }
