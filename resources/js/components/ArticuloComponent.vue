@@ -19,7 +19,12 @@
                     <td>{{articulo.tipo_nombre}}</td>
                     <td>{{articulo.precio}}</td>
                     <td>{{articulo.costo}}</td>
-                    <td>
+                    <td v-if="articulo.tipo_id==1">
+                        <button class="btn btn-warning" @click="formulario=2;asignar(articulo)">Editar</button>
+                        <button class="btn btn-danger" @click="formulario=3;asignar(articulo);pos=index">Eliminar</button>
+                        <button class="btn btn-info" @click="insumos=true;asignar(articulo)">Insumos</button>
+                    </td>
+                    <td v-else>
                         <button class="btn btn-warning" @click="formulario=2;asignar(articulo)">Editar</button>
                         <button class="btn btn-danger" @click="formulario=3;asignar(articulo);pos=index">Eliminar</button>
                     </td>
@@ -39,6 +44,10 @@
             @cerrar-ventana="formulario=0"
             @modificar="formulario=0"
             @eliminar="eliminar();formulario=0"></articulo-formulario-component>
+        <articulo-insumo-component
+            v-if="insumos==true"
+            :articuloRegistro="articuloRegistro"            
+            @cerrar-insumos="insumos=false"></articulo-insumo-component>
     </div>
 </template>
 
@@ -48,6 +57,7 @@
         data: function() {
             return{
                 formulario:0,
+                insumos:false,
                 pos:0,
                 articulos:[],
                 articuloRegistro:''
