@@ -12,13 +12,13 @@ class TiposTableSeeder extends Seeder
     public function run()
     {
         factory(App\Tipo::Create([
-            'titulo' => 'Articulo'
+            'nombre' => 'Articulo'
         ]));
         factory(App\Tipo::Create([
-            'titulo' => 'Insumo'
+            'nombre' => 'Insumo'
         ]));
         factory(App\Tipo::Create([
-            'titulo' => 'Bebida'
+            'nombre' => 'Bebida'
         ]));
     }
 }

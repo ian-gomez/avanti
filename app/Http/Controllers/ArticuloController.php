@@ -23,7 +23,7 @@ class ArticuloController extends Controller
     {
         $articulo = DB::table('articulos')
                     ->join('tipos', 'articulos.tipo_id', '=', 'tipos.id')
-                    ->select('articulos.*', 'tipos.titulo')
+                    ->select('articulos.*', 'tipos.nombre as tipo_nombre')
                     ->get();
         return $articulo;
     }

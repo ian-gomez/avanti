@@ -13,7 +13,7 @@
             <br>
             <select class="form-control" v-model="opcionTipo">
                 <option v-for="tipo in tipos" v-bind:value="tipo.id" v-bind:selected="(tipo.id == opcionTipo)">
-                    {{tipo.titulo}}
+                    {{tipo.nombre}}
                 </option>
             </select>
             <label>Precio</label>
@@ -30,7 +30,7 @@
             <label>Tipo:</label>
             <select class="form-control" v-model="articuloRegistro.tipo_id">
                 <option v-for="tipo in tipos" v-bind:value="tipo.id" v-bind:selected="(tipo.id == articuloRegistro.tipo_id)">
-                    {{tipo.titulo}}
+                    {{tipo.nombre}}
                 </option>
             </select>
             <br>

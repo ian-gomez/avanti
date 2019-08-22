@@ -15,6 +15,7 @@
                     @endif
 
                     <a href="articulos-vista">Articulos</a>
+                    <a href="clientes-vista">Clientes</a>
                 </div>
             </div>
         </div>
