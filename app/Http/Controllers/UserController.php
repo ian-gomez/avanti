@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\User;
 
 class UserController extends Controller
@@ -14,7 +15,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::get();
+        $user = DB::table('users')
+                ->where('rol', '2')
+                ->get();
         return $user;            
     }
     public function userView()
