@@ -14,7 +14,8 @@ class Stock_CabeceraController extends Controller
      */
     public function index()
     {
-        //
+        $cabecera = Stock_Cabecera::get();
+        return $cabecera;
     }
 
     /**
@@ -35,7 +36,13 @@ class Stock_CabeceraController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cabecera = new Stock_Cabecera();
+        $cabecera->importe = $request->importe;
+        //$cabecera->user_id = $request->user_id;
+        $cabecera->user_id = auth()->user()['id'];
+        //dd($user);0
+        $cabecera->save();
+        return $cabecera;
     }
 
     /**
@@ -69,7 +76,11 @@ class Stock_CabeceraController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cabecera = Stock_Cabecera::find($id);
+        $cabecera->importe = $request->importe;
+        $cabecera->user_id = $request->user_id;
+        $cabecera->save();
+        return $cabecera;
     }
 
     /**
@@ -80,6 +91,7 @@ class Stock_CabeceraController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cabecera = Stock_Cabecera::find($id);
+        $cabecera->delete();
     }
 }
