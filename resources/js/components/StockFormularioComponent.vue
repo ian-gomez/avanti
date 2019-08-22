@@ -18,6 +18,7 @@
         },
         mounted() {
             console.log('Component mounted.')
+
         },
 
 		methods:{
@@ -28,22 +29,22 @@
             alta:function(){
                 let formdata = new FormData();
                 formdata.append("importe", this.cabecerasR.importe);
-                axios.post('stock-cabecera',formdata).then(response => {
-                this.$emit('altacabecera', response.data);
-                });
+                axios.post('stock-cabecera',formdata).then(response =>{
+                this.$emit('alta',response.data);
+                })
             },
-            eliminar:function(){
+            baja:function(){
                 axios.delete('stock-cabecera/'+this.cabecerasR.id).then(response => {
-                this.$emit('bajacabecera');
-                });
+                    this.$emit('baja');
+                })
             },
             editar:function(){           
                 let formdata = new FormData();
                 formdata.append("importe",this.cabecerasR.importe);
                 formdata.append("_method","PATCH");
                 axios.post('stock-cabecera/'+this.cabecerasR.id,formdata).then(response => {
-                this.$emit('editarcabecera',response.data);
-                });
+                this.$emit('editar',response.data);
+                })
             },
 
             operacioncabecera:function(){

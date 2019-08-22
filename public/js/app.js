@@ -1951,14 +1951,14 @@ __webpack_require__.r(__webpack_exports__);
       var formdata = new FormData();
       formdata.append("importe", this.cabecerasR.importe);
       axios.post('stock-cabecera', formdata).then(function (response) {
-        _this.$emit('altacabecera', response.data);
+        _this.$emit('alta', response.data);
       });
     },
-    eliminar: function eliminar() {
+    baja: function baja() {
       var _this2 = this;
 
       axios["delete"]('stock-cabecera/' + this.cabecerasR.id).then(function (response) {
-        _this2.$emit('bajacabecera');
+        _this2.$emit('baja');
       });
     },
     editar: function editar() {
@@ -1968,7 +1968,7 @@ __webpack_require__.r(__webpack_exports__);
       formdata.append("importe", this.cabecerasR.importe);
       formdata.append("_method", "PATCH");
       axios.post('stock-cabecera/' + this.cabecerasR.id, formdata).then(function (response) {
-        _this3.$emit('editarcabecera', response.data);
+        _this3.$emit('editar', response.data);
       });
     },
     operacioncabecera: function operacioncabecera() {
@@ -38021,7 +38021,7 @@ var render = function() {
                       click: function($event) {
                         _vm.pos = index
                         _vm.operacion = 2
-                        _vm.cabecerasR = _vm.cabeceras
+                        _vm.cabecerasR = cabecera
                       }
                     }
                   },
@@ -38036,7 +38036,7 @@ var render = function() {
                       click: function($event) {
                         _vm.pos = index
                         _vm.operacion = 3
-                        _vm.cabecerasR = _vm.cabeceras
+                        _vm.cabecerasR = cabecera
                       }
                     }
                   },
@@ -38053,14 +38053,14 @@ var render = function() {
         ? _c("stock-formulario-component", {
             attrs: { cabecerasR: _vm.cabecerasR, operacion: _vm.operacion },
             on: {
-              altacabecera: function($event) {
-                return _vm.alta($event)
+              alta: function($event) {
+                return _vm.altacabecera($event)
               },
               baja: function($event) {
-                return _vm.baja()
+                return _vm.bajacabecera()
               },
               editar: function($event) {
-                return _vm.editar($event)
+                return _vm.editarcabecera($event)
               },
               "cerrar-ventana": function($event) {
                 _vm.operacion = 0

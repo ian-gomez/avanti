@@ -18,6 +18,11 @@ class Stock_CabeceraController extends Controller
         return $cabecera;
     }
 
+    public function vista()
+    {
+        return view('stock-cabecera');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -78,7 +83,8 @@ class Stock_CabeceraController extends Controller
     {
         $cabecera = Stock_Cabecera::find($id);
         $cabecera->importe = $request->importe;
-        $cabecera->user_id = $request->user_id;
+        //$cabecera->user_id = $request->user_id;
+        $cabecera->user_id = auth()->user()['id'];
         $cabecera->save();
         return $cabecera;
     }

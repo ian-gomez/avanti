@@ -13,21 +13,21 @@
                 <tr v-for="(cabecera, index) in cabeceras">
                     <td>{{cabecera.id}}</td>
                     <td>{{cabecera.importe}}</td>
-                    <td><button class="btn btn-info" 
-                    @click="pos=index;operacion=2;cabecerasR=cabeceras">Editar</button>
+                    <td><button class="btn btn-info"
+                    @click="pos=index;operacion=2;cabecerasR=cabecera">Editar</button>
                     <button class="btn btn-danger" 
-                    @click="pos=index;operacion=3;cabecerasR=cabeceras">Borrar</button></td>
+                    @click="pos=index;operacion=3;cabecerasR=cabecera">Borrar</button></td>
                 </tr>
             </tbody>    
         </table>
         <stock-formulario-component 
-                @altacabecera="alta($event);" 
-                @baja="baja()"
-                @editar="editar($event)" 
+                @alta="altacabecera($event)" 
+                @baja="bajacabecera()"
+                @editar="editarcabecera($event)" 
                 @cerrar-ventana="operacion=0"
-                v-if="operacion>0" 
+                v-if="operacion>0"
                 :cabecerasR="cabecerasR"
-                :operacion="operacion">            
+                :operacion="operacion">
         </stock-formulario-component>
             <div class="datosm">
                 <pre>{{$data}}</pre>
@@ -81,7 +81,7 @@
 <style type="text/css">
     .datosm{
         background-color: gray;
-        border-radius: 8px;         
+        border-radius: 8px;
     }
 </style>
 
