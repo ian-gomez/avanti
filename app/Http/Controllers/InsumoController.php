@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Cliente;
+use App\Insumo;
 
-class ClienteController extends Controller
+class InsumoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,13 +14,13 @@ class ClienteController extends Controller
      */
     public function vista()
     {
-        return view('clientes');
+        return view('insumos');
     }
 
     public function index()
     {
-        $cliente = Cliente::get();
-        return $cliente;
+        $insumo = Insumo::get();
+        return $insumo;
     }
 
     /**
@@ -41,12 +41,12 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        $cliente = new Cliente();
-        $cliente->nombre = $request->nombre;
-        $cliente->direccion = $request->direccion;
-        $cliente->telefono = $request->telefono;
-        $cliente->save();
-        return $cliente;
+        $insumo = new Insumo();
+        $insumo->nombre = $request->nombre;
+        $insumo->precio = $request->precio;
+        $insumo->cantidad = $request->cantidad;
+        $insumo->save();
+        return $insumo;
     }
 
     /**
@@ -80,12 +80,12 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $cliente = Cliente::find($id);
-        $cliente->nombre = $request->nombre;
-        $cliente->direccion = $request->direccion;
-        $cliente->telefono = $request->telefono;
-        $cliente->save();
-        return $cliente;
+        $insumo = Insumo::find($id);
+        $insumo->nombre = $request->nombre;
+        $insumo->precio = $request->precio;
+        $insumo->cantidad = $request->cantidad;
+        $insumo->save();
+        return $insumo;
     }
 
     /**
@@ -96,8 +96,8 @@ class ClienteController extends Controller
      */
     public function destroy($id)
     {
-        $cliente = Cliente::find($id);
-        $cliente->delete();
+        $insumo = Insumo::find($id);
+        $insumo->delete();
         return back();
     }
 }

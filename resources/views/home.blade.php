@@ -16,6 +16,7 @@
 
                     <a href="articulos-vista">Articulos</a>
                     <a href="clientes-vista">Clientes</a>
+                    <a href="insumos-vista">Insumos</a>
                 </div>
             </div>
         </div>

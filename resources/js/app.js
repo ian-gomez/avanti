@@ -25,6 +25,8 @@ Vue.component('articulo-formulario-component', require('./components/ArticuloFor
 Vue.component('articulo-insumo-component', require('./components/Articulo_InsumoComponent.vue').default);
 Vue.component('cliente-component', require('./components/ClienteComponent.vue').default);
 Vue.component('cliente-formulario-component', require('./components/ClienteFormularioComponent.vue').default);
+Vue.component('insumo-component', require('./components/InsumoComponent.vue').default);
+Vue.component('insumo-formulario-component', require('./components/InsumoFormularioComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

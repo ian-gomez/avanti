@@ -15,9 +15,6 @@ class TiposTableSeeder extends Seeder
             'nombre' => 'Articulo'
         ]));
         factory(App\Tipo::Create([
-            'nombre' => 'Insumo'
-        ]));
-        factory(App\Tipo::Create([
             'nombre' => 'Bebida'
         ]));
     }

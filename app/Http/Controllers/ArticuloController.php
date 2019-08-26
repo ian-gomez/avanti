@@ -47,10 +47,10 @@ class ArticuloController extends Controller
     public function store(Request $request)
     {
         $articulo = new Articulo();
-        $articulo->nombre=$request->nombre;
-        $articulo->tipo_id=$request->tipo_id;
-        $articulo->precio=$request->precio;
-        $articulo->costo=$request->costo;
+        $articulo->nombre = $request->nombre;
+        $articulo->tipo_id = $request->tipo_id;
+        $articulo->precio = $request->precio;
+        $articulo->costo = $request->costo;
         $articulo->save();
         return $articulo;
     }

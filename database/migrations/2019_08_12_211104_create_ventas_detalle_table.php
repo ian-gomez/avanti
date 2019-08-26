@@ -18,8 +18,8 @@ class CreateVentasDetalleTable extends Migration
             $table->bigInteger('venta_cabecera_id')->unsigned();
             $table->bigInteger('articulo_id')->unsigned();
             $table->integer('cantidad');
-            $table->float('precio');
-            $table->float('costo');
+            $table->float('precio', 10, 2);
+            $table->float('costo', 10, 2);
 
             $table->foreign('venta_cabecera_id')->references('id')->on('ventas_cabecera');
             $table->foreign('articulo_id')->references('id')->on('articulos');

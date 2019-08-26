@@ -21,6 +21,8 @@ Route::middleware(['auth'])->group(function() {
     Route::get('articulos-vista', 'ArticuloController@vista');
     Route::resource('clientes', 'ClienteController');
     Route::get('clientes-vista', 'ClienteController@vista');
+    Route::resource('insumos', 'InsumoController');
+    Route::get('insumos-vista', 'InsumoController@vista');
     Route::resource('proveedores', 'ProveedorController');
     Route::resource('remitos-cabecera', 'Remito_CabeceraController');
     Route::resource('remitos-detalle', 'Remito_DetalleController');

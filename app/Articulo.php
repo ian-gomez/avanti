@@ -8,7 +8,7 @@ class Articulo extends Model
 {
         protected $table = 'articulos';
 
-        protected $fillable = ['nombre', 'tipo', 'precio', 'costo'];
+        protected $fillable = ['tipo_id', 'nombre', 'precio', 'costo'];
 
         public $timestamps = false;
 }
