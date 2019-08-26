@@ -7132,7 +7132,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.contenedor {\n            display: grid;\n            grid-template-columns: 1fr 3fr 1fr;\n            grid-template-rows: 1fr 1fr 3fr 1fr;\n            grid-template-areas: \n            \" . . .\"\n            \" . titulo .\"\n            \" . datos .\"\n            \" . . .\";\n            position: fixed;\n            top: 0;\n            left: 0;\n            width: 100%;\n            height: 100%;\n            background-color: rgba(0,0,0,0.5);\n}\n.titulo {\n        background-color: burlywood;\n        grid-area: titulo;\n}\n.datos {\n        background-color: lemonchiffon;\n        grid-area: datos;\n}\n.cierre {\n\t\tfloat: right;\n}\n", ""]);
+exports.push([module.i, "\n.contenedor2 {\n            display: grid;\n            grid-template-columns: 1fr 10fr 1fr;\n            grid-template-rows: 1fr 1fr 9fr 1fr;\n            grid-template-areas: \n            \" . . .\"\n            \" . titulo2 .\"\n            \" . datos2 .\"\n            \" . . .\";\n            position: fixed;\n            top: 0;\n            left: 0;\n            width: 100%;\n            height: 100%;\n            background-color: rgba(0,0,0,0.5);\n}\n.titulo2 {\n        background-color: burlywood;\n        grid-area: titulo2;\n}\n.datos2 {\n        background-color: lemonchiffon;\n        grid-area: datos2;\n}\n.cierre {\n\t\tfloat: right;\n}\n", ""]);
 
 // exports
 
@@ -54563,8 +54563,8 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "contenedor" }, [
-    _c("div", { staticClass: "titulo" }, [
+  return _c("div", { staticClass: "contenedor2" }, [
+    _c("div", { staticClass: "titulo2" }, [
       _c("label", [_vm._v(_vm._s(_vm.articuloRegistro.nombre))]),
       _vm._v(" "),
       _c(
@@ -54589,7 +54589,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "datos" }, [_c("label", [_vm._v("Datos")])])
+    return _c("div", { staticClass: "datos2" }, [
+      _c("label", [_vm._v("Datos")])
+    ])
   }
 ]
 render._withStripped = true
