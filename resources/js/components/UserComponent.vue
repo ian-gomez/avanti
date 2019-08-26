@@ -1,18 +1,20 @@
 <template>
-    <div class="contenedor">
+    <div class="con-tenedor">
             <div>
                 <input type="text" class="form-control" name="busqueda" v-model="busqueda" placeholder="Buscar...">
             </div>
             <div class="col-md-8">
                 <div class="card">
                   <button class="btn btn-info btn-block" @click="operacion=1; registrousers=[]">Ingresar</button>
-                   <table>
+                   <table id="tabla" class="display; color">
+                    <thead>
                        <tr>
                            <td>ID</td>
                            <td>Name</td>
                            <td>Email</td>
                            <td>Acciones</td>
                        </tr>
+                    </thead>
                       <tbody>
                         <tr v-for="(user, index) in buscausers">
                             <td>{{user.id}}</td>
@@ -25,7 +27,9 @@
                         </tr>
                       </tbody>
                   </table>
-                  <user-formulario-component @useralta="altauser($event)" @userbaja="bajauser()" @usereditar="editaruser($event)" v-if="operacion>0" 
+                  <user-formulario-component @useralta="altauser($event)" @userbaja="bajauser()" @usereditar="editaruser($event)"
+                  @cerrar-ventana="operacion=0"
+                        v-if="operacion>0" 
                         :operacion="operacion"
                         :registrousers="registrousers">
             </user-formulario-component>
@@ -35,6 +39,7 @@
 </template>
 
 <script>
+    import datatables from 'datatables'
     export default{
         data(){
             return{
@@ -43,6 +48,7 @@
                 busqueda:'',
                 registrousers:[],
                 pos:0,
+
             }
         },
         mounted() {
@@ -64,6 +70,7 @@
                 axios.get('users').then(response =>{
                   console.log(response.data);
                     this.users = response.data;
+                    this.tabla();
                 });
             },
             editaruser:function(dato){
@@ -72,6 +79,41 @@
             bajauser:function(){
                 this.users.splice(this.pos,1);
             },
+            tabla:function(){
+                $(document).ready( function () {
+                $('#tabla').DataTable({
+                    "scrollY":        "500px",
+                    "scrollCollapse": true,
+                    "paging":         false,
+
+                    
+                        language:{
+                            "sProcessing":     "Procesando...",
+                            "sLengthMenu":     "Mostrar _MENU_ registros",
+                            "sZeroRecords":    "No se encontraron resultados",
+                            "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                            "sInfoPostFix":    "",
+                            "sSearch":         "Buscar:",
+                            "sUrl":            "",
+                            "sInfoThousands":  ",",
+                            "sLoadingRecords": "Cargando...",
+                            "oPaginate": {
+                                "sFirst":    "Primero",
+                                "sLast":     "Último",
+                                "sNext":     "Siguiente",
+                                "sPrevious": "Anterior"
+                            },
+                            "oAria": {
+                                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                            }
+                        }
+                    });
+                } );
+            }
         }
        } 
 </script>
