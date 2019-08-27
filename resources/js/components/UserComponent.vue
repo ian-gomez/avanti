@@ -52,7 +52,7 @@
             }
         },
         mounted() {
-            console.log('Component mounted.');
+            console.log('Component mounteda.');
             this.mostraruser();
         },
         computed:{
@@ -64,6 +64,7 @@
         },
         methods:{
             altauser:function(dato){
+                alert("hhhh");
                this.users.push(dato);
             },
             mostraruser:function(){
@@ -74,9 +75,10 @@
                 });
             },
             editaruser:function(dato){
-                console.log(dato);
+                console.log(dato);    
             },
             bajauser:function(){
+                console.log(dato);
                 this.users.splice(this.pos,1);
             },
             tabla:function(){

@@ -4,8 +4,6 @@
     		<label>{{titulo}}</label>
     	</div>
         <!-- Alta -->
-        
-
         <div class="dato" v-if="operacion==1">
             <label>Nombre:</label>
             <input class="form-control" type="text" v-model="registrousers.name">
@@ -17,8 +15,34 @@
             <input class="form-control" type="text" v-model="registrousers.password">
             <br>
         </div>
-        <button @click="operacionuser()">Aceptar</button>
-        <button @click="operacion=0">X</button>
+        <!-- Editar -->
+        <div class="dato" v-if="operacion==2">
+            <label>Nombre:</label>
+            <input class="form-control" type="text" v-model="registrousers.name">
+            <br>
+            <label>Email</label>
+            <input class="form-control" type="text" v-model="registrousers.email">
+            <br>
+            <label>Password</label>
+            <input class="form-control" type="text" v-model="registrousers.password">
+            <br>
+        </div>
+        <!-- Baja -->
+        <div class="dato" v-if="operacion==3">
+            <label>Nombre:</label>
+            <input class="form-control" type="text" v-model="registrousers.name">
+            <br>
+            <label>Email</label>
+            <input class="form-control" type="text" v-model="registrousers.email">
+            <br>
+            <label>Password</label>
+            <input class="form-control" type="text" v-model="registrousers.password">
+            <br>
+        </div>
+        <div class="aceptar">
+            <button @click="operacionuser(); cerrar()">Aceptar</button>
+            <button @click="cerrar()" class="boton">X</button>
+        </div>
     </div>
 </template>
 
@@ -87,3 +111,37 @@
         }
       }  
 </script>
+<style>
+    .contenedor {
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
+        grid-template-rows: 1fr 1fr 3fr 1fr 1fr;
+        grid-template-areas: 
+        " . . ."
+        " . titulo ."
+        " . dato ."
+        " . aceptar ."
+        " . . .";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+    }
+    .titulo {
+        background-color: burlywood;
+        grid-area: titulo;
+    }
+    .dato {
+        background-color: lemonchiffon;
+        grid-area: dato;
+    }
+    .cierre {
+        float: right;
+    }
+    .aceptar {
+        text-align: center;
+        grid-area: aceptar;
+    }
+</style>
