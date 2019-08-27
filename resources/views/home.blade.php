@@ -14,9 +14,9 @@
                         </div>
                     @endif
 
-                    <a href="articulos-vista">Articulos</a>
-                    <a href="clientes-vista">Clientes</a>
-                    <a href="insumos-vista">Insumos</a>
+                    <a href="articulos">Articulos</a>
+                    <a href="clientes">Clientes</a>
+                    <a href="insumos">Insumos</a>
                 </div>
             </div>
         </div>

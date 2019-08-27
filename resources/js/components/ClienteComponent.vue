@@ -56,7 +56,7 @@
         },
         methods: {
             mostrar:function() {
-                axios.get('clientes').then(response=>{
+                axios.get('clientes-datos').then(response=>{
                     this.clientes = response.data;
                     this.tabla();
                 })

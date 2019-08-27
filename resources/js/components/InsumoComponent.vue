@@ -56,7 +56,7 @@
         },
         methods: {
             mostrar:function() {
-                axios.get('insumos').then(response=>{
+                axios.get('insumos-datos').then(response=>{
                     this.insumos = response.data;
                     this.tabla();
                 })

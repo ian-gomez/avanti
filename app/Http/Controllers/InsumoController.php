@@ -12,16 +12,17 @@ class InsumoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function vista()
-    {
-        return view('insumos');
-    }
-
-    public function index()
+    public function datos()
     {
         $insumo = Insumo::get();
         return $insumo;
     }
+
+    public function index()
+    {
+        return view('insumos');
+    }
+
 
     /**
      * Show the form for creating a new resource.

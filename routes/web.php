@@ -16,13 +16,13 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function() {
-    Route::resource('articulos-insumos', 'Articulo_InsumoController');
+    Route::resource('articulos.insumos', 'Articulo_InsumoController');
     Route::resource('articulos', 'ArticuloController');
-    Route::get('articulos-vista', 'ArticuloController@vista');
+    Route::get('articulos-datos', 'ArticuloController@datos');
     Route::resource('clientes', 'ClienteController');
-    Route::get('clientes-vista', 'ClienteController@vista');
+    Route::get('clientes-datos', 'ClienteController@datos');
     Route::resource('insumos', 'InsumoController');
-    Route::get('insumos-vista', 'InsumoController@vista');
+    Route::get('insumos-datos', 'InsumoController@datos');
     Route::resource('proveedores', 'ProveedorController');
     Route::resource('remitos-cabecera', 'Remito_CabeceraController');
     Route::resource('remitos-detalle', 'Remito_DetalleController');

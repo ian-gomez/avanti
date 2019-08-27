@@ -14,18 +14,18 @@ class ArticuloController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function vista()
-    {
-        return view('articulos');
-    }
-
-    public function index()
+    public function datos()
     {
         $articulo = DB::table('articulos')
                     ->join('tipos', 'articulos.tipo_id', '=', 'tipos.id')
                     ->select('articulos.*', 'tipos.nombre as tipo_nombre')
                     ->get();
         return $articulo;
+    }
+
+    public function index()
+    {
+        return view('articulos');
     }
 
     /**
