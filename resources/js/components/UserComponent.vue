@@ -66,6 +66,7 @@
             altauser:function(dato){
                 alert("hhhh");
                this.users.push(dato);
+               this.operacion=0;
             },
             mostraruser:function(){
                 axios.get('users').then(response =>{
@@ -75,11 +76,12 @@
                 });
             },
             editaruser:function(dato){
-                console.log(dato);    
+                console.log(dato); 
+                this.operacion=0;   
             },
             bajauser:function(){
-                console.log(dato);
                 this.users.splice(this.pos,1);
+                this.operacion=0;
             },
             tabla:function(){
                 $(document).ready( function () {
