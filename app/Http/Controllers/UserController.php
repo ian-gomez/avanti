@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\User;
 
@@ -47,7 +48,7 @@ class UserController extends Controller
         $user = new User();
         $user->name = $request->name;
         $user->email =$request->email;
-        $user->password =$request->password;
+        $user->password =Hash::make($request->password);
         $user->rol=2;
         $user->save();
         return $user;

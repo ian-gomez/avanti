@@ -13,7 +13,7 @@
             <input class="form-control" type="text" v-model="registrousers.email">
             <br>
             <label>Password</label>
-            <input class="form-control" type="text" v-model="registrousers.password">
+            <input class="form-control" type="password" v-model="registrousers.password">
             <br>
         </div>
         <!-- Editar -->
@@ -25,7 +25,7 @@
             <input class="form-control" type="text" v-model="registrousers.email">
             <br>
             <label>Password</label>
-            <input class="form-control" type="text" v-model="registrousers.password">
+            <input class="form-control" type="password" v-model="registrousers.password">
             <br>
         </div>
          <!-- Baja -->

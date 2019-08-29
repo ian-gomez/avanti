@@ -17,6 +17,11 @@ class Remito_CabeceraController extends Controller
         //
     }
 
+    public function cabeceraView()
+    {
+        return view ('remito-cabecera');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

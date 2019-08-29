@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Proveedor;
 
 class ProveedorController extends Controller
@@ -14,7 +15,13 @@ class ProveedorController extends Controller
      */
     public function index()
     {
-        //
+        $proveedor = Proveedor::get();
+        return $proveedor;
+    }
+
+    public function proveedorView()
+    {  
+        return view('proveedor');        
     }
 
     /**
@@ -35,7 +42,12 @@ class ProveedorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $proveedor = new Proveedor();
+        $proveedor->nombre = $request->nombre;
+        $proveedor->telefono =$request->telefono;
+        $proveedor->direccion =$request->direccion;
+        $proveedor->save();
+        return $proveedor;
     }
 
     /**
@@ -69,7 +81,12 @@ class ProveedorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $proveedor= Proveedor::find($id);
+        $proveedor->nombre =$request->nombre;
+        $proveedor->telefono =$request->telefono;
+        $proveedor->direccion =$request->direccion;
+        $proveedor->save();
+        return $proveedor;
     }
 
     /**
@@ -80,6 +97,7 @@ class ProveedorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $proveedor = Proveedor::find($id);
+        $proveedor->delete();
     }
 }

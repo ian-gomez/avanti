@@ -26,6 +26,8 @@ Route::middleware(['auth'])->group(function() {
     Route::resource('stock-detalle', 'Stock_DetalleController');
     Route::resource('users', 'UserController');
     Route::get('user', 'UserController@userView');
+    Route::get('proveedor', 'ProveedorController@proveedorView');
+    Route::get('remito-cabecera', 'Remito_CabeceraController@cabeceraView');
     Route::resource('ventas-cabecera', 'Venta_CabeceraController');
     Route::resource('ventas-detalle', 'Venta_DetalleController');
 });
