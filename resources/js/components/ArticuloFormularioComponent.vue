@@ -2,7 +2,7 @@
     <div class="contenedor">
         <div class="titulo">
             <label>{{titulo}}</label>
-            <button class="btn btn-danger cierre" @click="$emit('cerrar-ventana')">X</button>
+            <button class="btn btn-danger cierre" @click="$emit('cerrar-formulario')">X</button>
         </div>
         <!-- En caso de alta -->
         <div class="datos" v-if="formulario==1">

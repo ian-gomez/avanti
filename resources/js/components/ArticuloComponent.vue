@@ -22,7 +22,7 @@
                     <td v-if="articulo.tipo_id==1">
                         <button class="btn btn-warning" @click="formulario=2;asignar(articulo)">Editar</button>
                         <button class="btn btn-danger" @click="formulario=3;asignar(articulo);pos=index">Eliminar</button>
-                        <button class="btn btn-info" @click="asignar(articulo)">Insumos</button>
+                        <button class="btn btn-info" @click="insumos=true;asignarB(articulo)">Insumos</button>
                     </td>
                     <td v-else>
                         <button class="btn btn-warning" @click="formulario=2;asignar(articulo)">Editar</button>
@@ -35,27 +35,32 @@
             v-if="formulario==1"
             :formulario="formulario"
             :articuloRegistro="[]"
-            @cerrar-ventana="formulario=0"
+            @cerrar-formulario="formulario=0"
             @alta="alta($event);formulario=0"></articulo-formulario-component>
         <articulo-formulario-component
             v-if="formulario>1"
             :formulario="formulario"
             :articuloRegistro="articuloRegistro"
-            @cerrar-ventana="formulario=0"
+            @cerrar-formulario="formulario=0"
             @modificar="formulario=0"
             @eliminar="eliminar();formulario=0"></articulo-formulario-component>
+        <articulo-insumo-component
+         v-if="insumos"
+         :articuloRegistroB="articuloRegistroB"
+         @cerrar-insumos="insumos=false"></articulo-insumo-component>
     </div>
 </template>
 
 <script>
-    import datatables from "datatables"
     export default {
         data: function() {
             return{
                 formulario:0,
                 pos:0,
                 articulos:[],
-                articuloRegistro:''
+                insumos:false,
+                articuloRegistro:'',
+                articuloRegistroB:''
             }
         },
         mounted() {
@@ -70,6 +75,9 @@
             },
             asignar:function(datos) {
                 this.articuloRegistro = datos;
+            },
+            asignarB:function(datos) {
+                this.articuloRegistroB = datos;
             },
             alta:function(datos) {
                 this.articulos.push(datos);

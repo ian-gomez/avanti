@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Articulo_Insumo;
 
 class Articulo_InsumoController extends Controller
@@ -12,9 +13,14 @@ class Articulo_InsumoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $articulo_insumo = DB::table('articulos_insumos')
+                    ->join('insumos', 'articulos_insumos.insumo_id', '=', 'insumos.id')
+                    ->where('articulos_insumos.articulo_id', '=', $id)
+                    ->select('articulos_insumos.*', 'insumos.nombre')
+                    ->get();
+        return $articulo_insumo;
     }
 
     /**

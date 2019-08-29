@@ -17,7 +17,6 @@ class CreateVentasCabeceraTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('cliente_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
-            $table->float('importe', 10, 2);
             $table->timestamps();
 
             $table->foreign('cliente_id')->references('id')->on('clientes');
