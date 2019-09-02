@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Stock_Detalle;
 
 class Stock_DetalleController extends Controller
@@ -14,7 +15,12 @@ class Stock_DetalleController extends Controller
      */
     public function index()
     {
-        //
+        $Stock_Detalle = DB::table('Stock_Detalle')
+                    ->join('articulos','articulos.articulos_id','=','articulos.id')
+                    ->where('Stock_Detalle.id','=', $id)
+                    ->select('Stock_Detalle.*','articulos.nombre')
+                    ->get();
+        return $Stock_Detalle; 
     }
 
     /**

@@ -42,14 +42,16 @@ class Stock_CabeceraController extends Controller
     public function store(Request $request)
     {
         $cabecera = new Stock_Cabecera();
-        $cabecera->importe = $request->importe;
         //$cabecera->user_id = $request->user_id;
+        $cabecera->fecha = $request->fecha;
+        $cabecera->proveedor_id = $request->proveedor_id;
+        $cabecera->numero_remito = $request->numero_remito;
         $cabecera->user_id = auth()->user()['id'];
         //dd($user);0
         $cabecera->save();
         return $cabecera;
     }
-
+    
     /**
      * Display the specified resource.
      *
@@ -82,8 +84,7 @@ class Stock_CabeceraController extends Controller
     public function update(Request $request, $id)
     {
         $cabecera = Stock_Cabecera::find($id);
-        $cabecera->importe = $request->importe;
-        //$cabecera->user_id = $request->user_id;
+        $cabecera->fecha = $request->fecha;
         $cabecera->user_id = auth()->user()['id'];
         $cabecera->save();
         return $cabecera;

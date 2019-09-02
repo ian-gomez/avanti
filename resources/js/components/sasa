@@ -1,37 +1,30 @@
 <template>
     <div class="contenedor">
-        <div class="dato" v-if="operacion==1">
-            <label>Fecha:</label>
-            <input class="form-control" type="date" v-model="cabecerasR.fecha" placeholder="..." autofocus>
+        <div class="dato" v-if="operaciondetalle==1">
+            <label>Cantidad:</label>
+            <input class="form-control" type="date" v-model="detalleR.cantidad" placeholder="Ingrese la cantidad..." autofocus>
             <br>
-            <label>Proveedor:</label>
-            <input class="form-control" v-model="cabecerasR.proveedor_id" placeholder="..." autofocus>
+            <label>Precio:</label>
+            <input class="form-control" v-model="detalleR.precio" placeholder="Ingrese el precio..." autofocus>
             <br>
-            <label>Numero Remito:</label>
-            <input class="form-control" v-model="cabecerasR.numero_remito" placeholder="..." autofocus>
-            <br>
-            <button class="boton" @click="operacioncabecera()">Aceptar</button>
+            <button class="boton" @click="operaciondetalle()">Aceptar</button>
             <button @click="cerrar()" class="boton">X</button>
         </div>
 
-        <div class="dato" v-else-if="operacion==2">
-            <label>Fecha:</label>
-            <input class="form-control" type="date" v-model="cabecerasR.fecha" placeholder="..." autofocus>
+        <div class="dato" v-else-if="operaciondetalle==2">
+            <label>Cantidad:</label>
+            <input class="form-control" type="date" v-model="detalleR.cantidad" placeholder="Ingrese la cantidad..." autofocus>
             <br>
-            <label>Proveedor:</label>
-            <input class="form-control" v-model="cabecerasR.proveedor_id" placeholder="..." autofocus>
+            <label>Precio:</label>
+            <input class="form-control" v-model="detalleR.precio" placeholder="Ingrese el precio..." autofocus>
             <br>
-            <label>Numero Remito:</label>
-            <input class="form-control" v-model="cabecerasR.numero_remito" placeholder="..." autofocus>
-            <br>
-            <button class="boton" @click="operacioncabecera()">Aceptar</button>
+            <button class="boton" @click="operaciondetalle()">Aceptar</button>
             <button @click="cerrar()" class="boton">X</button>
         </div>
 
-        <div class="dato" v-else-if="operacion==3">
+        <div class="dato" v-else-if="operaciondetalle==3">
             <div class="datos">
-                ¿Desea eliminar el id: {{cabecerasR.id}}?
-                <button class="boton" @click="operacioncabecera()">Aceptar</button>
+                <button class="boton" @click="operaciondetalle()">Aceptar</button>
                 <button @click="cerrar()" class="boton">X</button>
             </div>
         </div>
@@ -41,7 +34,7 @@
 
 <script>
     export default {
-    	props: ['operacion',"cabecerasR"],
+    	props: ['operaciondetalle',"detalleR"],
         data:function(){
             return{
 
@@ -59,28 +52,28 @@
             },    
             alta:function(){
                 let formdata = new FormData();
-                formdata.append("fecha", this.cabecerasR.fecha);
-                formdata.append("proveedor_id", this.cabecerasR.proveedor_id);
-                formdata.append("numero_remito", this.cabecerasR.numero_remito);
+                formdata.append("", this.detalleR.);
+                formdata.append("", this.detalleR.);
+                formdata.append("", this.detalleR.);
                 axios.post('stock-cabecera',formdata).then(response =>{
                 this.$emit('alta',response.data);
                 })
             },
             baja:function(){
-                axios.delete('stock-cabecera/'+this.cabecerasR.id).then(response => {
+                axios.delete('stock-cabecera/'+this.detalleR.id).then(response => {
                     this.$emit('baja');
                 })
             },
             editar:function(){           
                 let formdata = new FormData();
-                formdata.append("fecha",this.cabecerasR.fecha);
+                formdata.append("fecha",this.detalleR.fecha);
                 formdata.append("_method","PATCH");
-                axios.post('stock-cabecera/'+this.cabecerasR.id,formdata).then(response => {
+                axios.post('stock-cabecera/'+this.detalleR.id,formdata).then(response => {
                 this.$emit('editar',response.data);
                 })
             },
 
-            operacioncabecera:function(){
+            operaciondetalle:function(){
                 if (this.operacion == 1){
                     this.alta();
                 };

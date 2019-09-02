@@ -16,10 +16,13 @@ class CreateStockCabeceraTable extends Migration
         Schema::create('stock_cabecera', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
-            $table->float('importe');
+            $table->bigInteger('proveedor_id')->unsigned();
+            $table->date('fecha');
+            $table->bigInteger('numero_remito');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('proveedor_id')->references('id')->on('proveedores');
         });
     }
 
