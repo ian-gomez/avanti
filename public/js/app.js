@@ -2285,14 +2285,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['articuloInsumoRegistro', 'articulo_id', 'formulario'],
   data: function data() {
     return {
-      insumoNombre: '',
       titulo: '',
       opcionInsumo: 1,
       insumos: []
@@ -2354,6 +2350,8 @@ __webpack_require__.r(__webpack_exports__);
       formdata.append("insumo_id", this.opcionInsumo);
       formdata.append("cantidad", this.articuloInsumoRegistro.cantidad);
       axios.post('articulos-insumos', formdata).then(function (response) {
+        console.log(response.data);
+
         _this2.$emit('alta', response.data);
       });
     },
@@ -55158,10 +55156,6 @@ var render = function() {
         },
         [_vm._v("Aceptar")]
       )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "aceptar-formulario" }, [
-      _c("pre", [_vm._v(_vm._s(_vm.$data))])
     ])
   ])
 }

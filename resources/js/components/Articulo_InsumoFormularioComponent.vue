@@ -28,9 +28,6 @@
         <div class="aceptar-formulario">
             <button class="bnt btn-success btn-block" @click="operacion()">Aceptar</button>
         </div>
-        <div class="aceptar-formulario">
-            <pre>{{$data}}</pre>
-        </div>
     </div>
 </template>
 
@@ -39,7 +36,6 @@
         props: ['articuloInsumoRegistro', 'articulo_id', 'formulario'],
         data: function() {
             return{
-                insumoNombre: '',
                 titulo:'',
                 opcionInsumo:1,
                 insumos:[]
@@ -80,6 +76,7 @@
                 formdata.append("insumo_id", this.opcionInsumo);
                 formdata.append("cantidad", this.articuloInsumoRegistro.cantidad);
                 axios.post('articulos-insumos', formdata).then(response => {
+                    console.log(response.data);
                     this.$emit('alta', response.data);
                 })
             },

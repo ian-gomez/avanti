@@ -52,6 +52,11 @@ class ArticuloController extends Controller
         $articulo->precio = $request->precio;
         $articulo->costo = $request->costo;
         $articulo->save();
+
+        $tipo_nombre = Articulo::all();
+        $tipo_nombre = $tipo_nombre->where('nombre', $request->nombre);
+        $tipo_nombre = $tipo_nombre->first();
+        $articulo->tipo_nombre = $tipo_nombre->tipo->nombre;
         return $articulo;
     }
 

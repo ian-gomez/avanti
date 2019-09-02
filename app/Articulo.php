@@ -16,4 +16,9 @@ class Articulo extends Model
         {
                 return $this->belongsToMany('App\Insumo', 'articulos_insumos');
         }
+        
+        public function tipo()
+        {
+                return $this->hasOne('App\Tipo', 'id', 'tipo_id');
+        }
 }
