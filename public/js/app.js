@@ -2114,6 +2114,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var datatables__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! datatables */ "./node_modules/datatables/media/js/jquery.dataTables.js");
+/* harmony import */ var datatables__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(datatables__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2130,9 +2132,108 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      operacion: 0,
+      remitos: [],
+      busqueda: '',
+      registroremitos: [],
+      pos: 0
+    };
+  },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    console.log('Component mounteda.');
+    this.mostrarremito();
+  },
+  computed: {
+    buscaremitos: function buscaremitos() {
+      var _this = this;
+
+      return this.remitos.filter(function (remito) {
+        return remito.name.includes(_this.busqueda);
+      });
+    }
+  },
+  methods: {
+    altaremito: function altaremito(dato) {
+      alert("hhhh");
+      this.remitos.push(dato);
+      this.operacion = 0;
+    },
+    mostrarremito: function mostrarremito() {
+      var _this2 = this;
+
+      axios.get('remitos-cabecera').then(function (response) {
+        console.log(response.data);
+        _this2.remitos = response.data;
+
+        _this2.tabla();
+      });
+    },
+    editarremito: function editarremito(dato) {
+      console.log(dato);
+      this.operacion = 0;
+    },
+    bajaremito: function bajaremito() {
+      this.remitos.splice(this.pos, 1);
+      this.operacion = 0;
+    },
+    tabla: function tabla() {
+      $(document).ready(function () {
+        $('#tabla').DataTable({
+          "scrollY": "500px",
+          "scrollCollapse": true,
+          "paging": false,
+          language: {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+              "sFirst": "Primero",
+              "sLast": "Último",
+              "sNext": "Siguiente",
+              "sPrevious": "Anterior"
+            },
+            "oAria": {
+              "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+          }
+        });
+      });
+    }
   }
 });
 
@@ -2163,9 +2264,104 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['operacion', "registroremitos"],
+  data: function data() {
+    return {
+      titulo: ''
+    };
+  },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    console.log('Component mounted8888888888');
+
+    if (this.operacion == 1) {
+      this.titulo = "Alta";
+    }
+
+    ;
+
+    if (this.operacion == 2) {
+      this.titulo = "Editar";
+    }
+
+    ;
+
+    if (this.operacion == 3) {
+      this.titulo = "Baja";
+    }
+
+    ;
+  },
+  methods: {
+    cerrar: function cerrar() {
+      this.$emit('cerrar-ventana');
+    },
+    operacionremito: function operacionremito() {
+      if (this.operacion == 1) {
+        this.altaremito();
+      }
+
+      ;
+
+      if (this.operacion == 2) {
+        this.editarremito();
+      }
+
+      ;
+
+      if (this.operacion == 3) {
+        this.bajaremito();
+      }
+
+      ;
+    },
+    altaremito: function altaremito() {
+      var _this = this;
+
+      var formdata = new FormData();
+      formdata.append("importe", this.registroremitos.importe);
+      formdata.append("user_id", this.registroremitos.user_id);
+      formdata.append("proveedor_id", this.registroremitos.proveedor_id);
+      axios.post('remitos-cabecera', formdata).then(function (response) {
+        _this.$emit('remitoalta', response.data);
+      });
+    },
+    editarremito: function editarremito() {
+      var _this2 = this;
+
+      var formdata = new FormData();
+      formdata.append("importe", this.registroremitos.importe);
+      formdata.append("_method", "PATCH");
+      axios.post('remitos/' + this.registroremitos.id, formdata).then(function (response) {
+        //console.log(response.data);
+        _this2.$emit('remitoeditar', response.data);
+      });
+    },
+    bajaremito: function bajaremito() {
+      var _this3 = this;
+
+      axios["delete"]('remitos/' + this.registroremitos.id).then(function (response) {
+        _this3.$emit('remitobaja');
+      });
+    }
   }
 });
 
@@ -54083,28 +54279,139 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "con-tenedor" }, [
+    _c("div", [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.busqueda,
+            expression: "busqueda"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { type: "text", name: "busqueda", placeholder: "Buscar..." },
+        domProps: { value: _vm.busqueda },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.busqueda = $event.target.value
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-md-8" }, [
+      _c(
+        "div",
+        { staticClass: "card" },
+        [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-info btn-block",
+              on: {
+                click: function($event) {
+                  _vm.operacion = 1
+                  _vm.registroremitos = []
+                }
+              }
+            },
+            [_vm._v("Ingresar")]
+          ),
+          _vm._v(" "),
+          _c(
+            "table",
+            { staticClass: "display; color", attrs: { id: "tabla" } },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.buscaremitos, function(remito, index) {
+                  return _c("tr", [
+                    _c("td", [_vm._v(_vm._s(remito.id))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(remito.importe))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-warning btn-large",
+                          on: {
+                            click: function($event) {
+                              _vm.operacion = 2
+                              _vm.registroremitos = remito
+                            }
+                          }
+                        },
+                        [_vm._v("Editar")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger btn-large",
+                          on: {
+                            click: function($event) {
+                              _vm.pos = index
+                              _vm.operacion = 3
+                              _vm.registroremitos = remito
+                            }
+                          }
+                        },
+                        [_vm._v("Borrar")]
+                      )
+                    ])
+                  ])
+                }),
+                0
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _vm.operacion > 0
+            ? _c("remito-cabecera-formulario-component", {
+                attrs: {
+                  operacion: _vm.operacion,
+                  registroremitos: _vm.registroremitos
+                },
+                on: {
+                  remitoalta: function($event) {
+                    return _vm.altaremito($event)
+                  },
+                  remitobaja: function($event) {
+                    return _vm.bajaremito()
+                  },
+                  remitoeditar: function($event) {
+                    return _vm.editarremito($event)
+                  },
+                  "cerrar-ventana": function($event) {
+                    _vm.operacion = 0
+                  }
+                }
+              })
+            : _vm._e()
+        ],
+        1
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
-          ])
-        ])
+    return _c("thead", [
+      _c("tr", [
+        _c("td", [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Importe")])
       ])
     ])
   }
@@ -54130,32 +54437,155 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
+  return _c("div", { staticClass: "contenedor" }, [
+    _c("div", { staticClass: "titulo" }, [
+      _c("label", [_vm._v(_vm._s(_vm.titulo))]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger cierre",
+          on: {
+            click: function($event) {
+              return _vm.cerrar()
+            }
+          }
+        },
+        [_vm._v("X")]
+      )
+    ]),
+    _vm._v(" "),
+    _vm.operacion == 1
+      ? _c("div", { staticClass: "dato" }, [
+          _c("label", [_vm._v("Importe:")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.registroremitos.importe,
+                expression: "registroremitos.importe"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.registroremitos.importe },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.registroremitos, "importe", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("label", [_vm._v("User:")]),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.opcionuser,
+                  expression: "opcionuser"
+                }
+              ],
+              staticClass: "form-control",
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.opcionuser = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                }
+              }
+            },
+            _vm._l(_vm.users, function(user) {
+              return _c(
+                "option",
+                {
+                  domProps: {
+                    value: user.id,
+                    selected: user.id == _vm.opcionuser
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                " + _vm._s(user.name) + "\n            "
+                  )
+                ]
               )
-            ])
-          ])
+            }),
+            0
+          )
         ])
-      ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.operacion == 2
+      ? _c("div", { staticClass: "dato" }, [
+          _c("label", [_vm._v("Importe:")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.registroremitos.importe,
+                expression: "registroremitos.importe"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.registroremitos.importe },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.registroremitos, "importe", $event.target.value)
+              }
+            }
+          })
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.operacion == 3
+      ? _c("div", { staticClass: "dato" }, [
+          _vm._v(
+            "\n        ¿Está seguro que desea eliminar " +
+              _vm._s(_vm.registroremitos.importe) +
+              "?\n    "
+          )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c("div", { staticClass: "aceptar" }, [
+      _c(
+        "button",
+        {
+          on: {
+            click: function($event) {
+              return _vm.operacionremito()
+            }
+          }
+        },
+        [_vm._v("Aceptar")]
+      )
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
