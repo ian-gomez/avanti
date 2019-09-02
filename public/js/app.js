@@ -2173,6 +2173,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['articuloRegistroB'],
   data: function data() {
@@ -2284,10 +2285,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['articuloInsumoRegistro', 'formulario'],
+  props: ['articuloInsumoRegistro', 'articulo_id', 'formulario'],
   data: function data() {
     return {
+      insumoNombre: '',
       titulo: '',
       opcionInsumo: 1,
       insumos: []
@@ -2345,7 +2350,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       var formdata = new FormData();
-      formdata.append("articulo_id", this.articuloInsumoRegistro.articulo_id);
+      formdata.append("articulo_id", this.articulo_id);
       formdata.append("insumo_id", this.opcionInsumo);
       formdata.append("cantidad", this.articuloInsumoRegistro.cantidad);
       axios.post('articulos-insumos', formdata).then(function (response) {
@@ -2357,15 +2362,15 @@ __webpack_require__.r(__webpack_exports__);
 
       var formdata = new FormData();
       formdata.append("articulo_id", this.articuloInsumoRegistro.articulo_id);
-      formdata.append("insumo_id", this.articuloInsumoRegistro.tipo_id);
+      formdata.append("insumo_id", this.articuloInsumoRegistro.insumo_id);
       formdata.append("cantidad", this.articuloInsumoRegistro.cantidad);
       formdata.append("_method", "PATCH");
-      axios.post('articulos-insumos' + this.articuloInsumoRegistro.id, formdata).then(function (response) {
+      axios.post('articulos-insumos/' + this.articuloInsumoRegistro.id, formdata).then(function (response) {
         _this3.$emit('modificar');
       });
     },
     eliminar: function eliminar() {
-      axios.post('articulos-insumos' + this.articuloInsumoRegistro.id, {
+      axios.post('articulos-insumos/' + this.articuloInsumoRegistro.id, {
         _method: 'delete'
       });
       this.$emit('eliminar');
@@ -54926,7 +54931,11 @@ var render = function() {
         _vm._v(" "),
         _vm.formulario == 1
           ? _c("articulo-insumo-formulario-component", {
-              attrs: { formulario: _vm.formulario, articuloInsumoRegistro: [] },
+              attrs: {
+                formulario: _vm.formulario,
+                articuloInsumoRegistro: [],
+                articulo_id: _vm.articuloRegistroB.id
+              },
               on: {
                 "cerrar-formulario": function($event) {
                   _vm.formulario = 0
@@ -55149,6 +55158,10 @@ var render = function() {
         },
         [_vm._v("Aceptar")]
       )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "aceptar-formulario" }, [
+      _c("pre", [_vm._v(_vm._s(_vm.$data))])
     ])
   ])
 }

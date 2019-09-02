@@ -13,11 +13,11 @@ class Articulo_InsumoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index($articulo_id)
     {
         $articulo_insumo = DB::table('articulos_insumos')
                     ->join('insumos', 'articulos_insumos.insumo_id', '=', 'insumos.id')
-                    ->where('articulos_insumos.articulo_id', '=', $id)
+                    ->where('articulos_insumos.articulo_id', '=', $articulo_id)
                     ->select('articulos_insumos.*', 'insumos.nombre')
                     ->get();
         return $articulo_insumo;
@@ -41,7 +41,12 @@ class Articulo_InsumoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $articulo_insumo = new Articulo_Insumo();
+        $articulo_insumo->articulo_id = $request->articulo_id;
+        $articulo_insumo->insumo_id = $request->insumo_id;
+        $articulo_insumo->cantidad = $request->cantidad;
+        $articulo_insumo->save();
+        return $articulo_insumo;
     }
 
     /**
@@ -75,7 +80,12 @@ class Articulo_InsumoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $articulo_insumo = Articulo_Insumo::find($id);
+        $articulo_insumo->articulo_id = $request->articulo_id;
+        $articulo_insumo->insumo_id = $request->insumo_id;
+        $articulo_insumo->cantidad = $request->cantidad;
+        $articulo_insumo->save();
+        return $articulo_insumo;
     }
 
     /**
@@ -86,6 +96,8 @@ class Articulo_InsumoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $articulo_insumo = Articulo_Insumo::find($id);
+        $articulo_insumo->delete();
+        return back();
     }
 }

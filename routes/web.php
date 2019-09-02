@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function() {
-    Route::get('articulos-insumos/{id}', ['as' => 'articulos-insumos.index', 'uses' => 'Articulo_InsumoController@index']);
+    Route::get('articulos-insumos/{articulo_id}', ['as' => 'articulos-insumos.index', 'uses' => 'Articulo_InsumoController@index']);
     Route::resource('articulos-insumos', 'Articulo_InsumoController', ['except' => ['index']]);
     Route::resource('articulos', 'ArticuloController');
     Route::get('articulos-datos', 'ArticuloController@datos');

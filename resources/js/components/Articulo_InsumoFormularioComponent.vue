@@ -28,14 +28,18 @@
         <div class="aceptar-formulario">
             <button class="bnt btn-success btn-block" @click="operacion()">Aceptar</button>
         </div>
+        <div class="aceptar-formulario">
+            <pre>{{$data}}</pre>
+        </div>
     </div>
 </template>
 
 <script>
     export default {
-        props: ['articuloInsumoRegistro', 'formulario'],
+        props: ['articuloInsumoRegistro', 'articulo_id', 'formulario'],
         data: function() {
             return{
+                insumoNombre: '',
                 titulo:'',
                 opcionInsumo:1,
                 insumos:[]
@@ -72,7 +76,7 @@
             },
             alta:function(){
                 let formdata = new FormData();
-                formdata.append("articulo_id", this.articuloInsumoRegistro.articulo_id);
+                formdata.append("articulo_id", this.articulo_id);
                 formdata.append("insumo_id", this.opcionInsumo);
                 formdata.append("cantidad", this.articuloInsumoRegistro.cantidad);
                 axios.post('articulos-insumos', formdata).then(response => {
@@ -82,15 +86,15 @@
             modificar:function(){
                 let formdata = new FormData();
                 formdata.append("articulo_id", this.articuloInsumoRegistro.articulo_id);
-                formdata.append("insumo_id", this.articuloInsumoRegistro.tipo_id);
+                formdata.append("insumo_id", this.articuloInsumoRegistro.insumo_id);
                 formdata.append("cantidad", this.articuloInsumoRegistro.cantidad);
                 formdata.append("_method", "PATCH");
-                axios.post('articulos-insumos'+this.articuloInsumoRegistro.id, formdata).then(response => {
+                axios.post('articulos-insumos/'+this.articuloInsumoRegistro.id, formdata).then(response => {
                     this.$emit('modificar');
                 })
             },
             eliminar:function() {
-                axios.post('articulos-insumos'+this.articuloInsumoRegistro.id, {_method: 'delete'});
+                axios.post('articulos-insumos/'+this.articuloInsumoRegistro.id, {_method: 'delete'});
                 this.$emit('eliminar');
             }
         }

@@ -31,6 +31,7 @@
                 v-if="formulario==1"
                 :formulario="formulario"
                 :articuloInsumoRegistro="[]"
+                :articulo_id="articuloRegistroB.id"
                 @cerrar-formulario="formulario=0"
                 @alta="alta($event);formulario=0"></articulo-insumo-formulario-component>
             <articulo-insumo-formulario-component
