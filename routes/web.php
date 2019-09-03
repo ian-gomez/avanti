@@ -31,6 +31,7 @@ Route::middleware(['auth'])->group(function() {
     Route::resource('stock-detalle', 'Stock_DetalleController');
     Route::resource('tipos', 'TipoController');
     Route::resource('users', 'UserController');
+    Route::get('ventas-cabecera-datos', 'Venta_CabeceraController@datos');
     Route::resource('ventas-cabecera', 'Venta_CabeceraController');
     Route::resource('ventas-detalle', 'Venta_DetalleController');
 });

@@ -23,7 +23,6 @@ class InsumoController extends Controller
         return view('insumos');
     }
 
-
     /**
      * Show the form for creating a new resource.
      *

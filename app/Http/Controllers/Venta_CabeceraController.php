@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Venta_Cabecera;
 
 class Venta_CabeceraController extends Controller
@@ -12,9 +13,19 @@ class Venta_CabeceraController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function datos()
+    {
+        $venta_cabecera = DB::table('ventas_cabecera')
+                          ->join('clientes', 'ventas_cabecera.cliente_id', '=', 'clientes.id')
+                          ->join('users', 'ventas_cabecera.user_id', '=', 'users.id')
+                          ->select('ventas_cabecera.*', 'clientes.nombre as cliente_nombre', 'users.name as user_nombre')
+                          ->get();
+        return $venta_cabecera;
+    }
+    
     public function index()
     {
-        //
+        return view('ventas-cabecera');
     }
 
     /**

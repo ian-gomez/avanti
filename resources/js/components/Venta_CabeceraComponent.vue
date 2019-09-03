@@ -1,0 +1,107 @@
+<template>
+    <div class="container">
+        <div>
+            <button class="btn btn-primary btn-block" @click="formulario=1">Ingresar</button>
+        </div>
+        <table class="display" id="tabla">
+            <thead>
+                <tr>
+                    <td>Empleado</td>
+                    <td>Cliente</td>
+                    <td>Fecha de Venta</td>
+                    <td>Acciones</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(ventaCabecera, index) in ventasCabecera">
+                    <td>{{ventaCabecera.user_nombre}}</td>
+                    <td>{{ventaCabecera.cliente_nombre}}</td>
+                    <td>{{ventaCabecera.created_at}}</td>
+                    <td>
+                        <button class="btn btn-warning" @click="formulario=2;asignar(ventaCabecera)">Editar</button>
+                        <button class="btn btn-danger" @click="formulario=3;asignar(ventaCabecera);pos=index">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <venta-cabecera-formulario-component
+            v-if="formulario==1"
+            :formulario="formulario"
+            :ventaCabeceraRegistro="[]"
+            @cerrar-formulario="formulario=0"
+            @alta="alta($event);formulario=0"></venta-cabecera-formulario-component>
+        <venta-cabecera-formulario-component
+            v-if="formulario>1"
+            :formulario="formulario"
+            :ventaCabeceraRegistro="ventaCabeceraRegistro"
+            @cerrar-formulario="formulario=0"
+            @modificar="formulario=0"
+            @eliminar="eliminar();formulario=0"></venta-cabecera-formulario-component>
+    </div>
+</template>
+
+<script>
+    import datatables from "datatables"
+    export default {
+        data: function() {
+            return{
+                formulario:0,
+                pos:0,
+                ventasCabecera:[],
+                ventaCabeceraRegistro:''
+            }
+        },
+        mounted() {
+            this.mostrar()
+        },
+        methods: {
+            mostrar:function() {
+                axios.get('ventas-cabecera-datos').then(response=>{
+                    this.ventasCabecera = response.data;
+                    this.tabla();
+                })
+            },
+            asignar:function(datos) {
+                this.ventaCabeceraRegistro = datos;
+            },
+            alta:function(datos) {
+                this.ventasCabecera.push(datos);
+            },
+            eliminar:function() {
+                this.ventasCabecera.splice(this.pos, 1)
+            },
+            tabla:function() {
+                $(document).ready(function() {
+                    $('#tabla').DataTable({
+                        "lengthMenu": [[5, 25, 50], [5, 25, 50]],
+                        "pagingType": "full_numbers",
+                        language: {
+                            "sProcessing":     "Procesando...",
+                            "sLengthMenu":     "Mostrar _MENU_ registros",
+                            "sZeroRecords":    "No se encontraron resultados",
+                            "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                            "sInfoPostFix":    "",
+                            "sSearch":         "Buscar:",
+                            "sUrl":            "",
+                            "sInfoThousands":  ",",
+                            "sLoadingRecords": "Cargando...",
+                            "oPaginate": {
+                                "sFirst":    "Primero",
+                                "sLast":     "Último",
+                                "sNext":     "Siguiente",
+                                "sPrevious": "Anterior"
+                            },
+                            "oAria": {
+                                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                            }
+                        }
+                    });
+                });
+            }
+        }
+    }
+</script>

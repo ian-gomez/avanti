@@ -17,6 +17,7 @@
                     <a href="articulos">Articulos</a>
                     <a href="clientes">Clientes</a>
                     <a href="insumos">Insumos</a>
+                    <a href="ventas-cabecera">Ventas</a>
                 </div>
             </div>
         </div>
