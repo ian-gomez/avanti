@@ -2281,16 +2281,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['operacion', "registroremitos"],
   data: function data() {
     return {
-      titulo: ''
+      titulo: '',
+      opcionproveedor: 1,
+      proveedores: []
     };
   },
   mounted: function mounted() {
     console.log('Component mounted8888888888');
+    this.cargarProveedores();
 
     if (this.operacion == 1) {
       this.titulo = "Alta";
@@ -2311,6 +2313,13 @@ __webpack_require__.r(__webpack_exports__);
     ;
   },
   methods: {
+    cargarProveedores: function cargarProveedores() {
+      var _this = this;
+
+      axios.get('proveedores-datos').then(function (response) {
+        _this.proveedores = response.data;
+      });
+    },
     cerrar: function cerrar() {
       this.$emit('cerrar-ventana');
     },
@@ -2334,32 +2343,31 @@ __webpack_require__.r(__webpack_exports__);
       ;
     },
     altaremito: function altaremito() {
-      var _this = this;
+      var _this2 = this;
 
       var formdata = new FormData();
       formdata.append("importe", this.registroremitos.importe);
-      formdata.append("user_id", this.registroremitos.user_id);
       formdata.append("proveedor_id", this.registroremitos.proveedor_id);
       axios.post('remitos-cabecera', formdata).then(function (response) {
-        _this.$emit('remitoalta', response.data);
+        _this2.$emit('remitoalta', response.data);
       });
     },
     editarremito: function editarremito() {
-      var _this2 = this;
+      var _this3 = this;
 
       var formdata = new FormData();
       formdata.append("importe", this.registroremitos.importe);
       formdata.append("_method", "PATCH");
       axios.post('remitos/' + this.registroremitos.id, formdata).then(function (response) {
         //console.log(response.data);
-        _this2.$emit('remitoeditar', response.data);
+        _this3.$emit('remitoeditar', response.data);
       });
     },
     bajaremito: function bajaremito() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios["delete"]('remitos/' + this.registroremitos.id).then(function (response) {
-        _this3.$emit('remitobaja');
+        _this4.$emit('remitobaja');
       });
     }
   }
@@ -54481,7 +54489,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("label", [_vm._v("User:")]),
+          _c("label", [_vm._v("Proveedor:")]),
           _vm._v(" "),
           _c(
             "select",
@@ -54490,8 +54498,8 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.opcionuser,
-                  expression: "opcionuser"
+                  value: _vm.registroremitos.proveedor_id,
+                  expression: "registroremitos.proveedor_id"
                 }
               ],
               staticClass: "form-control",
@@ -54505,24 +54513,28 @@ var render = function() {
                       var val = "_value" in o ? o._value : o.value
                       return val
                     })
-                  _vm.opcionuser = $event.target.multiple
-                    ? $$selectedVal
-                    : $$selectedVal[0]
+                  _vm.$set(
+                    _vm.registroremitos,
+                    "proveedor_id",
+                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                  )
                 }
               }
             },
-            _vm._l(_vm.users, function(user) {
+            _vm._l(_vm.proveedores, function(proveedor) {
               return _c(
                 "option",
                 {
                   domProps: {
-                    value: user.id,
-                    selected: user.id == _vm.opcionuser
+                    value: proveedor.id,
+                    selected: proveedor.id == _vm.opcionproveedor
                   }
                 },
                 [
                   _vm._v(
-                    "\n                " + _vm._s(user.name) + "\n            "
+                    "\n                " +
+                      _vm._s(proveedor.nombre) +
+                      "\n            "
                   )
                 ]
               )

@@ -8,10 +8,10 @@
         <div class="dato" v-if="operacion==1">
             <label>Importe:</label>
             <input class="form-control" type="text" v-model="registroremitos.importe">
-            <label>User:</label>
-            <select class="form-control" v-model="opcionuser">
-                <option v-for="user in users" v-bind:value="user.id" v-bind:selected="(user.id == opcionuser)">
-                    {{user.name}}
+            <label>Proveedor:</label>
+            <select class="form-control" v-model="registroremitos.proveedor_id">
+                <option v-for="proveedor in proveedores" v-bind:value="proveedor.id" v-bind:selected="(proveedor.id == opcionproveedor)">
+                    {{proveedor.nombre}}
                 </option>
             </select>
         </select>
@@ -29,7 +29,6 @@
             <button @click="operacionremito()">Aceptar</button>
         </div>
     </div>
-
 </template>
 
 <script>
@@ -37,11 +36,14 @@
         props: ['operacion',"registroremitos"],
         data:function(){
             return{
-             titulo:''   
+             titulo:'',
+             opcionproveedor:1,
+             proveedores:[]   
             }
         },
         mounted() {
             console.log('Component mounted8888888888')
+            this.cargarProveedores();
               if (this.operacion==1) {
                     this.titulo="Alta";
                 };
@@ -53,6 +55,13 @@
                 };
         },
         methods:{
+
+            cargarProveedores:function() {
+                axios.get('proveedores-datos').then(response=>{
+                    this.proveedores = response.data
+                })
+            },
+
             cerrar:function(){
                 this.$emit('cerrar-ventana');
             },   
@@ -70,7 +79,6 @@
             altaremito:function(){
                 let formdata = new FormData();
                 formdata.append("importe", this.registroremitos.importe);
-                formdata.append("user_id", this.registroremitos.user_id);
                 formdata.append("proveedor_id", this.registroremitos.proveedor_id);
                 axios.post('remitos-cabecera',formdata).then(response => {
                     

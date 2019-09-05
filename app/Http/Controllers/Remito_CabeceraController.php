@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Remito_Cabecera;
+use App\proveedores;
 
 class Remito_CabeceraController extends Controller
 {
@@ -15,8 +16,13 @@ class Remito_CabeceraController extends Controller
      */
     public function index()
     {
-       $remito = Remito_Cabecera::get();
+        $remito = DB::table('remitos_cabecera')
+                    ->join('proveedores', 'remitos_cabecera.proveedor_id', '=', 'proveedores.id')
+                    ->select('remitos_cabecera.*', 'proveedores.nombre')
+                    ->get();
         return $remito;
+       //$remito = Remito_Cabecera::get();
+        //return $remito;
     }
 
     public function cabeceraView()
@@ -44,8 +50,8 @@ class Remito_CabeceraController extends Controller
     {
         $remito = new Remito_Cabecera();
         $remito->importe = $request->importe;
-        $cabecera->user_id = $request->user_id;
-        $cabecera->proveedor_id = $request->proveedor_id;
+        $remito->user_id = auth()->user()['id'];
+        $remito->proveedor_id = $request->proveedor_id;
         $remito->save();
         return $remito;
     }

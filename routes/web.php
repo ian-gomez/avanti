@@ -20,13 +20,13 @@ Route::middleware(['auth'])->group(function() {
     Route::resource('articulos', 'ArticuloController');
     Route::resource('clientes', 'ClienteController');
     Route::resource('proveedores', 'ProveedorController');
+    Route::get('proveedores-datos', 'ProveedorController@datos');
     Route::resource('remitos-cabecera', 'Remito_CabeceraController');
     Route::resource('remitos-detalle', 'Remito_DetalleController');
     Route::resource('stock-cabecera', 'Stock_CabeceraController');
     Route::resource('stock-detalle', 'Stock_DetalleController');
     Route::resource('users', 'UserController');
     Route::get('user', 'UserController@userView');
-    Route::get('proveedor', 'ProveedorController@proveedorView');
     Route::get('remito-cabecera', 'Remito_CabeceraController@cabeceraView');
     Route::resource('ventas-cabecera', 'Venta_CabeceraController');
     Route::resource('ventas-detalle', 'Venta_DetalleController');

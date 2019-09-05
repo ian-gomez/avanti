@@ -13,13 +13,13 @@ class ProveedorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function datos()
     {
         $proveedor = Proveedor::get();
         return $proveedor;
     }
 
-    public function proveedorView()
+    public function index()
     {  
         return view('proveedor');        
     }
