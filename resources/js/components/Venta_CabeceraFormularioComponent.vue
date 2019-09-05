@@ -6,8 +6,9 @@
         </div>
         <!-- En caso de alta -->
         <div class="datos" v-if="formulario==1">
+            <label>Número de Ticket</label>
+            <input class="form-control" type="number" v-model="ventaCabeceraRegistro.numero_ticket">
             <label>Cliente:</label>
-            <br>
             <select class="form-control" v-model="opcionCliente">
                 <option v-for="cliente in clientes" v-bind:value="cliente.id" v-bind:selected="(cliente.id == opcionCliente)">
                     {{cliente.nombre}}
@@ -16,6 +17,8 @@
         </div>
         <!-- En caso de modificacion -->
         <div class="datos" v-else-if="formulario==2">
+            <label>Número de Ticket</label>
+            <input class="form-control" type="number" v-model="ventaCabeceraRegistro.numero_ticket">
             <label>Cliente:</label>
             <select class="form-control" v-model="ventaCabeceraRegistro.cliente_id">
                 <option v-for="cliente in clientes" v-bind:value="cliente.id" v-bind:selected="(cliente.id == ventaCabeceraRegistro.cliente_id)">
@@ -75,6 +78,7 @@
             alta:function(){
                 let formdata = new FormData();
                 formdata.append("cliente_id", this.opcionCliente);
+                formdata.append("numero_ticket", this.ventaCabeceraRegistro.numero_ticket);
                 axios.post('ventas-cabecera', formdata).then(response => {
                     this.$emit('alta', response.data);
                 })
@@ -82,9 +86,10 @@
             modificar:function(){
                 let formdata = new FormData();
                 formdata.append("cliente_id", this.ventaCabeceraRegistro.cliente_id);
+                formdata.append("numero_ticket", this.ventaCabeceraRegistro.numero_ticket);
                 formdata.append("_method", "PATCH");
                 axios.post('ventas-cabecera/'+this.ventaCabeceraRegistro.id, formdata).then(response => {
-                    this.$emit('modificar');
+                    this.$emit('modificar', response.data);
                 })
             },
             eliminar:function() {

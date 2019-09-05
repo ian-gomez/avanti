@@ -2350,8 +2350,6 @@ __webpack_require__.r(__webpack_exports__);
       formdata.append("insumo_id", this.opcionInsumo);
       formdata.append("cantidad", this.articuloInsumoRegistro.cantidad);
       axios.post('articulos-insumos', formdata).then(function (response) {
-        console.log(response.data);
-
         _this2.$emit('alta', response.data);
       });
     },
@@ -2940,6 +2938,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2968,6 +2968,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     alta: function alta(datos) {
       this.ventasCabecera.push(datos);
+    },
+    modificar: function modificar(datos) {
+      this.ventasCabecera[this.pos] = datos;
     },
     eliminar: function eliminar() {
       this.ventasCabecera.splice(this.pos, 1);
@@ -3018,6 +3021,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -3115,6 +3121,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var formdata = new FormData();
       formdata.append("cliente_id", this.opcionCliente);
+      formdata.append("numero_ticket", this.ventaCabeceraRegistro.numero_ticket);
       axios.post('ventas-cabecera', formdata).then(function (response) {
         _this2.$emit('alta', response.data);
       });
@@ -3124,9 +3131,10 @@ __webpack_require__.r(__webpack_exports__);
 
       var formdata = new FormData();
       formdata.append("cliente_id", this.ventaCabeceraRegistro.cliente_id);
+      formdata.append("numero_ticket", this.ventaCabeceraRegistro.numero_ticket);
       formdata.append("_method", "PATCH");
       axios.post('ventas-cabecera/' + this.ventaCabeceraRegistro.id, formdata).then(function (response) {
-        _this3.$emit('modificar');
+        _this3.$emit('modificar', response.data);
       });
     },
     eliminar: function eliminar() {
@@ -56132,6 +56140,8 @@ var render = function() {
           "tbody",
           _vm._l(_vm.ventasCabecera, function(ventaCabecera, index) {
             return _c("tr", [
+              _c("td", [_vm._v(_vm._s(ventaCabecera.numero_ticket))]),
+              _vm._v(" "),
               _c("td", [_vm._v(_vm._s(ventaCabecera.user_nombre))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(ventaCabecera.cliente_nombre))]),
@@ -56146,6 +56156,7 @@ var render = function() {
                     on: {
                       click: function($event) {
                         _vm.formulario = 2
+                        _vm.pos = index
                         _vm.asignar(ventaCabecera)
                       }
                     }
@@ -56200,6 +56211,7 @@ var render = function() {
                 _vm.formulario = 0
               },
               modificar: function($event) {
+                _vm.modificar($event)
                 _vm.formulario = 0
               },
               eliminar: function($event) {
@@ -56220,6 +56232,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
+        _c("td", [_vm._v("Número de Ticket")]),
+        _vm._v(" "),
         _c("td", [_vm._v("Empleado")]),
         _vm._v(" "),
         _c("td", [_vm._v("Cliente")]),
@@ -56272,9 +56286,35 @@ var render = function() {
     _vm._v(" "),
     _vm.formulario == 1
       ? _c("div", { staticClass: "datos" }, [
-          _c("label", [_vm._v("Cliente:")]),
+          _c("label", [_vm._v("Número de Ticket")]),
           _vm._v(" "),
-          _c("br"),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.ventaCabeceraRegistro.numero_ticket,
+                expression: "ventaCabeceraRegistro.numero_ticket"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "number" },
+            domProps: { value: _vm.ventaCabeceraRegistro.numero_ticket },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(
+                  _vm.ventaCabeceraRegistro,
+                  "numero_ticket",
+                  $event.target.value
+                )
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("label", [_vm._v("Cliente:")]),
           _vm._v(" "),
           _c(
             "select",
@@ -56327,6 +56367,34 @@ var render = function() {
         ])
       : _vm.formulario == 2
       ? _c("div", { staticClass: "datos" }, [
+          _c("label", [_vm._v("Número de Ticket")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.ventaCabeceraRegistro.numero_ticket,
+                expression: "ventaCabeceraRegistro.numero_ticket"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "number" },
+            domProps: { value: _vm.ventaCabeceraRegistro.numero_ticket },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(
+                  _vm.ventaCabeceraRegistro,
+                  "numero_ticket",
+                  $event.target.value
+                )
+              }
+            }
+          }),
+          _vm._v(" "),
           _c("label", [_vm._v("Cliente:")]),
           _vm._v(" "),
           _c(

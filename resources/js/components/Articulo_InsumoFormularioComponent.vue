@@ -76,7 +76,6 @@
                 formdata.append("insumo_id", this.opcionInsumo);
                 formdata.append("cantidad", this.articuloInsumoRegistro.cantidad);
                 axios.post('articulos-insumos', formdata).then(response => {
-                    console.log(response.data);
                     this.$emit('alta', response.data);
                 })
             },

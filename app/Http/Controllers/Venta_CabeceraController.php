@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Venta_Cabecera;
 
 class Venta_CabeceraController extends Controller
@@ -46,7 +47,18 @@ class Venta_CabeceraController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $venta_cabecera = new Venta_Cabecera();
+        $venta_cabecera->cliente_id = $request->cliente_id;
+        $venta_cabecera->user_id = Auth::id();
+        $venta_cabecera->numero_ticket = $request->numero_ticket;
+        $venta_cabecera->save();
+
+        $cabecera = Venta_Cabecera::where('numero_ticket', $request->numero_ticket)->first();
+        $user = $cabecera->user;
+        $venta_cabecera->user_nombre = $user->name;
+        $cliente = $cabecera->cliente;
+        $venta_cabecera->cliente_nombre = $cliente->nombre;
+        return $venta_cabecera;
     }
 
     /**
@@ -80,7 +92,17 @@ class Venta_CabeceraController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $venta_cabecera = Venta_Cabecera::find($id);
+        $venta_cabecera->cliente_id = $request->cliente_id;
+        $venta_cabecera->numero_ticket = $request->numero_ticket;
+        $venta_cabecera->save();
+
+        $cabecera = Venta_Cabecera::find($id);
+        $user = $cabecera->user;
+        $venta_cabecera->user_nombre = $user->name;
+        $cliente = $cabecera->cliente;
+        $venta_cabecera->cliente_nombre = $cliente->nombre;
+        return $venta_cabecera;
     }
 
     /**
@@ -91,6 +113,8 @@ class Venta_CabeceraController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $venta_cabecera = Venta_Cabecera::find($id);
+        $venta_cabecera->delete();
+        return back();
     }
 }

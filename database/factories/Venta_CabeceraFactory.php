@@ -9,5 +9,6 @@ $factory->define(Venta_Cabecera::class, function (Faker $faker) {
     return [
         'cliente_id' => App\Cliente::all()->random()->id,
         'user_id' => App\User::all()->random()->id,
+        'numero_ticket' => $faker->unique()->numberBetween($min = 1000, $max = 9000),
     ];
 });

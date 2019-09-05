@@ -6,6 +6,7 @@
         <table class="display" id="tabla">
             <thead>
                 <tr>
+                    <td>Número de Ticket</td>
                     <td>Empleado</td>
                     <td>Cliente</td>
                     <td>Fecha de Venta</td>
@@ -14,11 +15,12 @@
             </thead>
             <tbody>
                 <tr v-for="(ventaCabecera, index) in ventasCabecera">
+                    <td>{{ventaCabecera.numero_ticket}}</td>
                     <td>{{ventaCabecera.user_nombre}}</td>
                     <td>{{ventaCabecera.cliente_nombre}}</td>
                     <td>{{ventaCabecera.created_at}}</td>
                     <td>
-                        <button class="btn btn-warning" @click="formulario=2;asignar(ventaCabecera)">Editar</button>
+                        <button class="btn btn-warning" @click="formulario=2;pos=index;asignar(ventaCabecera)">Editar</button>
                         <button class="btn btn-danger" @click="formulario=3;asignar(ventaCabecera);pos=index">Eliminar</button>
                     </td>
                 </tr>
@@ -35,7 +37,7 @@
             :formulario="formulario"
             :ventaCabeceraRegistro="ventaCabeceraRegistro"
             @cerrar-formulario="formulario=0"
-            @modificar="formulario=0"
+            @modificar="modificar($event);formulario=0"
             @eliminar="eliminar();formulario=0"></venta-cabecera-formulario-component>
     </div>
 </template>
@@ -66,6 +68,9 @@
             },
             alta:function(datos) {
                 this.ventasCabecera.push(datos);
+            },
+            modificar:function(datos) {
+                this.ventasCabecera[this.pos] = datos;
             },
             eliminar:function() {
                 this.ventasCabecera.splice(this.pos, 1)
