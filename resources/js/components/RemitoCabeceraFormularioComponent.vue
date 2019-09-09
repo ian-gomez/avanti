@@ -76,13 +76,23 @@
                     this.bajaremito();
                 };
             },
+            buscaprov:function(dato){
+            return this.proveedores.filter(
+            (prov)=>prov.id=dato
+                );
+            },            
             altaremito:function(){
                 let formdata = new FormData();
                 formdata.append("importe", this.registroremitos.importe);
                 formdata.append("proveedor_id", this.registroremitos.proveedor_id);
                 axios.post('remitos-cabecera',formdata).then(response => {
                     
-                this.$emit('remitoalta', response.data);
+
+                this.$emit('remitoalta',
+                    {id:response.data.id,
+                     importe:response.data.importe,
+                     nombre:this.buscaprov(response.data.proveedor_id)[0].nombre}
+                   );
                 })
             },
              editarremito:function(){
@@ -102,5 +112,4 @@
             },
         }
       }  
-</script>
 </script>

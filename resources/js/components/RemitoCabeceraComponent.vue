@@ -11,12 +11,16 @@
                        <tr>
                            <td>ID</td>
                            <td>Importe</td>
+                           <td>Proveedor</td>
+                           <td>Acciones</td>
                        </tr>
                     </thead>
                       <tbody>
-                        <tr v-for="(remito, index) in buscaremitos">
+                        <tr v-for="(remito, index) in remitos">
+
                             <td>{{remito.id}}</td>
                             <td>{{remito.importe}}</td>
+                            <td>{{remito.nombre}}</td>
                             <td>
                                 <button class="btn btn-warning btn-large" @click="operacion=2;registroremitos=remito">Editar</button>
                                 <button class="btn btn-danger btn-large" @click="pos=index;operacion=3;registroremitos=remito">Borrar</button>
@@ -29,7 +33,7 @@
                         v-if="operacion>0" 
                         :operacion="operacion"
                         :registroremitos="registroremitos">
-            </remito-cabecera-formulario-component>
+                  </remito-cabecera-formulario-component>
                 </div>
             </div>
     </div>
@@ -44,7 +48,7 @@
                 remitos:[],
                 busqueda:'',
                 registroremitos:[],
-                pos:0,
+                pos:0
 
             }
         },
@@ -52,16 +56,11 @@
             console.log('Component mounteda.');
             this.mostrarremito();
         },
-        computed:{
-            buscaremitos:function(){
-            return this.remitos.filter(
-            (remito)=>remito.name.includes(this.busqueda)
-                );
-            }
-        },
+
         methods:{
             altaremito:function(dato){
                 alert("hhhh");
+                console.log(dato);
                this.remitos.push(dato);
                this.operacion=0;
             },

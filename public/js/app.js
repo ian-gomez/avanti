@@ -2153,6 +2153,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2168,29 +2172,21 @@ __webpack_require__.r(__webpack_exports__);
     console.log('Component mounteda.');
     this.mostrarremito();
   },
-  computed: {
-    buscaremitos: function buscaremitos() {
-      var _this = this;
-
-      return this.remitos.filter(function (remito) {
-        return remito.name.includes(_this.busqueda);
-      });
-    }
-  },
   methods: {
     altaremito: function altaremito(dato) {
       alert("hhhh");
+      console.log(dato);
       this.remitos.push(dato);
       this.operacion = 0;
     },
     mostrarremito: function mostrarremito() {
-      var _this2 = this;
+      var _this = this;
 
       axios.get('remitos-cabecera').then(function (response) {
         console.log(response.data);
-        _this2.remitos = response.data;
+        _this.remitos = response.data;
 
-        _this2.tabla();
+        _this.tabla();
       });
     },
     editarremito: function editarremito(dato) {
@@ -2342,6 +2338,11 @@ __webpack_require__.r(__webpack_exports__);
 
       ;
     },
+    buscaprov: function buscaprov(dato) {
+      return this.proveedores.filter(function (prov) {
+        return prov.id = dato;
+      });
+    },
     altaremito: function altaremito() {
       var _this2 = this;
 
@@ -2349,7 +2350,11 @@ __webpack_require__.r(__webpack_exports__);
       formdata.append("importe", this.registroremitos.importe);
       formdata.append("proveedor_id", this.registroremitos.proveedor_id);
       axios.post('remitos-cabecera', formdata).then(function (response) {
-        _this2.$emit('remitoalta', response.data);
+        _this2.$emit('remitoalta', {
+          id: response.data.id,
+          importe: response.data.importe,
+          nombre: _this2.buscaprov(response.data.proveedor_id)[0].nombre
+        });
       });
     },
     editarremito: function editarremito() {
@@ -54339,11 +54344,13 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.buscaremitos, function(remito, index) {
+                _vm._l(_vm.remitos, function(remito, index) {
                   return _c("tr", [
                     _c("td", [_vm._v(_vm._s(remito.id))]),
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(remito.importe))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(remito.nombre))]),
                     _vm._v(" "),
                     _c("td", [
                       _c(
@@ -54419,7 +54426,11 @@ var staticRenderFns = [
       _c("tr", [
         _c("td", [_vm._v("ID")]),
         _vm._v(" "),
-        _c("td", [_vm._v("Importe")])
+        _c("td", [_vm._v("Importe")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Proveedor")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Acciones")])
       ])
     ])
   }

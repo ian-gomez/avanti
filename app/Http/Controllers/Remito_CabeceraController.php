@@ -98,6 +98,7 @@ class Remito_CabeceraController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $remito = Remito_Cabecera::find($id);
+        $remito->delete();
     }
 }
