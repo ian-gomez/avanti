@@ -2940,6 +2940,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2947,7 +2952,9 @@ __webpack_require__.r(__webpack_exports__);
       formulario: 0,
       pos: 0,
       ventasCabecera: [],
-      ventaCabeceraRegistro: ''
+      ventaCabeceraRegistro: '',
+      ventaCabeceraRegistroB: '',
+      detalle: false
     };
   },
   mounted: function mounted() {
@@ -2965,6 +2972,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     asignar: function asignar(datos) {
       this.ventaCabeceraRegistro = datos;
+    },
+    asignarB: function asignarB(datos) {
+      this.ventaCabeceraRegistroB = datos;
     },
     alta: function alta(datos) {
       this.ventasCabecera.push(datos);
@@ -3139,6 +3149,269 @@ __webpack_require__.r(__webpack_exports__);
     },
     eliminar: function eliminar() {
       axios.post('ventas-cabecera/' + this.ventaCabeceraRegistro.id, {
+        _method: 'delete'
+      });
+      this.$emit('eliminar');
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Venta_DetalleComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Venta_DetalleComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['ventaCabeceraRegistroB'],
+  data: function data() {
+    return {
+      formulario: 0,
+      pos: 0,
+      ventasDetalle: [],
+      ventaDetalleRegistro: ''
+    };
+  },
+  mounted: function mounted() {
+    this.mostrar();
+  },
+  methods: {
+    mostrar: function mostrar() {
+      var _this = this;
+
+      axios.get('ventas-detalle/' + this.ventaCabeceraRegistroB.id).then(function (response) {
+        _this.ventasDetalle = response.data;
+
+        _this.tabla();
+      });
+    },
+    asignar: function asignar(datos) {
+      this.ventaDetalleRegistro = datos;
+    },
+    alta: function alta(datos) {
+      this.ventasDetalle.push(datos);
+    },
+    eliminar: function eliminar() {
+      this.ventasDetalle.splice(this.pos, 1);
+    },
+    tabla: function tabla() {
+      $(document).ready(function () {
+        $('#tabla-detalle').DataTable({
+          "lengthMenu": [[5], [5]],
+          "pagingType": "full_numbers",
+          language: {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+              "sFirst": "Primero",
+              "sLast": "Último",
+              "sNext": "Siguiente",
+              "sPrevious": "Anterior"
+            },
+            "oAria": {
+              "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+          }
+        });
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Venta_DetalleFormularioComponent.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Venta_DetalleFormularioComponent.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['ventaDetalleRegistro', 'venta_cabecera_id', 'formulario'],
+  data: function data() {
+    return {
+      titulo: '',
+      opcionArticulo: 1,
+      articulos: []
+    };
+  },
+  mounted: function mounted() {
+    this.cargarArticulos();
+
+    if (this.formulario == 1) {
+      this.titulo = 'Agregar producto a la venta';
+    }
+
+    ;
+
+    if (this.formulario == 2) {
+      this.titulo = 'Editar producto en la venta';
+    }
+
+    ;
+
+    if (this.formulario == 3) {
+      this.titulo = 'Eliminar producto de la venta';
+    }
+
+    ;
+  },
+  methods: {
+    cargarArticulos: function cargarArticulos() {
+      var _this = this;
+
+      axios.get('articulos-datos').then(function (response) {
+        _this.articulos = response.data;
+      });
+    },
+    operacion: function operacion() {
+      if (this.formulario == 1) {
+        this.alta();
+      }
+
+      ;
+
+      if (this.formulario == 2) {
+        this.modificar();
+      }
+
+      ;
+
+      if (this.formulario == 3) {
+        this.eliminar();
+      }
+
+      ;
+    },
+    alta: function alta() {
+      var _this2 = this;
+
+      var formdata = new FormData();
+      formdata.append("venta_cabecera_id", this.venta_cabecera_id);
+      formdata.append("articulo_id", this.opcionArticulo);
+      formdata.append("cantidad", this.ventaDetalleRegistro.cantidad);
+      axios.post('ventas-detalle', formdata).then(function (response) {
+        _this2.$emit('alta', response.data);
+      });
+    },
+    modificar: function modificar() {
+      var _this3 = this;
+
+      var formdata = new FormData();
+      formdata.append("venta_cabecera_id", this.ventaDetalleRegistro.venta_cabecera_id);
+      formdata.append("articulo_id", this.ventaDetalleRegistro.articulo_id);
+      formdata.append("cantidad", this.ventaDetalleRegistro.cantidad);
+      formdata.append("precio", this.ventaDetalleRegistro.precio);
+      formdata.append("costo", this.ventaDetalleRegistro.costo);
+      formdata.append("_method", "PATCH");
+      axios.post('ventas-detalle/' + this.ventaDetalleRegistro.id, formdata).then(function (response) {
+        _this3.$emit('modificar');
+      });
+    },
+    eliminar: function eliminar() {
+      axios.post('ventas-detalle/' + this.ventaDetalleRegistro.id, {
         _method: 'delete'
       });
       this.$emit('eliminar');
@@ -7701,6 +7974,44 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 // module
 exports.push([module.i, "\n.contenedor {\n        display: grid;\n        grid-template-columns: 1fr 3fr 1fr;\n        grid-template-rows: 1fr 1fr 3fr 1fr 1fr;\n        grid-template-areas: \n        \" . . .\"\n        \" . titulo .\"\n        \" . datos .\"\n        \" . aceptar .\"\n        \" . . .\";\n        position: fixed;\n\t\ttop: 0;\n\t\tleft: 0;\n        width: 100%;\n\t\theight: 100%;\n\t\tbackground-color: rgba(0,0,0,0.5);\n}\n.titulo {\n\t\tbackground-color: burlywood;\n        grid-area: titulo;\n}\n.datos {\n\t\tbackground-color: lemonchiffon;\n        grid-area: datos;\n}\n.cierre {\n\t\tfloat: right;\n}\n.aceptar {\n\t\ttext-align: center;\n        grid-area: aceptar;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Venta_DetalleComponent.vue?vue&type=style&index=0&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Venta_DetalleComponent.vue?vue&type=style&index=0&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.contenedor-detalle {\n        display: grid;\n        grid-template-columns: 1fr 10fr 1fr;\n        grid-template-rows: 1fr 1fr 9fr 1fr;\n        grid-template-areas: \n        \" . . .\"\n        \" . titulo-detalle .\"\n        \" . datos-detalle .\"\n        \" . . .\";\n        position: fixed;\n\t\ttop: 0;\n\t\tleft: 0;\n        width: 100%;\n\t\theight: 100%;\n\t\tbackground-color: rgba(0,0,0,0.5);\n}\n.titulo-detalle {\n\t\tbackground-color: burlywood;\n        grid-area: titulo-detalle;\n}\n.datos-detalle {\n\t\tbackground-color: lemonchiffon;\n        grid-area: datos-detalle;\n}\n.cierre-detalle {\n\t\tfloat: right;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Venta_DetalleFormularioComponent.vue?vue&type=style&index=0&lang=css&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Venta_DetalleFormularioComponent.vue?vue&type=style&index=0&lang=css& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.contenedor-formulario {\n        display: grid;\n        grid-template-columns: 1fr 3fr 1fr;\n        grid-template-rows: 1fr 1fr 3fr 1fr 1fr;\n        grid-template-areas: \n        \" . . .\"\n        \" . titulo-formulario .\"\n        \" . datos-formulario .\"\n        \" . aceptar-formulario .\"\n        \" . . .\";\n        position: fixed;\n\t\ttop: 0;\n\t\tleft: 0;\n        width: 100%;\n\t\theight: 100%;\n\t\tbackground-color: rgba(0,0,0,0.5);\n}\n.titulo-formulario {\n\t\tbackground-color: burlywood;\n        grid-area: titulo-formulario;\n}\n.datos-formulario {\n\t\tbackground-color: lemonchiffon;\n        grid-area: datos-formulario;\n}\n.cierre {\n\t\tfloat: right;\n}\n.aceptar-formulario {\n\t\ttext-align: center;\n        grid-area: aceptar-formulario;\n}\n", ""]);
 
 // exports
 
@@ -54020,6 +54331,66 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Venta_DetalleComponent.vue?vue&type=style&index=0&lang=css&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Venta_DetalleComponent.vue?vue&type=style&index=0&lang=css& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./Venta_DetalleComponent.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Venta_DetalleComponent.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Venta_DetalleFormularioComponent.vue?vue&type=style&index=0&lang=css&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Venta_DetalleFormularioComponent.vue?vue&type=style&index=0&lang=css& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./Venta_DetalleFormularioComponent.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Venta_DetalleFormularioComponent.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/lib/addStyles.js":
 /*!****************************************************!*\
   !*** ./node_modules/style-loader/lib/addStyles.js ***!
@@ -56177,6 +56548,20 @@ var render = function() {
                     }
                   },
                   [_vm._v("Eliminar")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-info",
+                    on: {
+                      click: function($event) {
+                        _vm.detalle = true
+                        _vm.asignarB(ventaCabecera)
+                      }
+                    }
+                  },
+                  [_vm._v("Detalle")]
                 )
               ])
             ])
@@ -56217,6 +56602,17 @@ var render = function() {
               eliminar: function($event) {
                 _vm.eliminar()
                 _vm.formulario = 0
+              }
+            }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.detalle
+        ? _c("venta-detalle-component", {
+            attrs: { ventaCabeceraRegistroB: _vm.ventaCabeceraRegistroB },
+            on: {
+              "cerrar-detalle": function($event) {
+                _vm.detalle = false
               }
             }
           })
@@ -56453,6 +56849,354 @@ var render = function() {
         ]),
     _vm._v(" "),
     _c("div", { staticClass: "aceptar" }, [
+      _c(
+        "button",
+        {
+          staticClass: "bnt btn-success btn-block",
+          on: {
+            click: function($event) {
+              return _vm.operacion()
+            }
+          }
+        },
+        [_vm._v("Aceptar")]
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Venta_DetalleComponent.vue?vue&type=template&id=4fbfd2b8&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Venta_DetalleComponent.vue?vue&type=template&id=4fbfd2b8& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "contenedor-detalle" }, [
+    _c("div", { staticClass: "titulo-detalle" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger cierre-detalle",
+          on: {
+            click: function($event) {
+              return _vm.$emit("cerrar-detalle")
+            }
+          }
+        },
+        [_vm._v("X")]
+      )
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "datos-detalle" },
+      [
+        _c("div", [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary btn-block",
+              on: {
+                click: function($event) {
+                  _vm.formulario = 1
+                }
+              }
+            },
+            [_vm._v("Ingresar")]
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "table",
+          { staticClass: "display", attrs: { id: "tabla-detalle" } },
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.ventasDetalle, function(ventaDetalle, index) {
+                return _c("tr", [
+                  _c("td", [_vm._v(_vm._s(ventaDetalle.nombre))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(ventaDetalle.cantidad))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(ventaDetalle.precio))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(ventaDetalle.costo))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-warning",
+                        on: {
+                          click: function($event) {
+                            _vm.formulario = 2
+                            _vm.asignar(ventaDetalle)
+                          }
+                        }
+                      },
+                      [_vm._v("Editar")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger",
+                        on: {
+                          click: function($event) {
+                            _vm.formulario = 3
+                            _vm.asignar(ventaDetalle)
+                            _vm.pos = index
+                          }
+                        }
+                      },
+                      [_vm._v("Eliminar")]
+                    )
+                  ])
+                ])
+              }),
+              0
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _vm.formulario == 1
+          ? _c("venta-detalle-formulario-component", {
+              attrs: {
+                formulario: _vm.formulario,
+                ventaDetalleRegistro: [],
+                venta_cabecera_id: _vm.ventaCabeceraRegistroB.id
+              },
+              on: {
+                "cerrar-formulario": function($event) {
+                  _vm.formulario = 0
+                },
+                alta: function($event) {
+                  _vm.alta($event)
+                  _vm.formulario = 0
+                }
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.formulario > 1
+          ? _c("venta-detalle-formulario-component", {
+              attrs: {
+                formulario: _vm.formulario,
+                ventaDetalleRegistro: _vm.ventaDetalleRegistro
+              },
+              on: {
+                "cerrar-formulario": function($event) {
+                  _vm.formulario = 0
+                },
+                modificar: function($event) {
+                  _vm.formulario = 0
+                },
+                eliminar: function($event) {
+                  _vm.eliminar()
+                  _vm.formulario = 0
+                }
+              }
+            })
+          : _vm._e()
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("td", [_vm._v("Articulo")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Cantidad")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Precio")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Costo")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Acciones")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Venta_DetalleFormularioComponent.vue?vue&type=template&id=0c7c7312&":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Venta_DetalleFormularioComponent.vue?vue&type=template&id=0c7c7312& ***!
+  \***********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "contenedor-formulario" }, [
+    _c("div", { staticClass: "titulo-formulario" }, [
+      _c("label", [_vm._v(_vm._s(_vm.titulo))]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger cierre",
+          on: {
+            click: function($event) {
+              return _vm.$emit("cerrar-formulario")
+            }
+          }
+        },
+        [_vm._v("X")]
+      )
+    ]),
+    _vm._v(" "),
+    _vm.formulario == 1
+      ? _c("div", { staticClass: "datos-formulario" }, [
+          _c("label", [_vm._v("Articulo:")]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.opcionArticulo,
+                  expression: "opcionArticulo"
+                }
+              ],
+              staticClass: "form-control",
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.opcionArticulo = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                }
+              }
+            },
+            _vm._l(_vm.articulos, function(articulo) {
+              return _c(
+                "option",
+                {
+                  domProps: {
+                    value: articulo.id,
+                    selected: articulo.id == _vm.opcionArticulo
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(articulo.nombre) +
+                      "\n            "
+                  )
+                ]
+              )
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _c("label", [_vm._v("Cantidad")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.ventaDetalleRegistro.cantidad,
+                expression: "ventaDetalleRegistro.cantidad"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "number" },
+            domProps: { value: _vm.ventaDetalleRegistro.cantidad },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(
+                  _vm.ventaDetalleRegistro,
+                  "cantidad",
+                  $event.target.value
+                )
+              }
+            }
+          })
+        ])
+      : _vm.formulario == 2
+      ? _c("div", { staticClass: "datos-formulario" }, [
+          _c("label", [_vm._v("Cantidad")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.ventaDetalleRegistro.cantidad,
+                expression: "ventaDetalleRegistro.cantidad"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "number" },
+            domProps: { value: _vm.ventaDetalleRegistro.cantidad },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(
+                  _vm.ventaDetalleRegistro,
+                  "cantidad",
+                  $event.target.value
+                )
+              }
+            }
+          })
+        ])
+      : _c("div", { staticClass: "datos-formulario" }, [
+          _c("label", [_vm._v("¿Está seguro que desea eliminar este campo?")])
+        ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "aceptar-formulario" }, [
       _c(
         "button",
         {
@@ -68647,6 +69391,8 @@ Vue.component('insumo-component', __webpack_require__(/*! ./components/InsumoCom
 Vue.component('insumo-formulario-component', __webpack_require__(/*! ./components/InsumoFormularioComponent.vue */ "./resources/js/components/InsumoFormularioComponent.vue")["default"]);
 Vue.component('venta-cabecera-component', __webpack_require__(/*! ./components/Venta_CabeceraComponent.vue */ "./resources/js/components/Venta_CabeceraComponent.vue")["default"]);
 Vue.component('venta-cabecera-formulario-component', __webpack_require__(/*! ./components/Venta_CabeceraFormularioComponent.vue */ "./resources/js/components/Venta_CabeceraFormularioComponent.vue")["default"]);
+Vue.component('venta-detalle-component', __webpack_require__(/*! ./components/Venta_DetalleComponent.vue */ "./resources/js/components/Venta_DetalleComponent.vue")["default"]);
+Vue.component('venta-detalle-formulario-component', __webpack_require__(/*! ./components/Venta_DetalleFormularioComponent.vue */ "./resources/js/components/Venta_DetalleFormularioComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -69579,6 +70325,180 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_CabeceraFormularioComponent_vue_vue_type_template_id_b90510aa___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_CabeceraFormularioComponent_vue_vue_type_template_id_b90510aa___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Venta_DetalleComponent.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/Venta_DetalleComponent.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Venta_DetalleComponent_vue_vue_type_template_id_4fbfd2b8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Venta_DetalleComponent.vue?vue&type=template&id=4fbfd2b8& */ "./resources/js/components/Venta_DetalleComponent.vue?vue&type=template&id=4fbfd2b8&");
+/* harmony import */ var _Venta_DetalleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Venta_DetalleComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/Venta_DetalleComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Venta_DetalleComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Venta_DetalleComponent.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/Venta_DetalleComponent.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _Venta_DetalleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Venta_DetalleComponent_vue_vue_type_template_id_4fbfd2b8___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Venta_DetalleComponent_vue_vue_type_template_id_4fbfd2b8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Venta_DetalleComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Venta_DetalleComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/Venta_DetalleComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_DetalleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Venta_DetalleComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Venta_DetalleComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_DetalleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Venta_DetalleComponent.vue?vue&type=style&index=0&lang=css&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/Venta_DetalleComponent.vue?vue&type=style&index=0&lang=css& ***!
+  \*********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_DetalleComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./Venta_DetalleComponent.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Venta_DetalleComponent.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_DetalleComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_DetalleComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_DetalleComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_DetalleComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_DetalleComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Venta_DetalleComponent.vue?vue&type=template&id=4fbfd2b8&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/Venta_DetalleComponent.vue?vue&type=template&id=4fbfd2b8& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_DetalleComponent_vue_vue_type_template_id_4fbfd2b8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Venta_DetalleComponent.vue?vue&type=template&id=4fbfd2b8& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Venta_DetalleComponent.vue?vue&type=template&id=4fbfd2b8&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_DetalleComponent_vue_vue_type_template_id_4fbfd2b8___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_DetalleComponent_vue_vue_type_template_id_4fbfd2b8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Venta_DetalleFormularioComponent.vue":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/Venta_DetalleFormularioComponent.vue ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Venta_DetalleFormularioComponent_vue_vue_type_template_id_0c7c7312___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Venta_DetalleFormularioComponent.vue?vue&type=template&id=0c7c7312& */ "./resources/js/components/Venta_DetalleFormularioComponent.vue?vue&type=template&id=0c7c7312&");
+/* harmony import */ var _Venta_DetalleFormularioComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Venta_DetalleFormularioComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/Venta_DetalleFormularioComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Venta_DetalleFormularioComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Venta_DetalleFormularioComponent.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/Venta_DetalleFormularioComponent.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _Venta_DetalleFormularioComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Venta_DetalleFormularioComponent_vue_vue_type_template_id_0c7c7312___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Venta_DetalleFormularioComponent_vue_vue_type_template_id_0c7c7312___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Venta_DetalleFormularioComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Venta_DetalleFormularioComponent.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/Venta_DetalleFormularioComponent.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_DetalleFormularioComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Venta_DetalleFormularioComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Venta_DetalleFormularioComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_DetalleFormularioComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Venta_DetalleFormularioComponent.vue?vue&type=style&index=0&lang=css&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/Venta_DetalleFormularioComponent.vue?vue&type=style&index=0&lang=css& ***!
+  \*******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_DetalleFormularioComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./Venta_DetalleFormularioComponent.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Venta_DetalleFormularioComponent.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_DetalleFormularioComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_DetalleFormularioComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_DetalleFormularioComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_DetalleFormularioComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_DetalleFormularioComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Venta_DetalleFormularioComponent.vue?vue&type=template&id=0c7c7312&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/Venta_DetalleFormularioComponent.vue?vue&type=template&id=0c7c7312& ***!
+  \*****************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_DetalleFormularioComponent_vue_vue_type_template_id_0c7c7312___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Venta_DetalleFormularioComponent.vue?vue&type=template&id=0c7c7312& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Venta_DetalleFormularioComponent.vue?vue&type=template&id=0c7c7312&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_DetalleFormularioComponent_vue_vue_type_template_id_0c7c7312___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Venta_DetalleFormularioComponent_vue_vue_type_template_id_0c7c7312___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

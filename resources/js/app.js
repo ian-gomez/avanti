@@ -30,6 +30,8 @@ Vue.component('insumo-component', require('./components/InsumoComponent.vue').de
 Vue.component('insumo-formulario-component', require('./components/InsumoFormularioComponent.vue').default);
 Vue.component('venta-cabecera-component', require('./components/Venta_CabeceraComponent.vue').default);
 Vue.component('venta-cabecera-formulario-component', require('./components/Venta_CabeceraFormularioComponent.vue').default);
+Vue.component('venta-detalle-component', require('./components/Venta_DetalleComponent.vue').default);
+Vue.component('venta-detalle-formulario-component', require('./components/Venta_DetalleFormularioComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

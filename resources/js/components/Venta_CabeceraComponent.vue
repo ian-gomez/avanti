@@ -22,6 +22,7 @@
                     <td>
                         <button class="btn btn-warning" @click="formulario=2;pos=index;asignar(ventaCabecera)">Editar</button>
                         <button class="btn btn-danger" @click="formulario=3;asignar(ventaCabecera);pos=index">Eliminar</button>
+                        <button class="btn btn-info" @click="detalle=true;asignarB(ventaCabecera)">Detalle</button>
                     </td>
                 </tr>
             </tbody>
@@ -39,6 +40,10 @@
             @cerrar-formulario="formulario=0"
             @modificar="modificar($event);formulario=0"
             @eliminar="eliminar();formulario=0"></venta-cabecera-formulario-component>
+        <venta-detalle-component
+         v-if="detalle"
+         :ventaCabeceraRegistroB="ventaCabeceraRegistroB"
+         @cerrar-detalle="detalle=false"></venta-detalle-component>
     </div>
 </template>
 
@@ -50,7 +55,9 @@
                 formulario:0,
                 pos:0,
                 ventasCabecera:[],
-                ventaCabeceraRegistro:''
+                ventaCabeceraRegistro:'',
+                ventaCabeceraRegistroB:'',
+                detalle:false
             }
         },
         mounted() {
@@ -65,6 +72,9 @@
             },
             asignar:function(datos) {
                 this.ventaCabeceraRegistro = datos;
+            },
+            asignarB:function(datos) {
+                this.ventaCabeceraRegistroB = datos;
             },
             alta:function(datos) {
                 this.ventasCabecera.push(datos);

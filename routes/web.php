@@ -33,7 +33,8 @@ Route::middleware(['auth'])->group(function() {
     Route::resource('users', 'UserController');
     Route::get('ventas-cabecera-datos', 'Venta_CabeceraController@datos');
     Route::resource('ventas-cabecera', 'Venta_CabeceraController');
-    Route::resource('ventas-detalle', 'Venta_DetalleController');
+    Route::get('ventas-detalle/{cabecera_id}', ['as' => 'ventas-detalle.index', 'uses' => 'Venta_DetalleController@index']);
+    Route::resource('ventas-detalle', 'Venta_DetalleController', ['except' => ['index']]);
 });
 
 Auth::routes();
