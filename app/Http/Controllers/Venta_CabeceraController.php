@@ -19,7 +19,10 @@ class Venta_CabeceraController extends Controller
         $venta_cabecera = DB::table('ventas_cabecera')
                           ->join('clientes', 'ventas_cabecera.cliente_id', '=', 'clientes.id')
                           ->join('users', 'ventas_cabecera.user_id', '=', 'users.id')
-                          ->select('ventas_cabecera.*', 'clientes.nombre as cliente_nombre', 'users.name as user_nombre')
+                          ->select('ventas_cabecera.*',
+                                   'clientes.nombre as cliente_nombre',
+                                   'users.name as user_nombre',
+                                   DB::raw("(SELECT SUM(ventas_detalle.cantidad * ventas_detalle.precio) FROM ventas_detalle WHERE ventas_detalle.venta_cabecera_id = ventas_cabecera.id) AS importe"))
                           ->get();
         return $venta_cabecera;
     }

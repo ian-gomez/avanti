@@ -17,7 +17,7 @@ class CreateRemitosCabeceraTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('proveedor_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
-            $table->float('importe', 10, 2);
+            $table->decimal('importe', 10, 2);
             $table->timestamps();
 
             $table->foreign('proveedor_id')->references('id')->on('proveedores');

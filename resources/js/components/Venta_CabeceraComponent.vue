@@ -10,6 +10,7 @@
                     <td>Empleado</td>
                     <td>Cliente</td>
                     <td>Fecha de Venta</td>
+                    <td>Importe</td>
                     <td>Acciones</td>
                 </tr>
             </thead>
@@ -19,6 +20,7 @@
                     <td>{{ventaCabecera.user_nombre}}</td>
                     <td>{{ventaCabecera.cliente_nombre}}</td>
                     <td>{{ventaCabecera.created_at}}</td>
+                    <td>{{ventaCabecera.importe}}</td>
                     <td>
                         <button class="btn btn-warning" @click="formulario=2;pos=index;asignar(ventaCabecera)">Editar</button>
                         <button class="btn btn-danger" @click="formulario=3;asignar(ventaCabecera);pos=index">Eliminar</button>

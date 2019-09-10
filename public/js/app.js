@@ -2945,6 +2945,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -56519,6 +56521,8 @@ var render = function() {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(ventaCabecera.created_at))]),
               _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(ventaCabecera.importe))]),
+              _vm._v(" "),
               _c("td", [
                 _c(
                   "button",
@@ -56635,6 +56639,8 @@ var staticRenderFns = [
         _c("td", [_vm._v("Cliente")]),
         _vm._v(" "),
         _c("td", [_vm._v("Fecha de Venta")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Importe")]),
         _vm._v(" "),
         _c("td", [_vm._v("Acciones")])
       ])

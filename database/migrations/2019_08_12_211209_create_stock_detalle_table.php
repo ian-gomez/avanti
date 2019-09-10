@@ -18,7 +18,7 @@ class CreateStockDetalleTable extends Migration
             $table->bigInteger('stock_cabecera_id')->unsigned();
             $table->bigInteger('articulo_id')->unsigned();
             $table->integer('cantidad');
-            $table->float('precio', 10, 2);
+            $table->decimal('precio', 10, 2);
 
             $table->foreign('stock_cabecera_id')->references('id')->on('stock_cabecera');
             $table->foreign('articulo_id')->references('id')->on('articulos');

@@ -18,7 +18,7 @@ class CreateRemitosDetalleTable extends Migration
             $table->biginteger('remito_cabecera_id')->unsigned();
             $table->bigInteger('articulo_id')->unsigned();
             $table->integer('cantidad');
-            $table->float('precio', 10, 2);
+            $table->decimal('precio', 10, 2);
 
             $table->foreign('remito_cabecera_id')->references('id')->on('remitos_cabecera');
         });
