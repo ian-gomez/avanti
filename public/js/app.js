@@ -1916,7 +1916,7 @@ __webpack_require__.r(__webpack_exports__);
     mostrarproveedor: function mostrarproveedor() {
       var _this2 = this;
 
-      axios.get('proveedores').then(function (response) {
+      axios.get('proveedores-datos').then(function (response) {
         console.log(response.data);
         _this2.proveedores = response.data;
 
@@ -2277,6 +2277,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['operacion', "registroremitos"],
   data: function data() {
@@ -2362,18 +2368,19 @@ __webpack_require__.r(__webpack_exports__);
 
       var formdata = new FormData();
       formdata.append("importe", this.registroremitos.importe);
+      formdata.append("proveedor_id", this.registroremitos.proveedor_id);
       formdata.append("_method", "PATCH");
-      axios.post('remitos/' + this.registroremitos.id, formdata).then(function (response) {
-        //console.log(response.data);
+      axios.post('remitos-cabecera/' + this.registroremitos.id, formdata).then(function (response) {
+        console.log(response.data);
+
         _this3.$emit('remitoeditar', response.data);
       });
     },
     bajaremito: function bajaremito() {
-      var _this4 = this;
-
-      axios["delete"]('remitos/' + this.registroremitos.id).then(function (response) {
-        _this4.$emit('remitobaja');
+      axios.post('remitos-cabecera/' + this.registroremitos.id, {
+        _method: 'delete'
       });
+      this.$emit('remitobaja');
     }
   }
 });
@@ -54579,7 +54586,60 @@ var render = function() {
                 _vm.$set(_vm.registroremitos, "importe", $event.target.value)
               }
             }
-          })
+          }),
+          _vm._v(" "),
+          _c("label", [_vm._v("Proveedor:")]),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.registroremitos.proveedor_id,
+                  expression: "registroremitos.proveedor_id"
+                }
+              ],
+              staticClass: "form-control",
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.$set(
+                    _vm.registroremitos,
+                    "proveedor_id",
+                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                  )
+                }
+              }
+            },
+            _vm._l(_vm.proveedores, function(proveedor) {
+              return _c(
+                "option",
+                {
+                  domProps: {
+                    value: proveedor.id,
+                    selected: proveedor.id == _vm.opcionproveedor
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(proveedor.nombre) +
+                      "\n            "
+                  )
+                ]
+              )
+            }),
+            0
+          )
         ])
       : _vm._e(),
     _vm._v(" "),

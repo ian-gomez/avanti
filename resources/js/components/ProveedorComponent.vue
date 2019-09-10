@@ -39,7 +39,7 @@
             </div>
     </div>
 </template>
-</template>
+
 
 <script>
     import datatables from 'datatables'
@@ -72,7 +72,7 @@
                this.operacion=0;
             },
             mostrarproveedor:function(){
-                axios.get('proveedores').then(response =>{
+                axios.get('proveedores-datos').then(response =>{
                   console.log(response.data);
                     this.proveedores = response.data;
                     this.tabla();
