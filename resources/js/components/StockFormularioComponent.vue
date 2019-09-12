@@ -2,13 +2,15 @@
     <div class="contenedor">
         <div class="dato" v-if="operacion==1">
             <label>Fecha:</label>
-            <input class="form-control" type="date" v-model="cabecerasR.fecha" placeholder="..." autofocus>
+            <input class="form-control" type="date" v-model="cabecerasR.fecha" autofocus>
             <br>
             <label>Proveedor:</label>
-            <input class="form-control" v-model="cabecerasR.proveedor_id" placeholder="..." autofocus>
+                <select class="form-control"v-model='cabecerasR.proveedor_id'>
+                    <option v-for="proveedor in proveedores" v-bind:value='proveedor.id' v-bind:selected='(proveedor.id == cabecerasR.proveedor_id)'>{{proveedor.nombre}}</option>
+                </select>
             <br>
             <label>Numero Remito:</label>
-            <input class="form-control" v-model="cabecerasR.numero_remito" placeholder="..." autofocus>
+            <input class="form-control" v-model="cabecerasR.numero_remito" placeholder="Ingrese numero del remito" autofocus>
             <br>
             <button class="boton" @click="operacioncabecera()">Aceptar</button>
             <button @click="cerrar()" class="boton">X</button>
@@ -16,13 +18,15 @@
 
         <div class="dato" v-else-if="operacion==2">
             <label>Fecha:</label>
-            <input class="form-control" type="date" v-model="cabecerasR.fecha" placeholder="..." autofocus>
+            <input class="form-control" type="date" v-model="cabecerasR.fecha" autofocus>
             <br>
             <label>Proveedor:</label>
-            <input class="form-control" v-model="cabecerasR.proveedor_id" placeholder="..." autofocus>
+                <select class="form-control"v-model='cabecerasR.proveedor_id'>
+                    <option v-for="proveedor in proveedores" v-bind:value='proveedor.id' v-bind:selected='(proveedor.id == cabecerasR.proveedor_id)'>{{proveedor.nombre}}</option>
+                </select>
             <br>
             <label>Numero Remito:</label>
-            <input class="form-control" v-model="cabecerasR.numero_remito" placeholder="..." autofocus>
+            <input class="form-control" v-model="cabecerasR.numero_remito" placeholder="Ingrese numero del remito" autofocus>
             <br>
             <button class="boton" @click="operacioncabecera()">Aceptar</button>
             <button @click="cerrar()" class="boton">X</button>
@@ -31,8 +35,8 @@
         <div class="dato" v-else-if="operacion==3">
             <div class="datos">
                 ¿Desea eliminar el id: {{cabecerasR.id}}?
-                <button class="boton" @click="operacioncabecera()">Aceptar</button>
-                <button @click="cerrar()" class="boton">X</button>
+                <br><button class="boton" @click="operacioncabecera()">Aceptar</button>
+                <button @click="cerrar()" class="boton">X</button>  
             </div>
         </div>
     </div>
@@ -44,15 +48,17 @@
     	props: ['operacion',"cabecerasR"],
         data:function(){
             return{
-
+                opcionProveedor:1,
+                proveedores:[]
             }
         },
         mounted() {
             console.log('Component mounted.')
-
+            this.proveedoresnombre();
         },
 
 		methods:{
+
 
             cerrar:function(){
                 this.$emit('cerrar-ventana');
@@ -90,6 +96,12 @@
                 if (this.operacion == 2){
                     this.editar();
                 };
+            },
+
+            proveedoresnombre:function(){
+                axios.get('proveedores').then(respose =>{
+                this.proveedores = respose.data;
+                });
             }
         }        
     }
@@ -110,6 +122,7 @@
         width: 100%;
         height: 100%;
         background-color: rgba(0,0,0,0.5);
+
     }
     .box{
         width: 28%;
@@ -121,6 +134,15 @@
         width: 200px;
         border: solid gainsboro 20px;
         background-color: ghostwhite;
+    }
+    .x{
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        background-color: rgba(0,0,0,0.5);
+        border: rgba(0,0,0,0.5);
     }
     .dato {
         background-color: gainsboro;

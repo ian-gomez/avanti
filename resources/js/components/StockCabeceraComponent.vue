@@ -5,16 +5,18 @@
             <thead>
                 <tr>
                     <td>ID</td>
-                    <td>User ID</td>
+                    <td>Usuario</td>
                     <td>Fecha</td>
-                    <td>Acciones</td>
+                    <td>Proveedor</td>
+                    <td>Operaciones</td>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(cabecera, index) in cabeceras">
                     <td>{{cabecera.id}}</td>
-                    <td>{{cabecera.user_id}}</td>
+                    <td>{{cabecera.name}}</td>
                     <td>{{cabecera.fecha}}</td>
+                    <td>{{cabecera.nombre}}</td>
                     <td><button class="btn btn-info"
                     @click="pos=index;operacion=2;cabecerasR=cabecera">Editar</button>
                     <button class="btn btn-danger" 
@@ -37,6 +39,7 @@
                 <pre>{{$data}}</pre>
             </div>
         <stock-detalle-formulario-component
+                @cerrar-ventana="operacion=0"
                 v-if="operacion==4"
                 :detallev="detallev"
                 :operacion="operacion">

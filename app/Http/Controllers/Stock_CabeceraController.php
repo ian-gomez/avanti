@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Stock_Cabecera;
+use App\proveedores;  
 
 class Stock_CabeceraController extends Controller
 {
@@ -14,7 +16,11 @@ class Stock_CabeceraController extends Controller
      */
     public function index()
     {
-        $cabecera = Stock_Cabecera::get();
+        $cabecera = DB::table('stock_cabecera')
+                    ->join('proveedores','proveedores.id','=','stock_cabecera.proveedor_id')
+                    ->join('users','users.id','=','stock_cabecera.user_id')
+                    ->select('stock_cabecera.*','proveedores.nombre','users.name')
+                    ->get();
         return $cabecera;
     }
 
@@ -42,7 +48,6 @@ class Stock_CabeceraController extends Controller
     public function store(Request $request)
     {
         $cabecera = new Stock_Cabecera();
-        //$cabecera->user_id = $request->user_id;
         $cabecera->fecha = $request->fecha;
         $cabecera->proveedor_id = $request->proveedor_id;
         $cabecera->numero_remito = $request->numero_remito;

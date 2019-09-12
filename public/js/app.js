@@ -1887,6 +1887,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -1973,6 +1976,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var datatables__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! datatables */ "./node_modules/datatables/media/js/jquery.dataTables.js");
+/* harmony import */ var datatables__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(datatables__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -1981,21 +1986,87 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['operacion', 'detallev'],
   data: function data() {
-    return {};
+    return {
+      detalleR: []
+    };
   },
   mounted: function mounted() {
     console.log('Component mounted.');
+    this.mostrard();
   },
-  cerrar: function cerrar() {
-    this.$emit('cerrar-ventana');
-  },
-  detalle: function detalle() {
-    if (this.operacion == 4) {}
+  methods: {
+    mostrard: function mostrard() {
+      var _this = this;
 
-    ;
+      axios.get('stock-detalle').then(function (respose) {
+        _this.detalleR = respose.data;
+
+        _this.tabla();
+      });
+    },
+    cerrar: function cerrar() {
+      this.$emit('cerrar-ventana');
+    },
+    detalle: function detalle() {
+      if (this.operacion == 4) {}
+
+      ;
+    },
+    tabla: function tabla() {
+      $(document).ready(function () {
+        $('#tabla-detalle').DataTable({
+          "lengthMenu": [[5, 25, 50], [5, 25, 50]],
+          "pagingType": "full_numbers",
+          language: {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla-detalle",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+              "sFirst": "Primero",
+              "sLast": "Último",
+              "sNext": "Siguiente",
+              "sPrevious": "Anterior"
+            },
+            "oAria": {
+              "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+          }
+        });
+      });
+    }
   }
 });
 
@@ -2051,13 +2122,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['operacion', "cabecerasR"],
   data: function data() {
-    return {};
+    return {
+      opcionProveedor: 1,
+      proveedores: []
+    };
   },
   mounted: function mounted() {
     console.log('Component mounted.');
+    this.proveedoresnombre();
   },
   methods: {
     cerrar: function cerrar() {
@@ -2109,6 +2188,13 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       ;
+    },
+    proveedoresnombre: function proveedoresnombre() {
+      var _this4 = this;
+
+      axios.get('proveedores').then(function (respose) {
+        _this4.proveedores = respose.data;
+      });
     }
   }
 });
@@ -6591,7 +6677,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.contenedor{\n    display: grid;\n    grid-template-columns: 1fr 3fr 1fr;\n    grid-template-rows: 1fr 1fr 3fr 1fr 1fr;\n    grid-template-areas: \n    \" . . .\"\n    \" . dato .\"\n    \" . aceptar .\"\n    \" . . .\";\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0,0,0,0.5);\n}\n.box{\n    width: 28%;\n    margin: 20% auto;\n}\n.boton{\n    font-weight: bold;\n    font-size: 10px;\n    width: 200px;\n    border: solid gainsboro 20px;\n    background-color: ghostwhite;\n}\n.dato {\n    background-color: gainsboro;\n    grid-area: dato;\n}\n.vista-eliminar{\n    background-color: green;\n    grid-area: vista-eliminar;\n}\n.vista-editar{\n}\n", ""]);
+exports.push([module.i, "\n.contenedor{\n    display: grid;\n    grid-template-columns: 1fr 3fr 1fr;\n    grid-template-rows: 1fr 1fr 3fr 1fr 1fr;\n    grid-template-areas: \n    \" . . .\"\n    \" . dato .\"\n    \" . aceptar .\"\n    \" . . .\";\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0,0,0,0.5);\n}\n.box{\n    width: 28%;\n    margin: 20% auto;\n}\n.boton{\n    font-weight: bold;\n    font-size: 10px;\n    width: 400px;\n    border: solid gainsboro 20px;\n    background-color: ghostwhite;\n}\n.dato {\n    background-color: gainsboro;\n    grid-area: dato;\n}\n.vista-eliminar{\n    background-color: green;\n    grid-area: vista-eliminar;\n}\n.vista-select{\n}\n", ""]);
 
 // exports
 
@@ -6610,7 +6696,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.contenedor{\n    display: grid;\n    grid-template-columns: 1fr 3fr 1fr;\n    grid-template-rows: 1fr 1fr 3fr 1fr 1fr;\n    grid-template-areas: \n    \" . . .\"\n    \" . dato .\"\n    \" . aceptar .\"\n    \" . . .\";\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0,0,0,0.5);\n}\n.box{\n    width: 28%;\n    margin: 20% auto;\n}\n.boton{\n    font-weight: bold;\n    font-size: 10px;\n    width: 200px;\n    border: solid gainsboro 20px;\n    background-color: ghostwhite;\n}\n.dato {\n    background-color: gainsboro;\n    grid-area: dato;\n}\n.vista-eliminar{\n    background-color: green;\n    grid-area: vista-eliminar;\n}\n.vista-editar{\n}\n", ""]);
+exports.push([module.i, "\n.contenedor{\n    display: grid;\n    grid-template-columns: 1fr 3fr 1fr;\n    grid-template-rows: 1fr 1fr 3fr 1fr 1fr;\n    grid-template-areas: \n    \" . . .\"\n    \" . dato .\"\n    \" . aceptar .\"\n    \" . . .\";\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0,0,0,0.5);\n}\n.box{\n    width: 28%;\n    margin: 20% auto;\n}\n.boton{\n    font-weight: bold;\n    font-size: 10px;\n    width: 200px;\n    border: solid gainsboro 20px;\n    background-color: ghostwhite;\n}\n.x{\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    position: fixed;\n    background-color: rgba(0,0,0,0.5);\n    border: rgba(0,0,0,0.5);\n}\n.dato {\n    background-color: gainsboro;\n    grid-area: dato;\n}\n.vista-eliminar{\n    background-color: green;\n    grid-area: vista-eliminar;\n}\n.vista-editar{\n}\n", ""]);
 
 // exports
 
@@ -53466,9 +53552,11 @@ var render = function() {
             return _c("tr", [
               _c("td", [_vm._v(_vm._s(cabecera.id))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(cabecera.user_id))]),
+              _c("td", [_vm._v(_vm._s(cabecera.name))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(cabecera.fecha))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(cabecera.nombre))]),
               _vm._v(" "),
               _c("td", [
                 _c(
@@ -53546,7 +53634,12 @@ var render = function() {
       _vm._v(" "),
       _vm.operacion == 4
         ? _c("stock-detalle-formulario-component", {
-            attrs: { detallev: _vm.detallev, operacion: _vm.operacion }
+            attrs: { detallev: _vm.detallev, operacion: _vm.operacion },
+            on: {
+              "cerrar-ventana": function($event) {
+                _vm.operacion = 0
+              }
+            }
           })
         : _vm._e()
     ],
@@ -53562,11 +53655,13 @@ var staticRenderFns = [
       _c("tr", [
         _c("td", [_vm._v("ID")]),
         _vm._v(" "),
-        _c("td", [_vm._v("User ID")]),
+        _c("td", [_vm._v("Usuario")]),
         _vm._v(" "),
         _c("td", [_vm._v("Fecha")]),
         _vm._v(" "),
-        _c("td", [_vm._v("Acciones")])
+        _c("td", [_vm._v("Proveedor")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Operaciones")])
       ])
     ])
   }
@@ -53594,6 +53689,24 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "contenedor" }, [
     _c("div", { staticClass: "dato" }, [
+      _c("table", { staticClass: "display", attrs: { id: "tabla-detalle" } }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.detalleR, function(detalle, index) {
+            return _c("tr", [
+              _c("td", [_vm._v(_vm._s(detalle.nombre))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(detalle.cantidad))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(detalle.precio))])
+            ])
+          }),
+          0
+        )
+      ]),
+      _vm._v(" "),
       _c(
         "button",
         {
@@ -53605,11 +53718,34 @@ var render = function() {
           }
         },
         [_vm._v("X")]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticStyle: { "background-color": "white", "border-radius": "10px" }
+        },
+        [_c("pre", [_vm._v(_vm._s(_vm.$data))])]
       )
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("td", [_vm._v("Articulo")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Cantidad")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Precio")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -53646,7 +53782,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "date", placeholder: "...", autofocus: "" },
+            attrs: { type: "date", autofocus: "" },
             domProps: { value: _vm.cabecerasR.fecha },
             on: {
               input: function($event) {
@@ -53662,27 +53798,50 @@ var render = function() {
           _vm._v(" "),
           _c("label", [_vm._v("Proveedor:")]),
           _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.cabecerasR.proveedor_id,
-                expression: "cabecerasR.proveedor_id"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { placeholder: "...", autofocus: "" },
-            domProps: { value: _vm.cabecerasR.proveedor_id },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.cabecerasR.proveedor_id,
+                  expression: "cabecerasR.proveedor_id"
                 }
-                _vm.$set(_vm.cabecerasR, "proveedor_id", $event.target.value)
+              ],
+              staticClass: "form-control",
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.$set(
+                    _vm.cabecerasR,
+                    "proveedor_id",
+                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                  )
+                }
               }
-            }
-          }),
+            },
+            _vm._l(_vm.proveedores, function(proveedor) {
+              return _c(
+                "option",
+                {
+                  domProps: {
+                    value: proveedor.id,
+                    selected: proveedor.id == _vm.cabecerasR.proveedor_id
+                  }
+                },
+                [_vm._v(_vm._s(proveedor.nombre))]
+              )
+            }),
+            0
+          ),
           _vm._v(" "),
           _c("br"),
           _vm._v(" "),
@@ -53698,7 +53857,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { placeholder: "...", autofocus: "" },
+            attrs: { placeholder: "Ingrese numero del remito", autofocus: "" },
             domProps: { value: _vm.cabecerasR.numero_remito },
             on: {
               input: function($event) {
@@ -53752,7 +53911,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "date", placeholder: "...", autofocus: "" },
+            attrs: { type: "date", autofocus: "" },
             domProps: { value: _vm.cabecerasR.fecha },
             on: {
               input: function($event) {
@@ -53768,27 +53927,50 @@ var render = function() {
           _vm._v(" "),
           _c("label", [_vm._v("Proveedor:")]),
           _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.cabecerasR.proveedor_id,
-                expression: "cabecerasR.proveedor_id"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { placeholder: "...", autofocus: "" },
-            domProps: { value: _vm.cabecerasR.proveedor_id },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.cabecerasR.proveedor_id,
+                  expression: "cabecerasR.proveedor_id"
                 }
-                _vm.$set(_vm.cabecerasR, "proveedor_id", $event.target.value)
+              ],
+              staticClass: "form-control",
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.$set(
+                    _vm.cabecerasR,
+                    "proveedor_id",
+                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                  )
+                }
               }
-            }
-          }),
+            },
+            _vm._l(_vm.proveedores, function(proveedor) {
+              return _c(
+                "option",
+                {
+                  domProps: {
+                    value: proveedor.id,
+                    selected: proveedor.id == _vm.cabecerasR.proveedor_id
+                  }
+                },
+                [_vm._v(_vm._s(proveedor.nombre))]
+              )
+            }),
+            0
+          ),
           _vm._v(" "),
           _c("br"),
           _vm._v(" "),
@@ -53804,7 +53986,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { placeholder: "...", autofocus: "" },
+            attrs: { placeholder: "Ingrese numero del remito", autofocus: "" },
             domProps: { value: _vm.cabecerasR.numero_remito },
             on: {
               input: function($event) {
@@ -53852,6 +54034,7 @@ var render = function() {
                 _vm._s(_vm.cabecerasR.id) +
                 "?\n            "
             ),
+            _c("br"),
             _c(
               "button",
               {
