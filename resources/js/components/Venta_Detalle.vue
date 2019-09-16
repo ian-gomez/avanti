@@ -1,59 +1,63 @@
 <template>
-    <div class="contenedor-insumos">
-        <div class="titulo-insumos">
-            <label>{{articuloRegistroB.nombre}}</label>
-            <button class="btn btn-danger cierre-insumos" @click="$emit('cerrar-insumos')">X</button>
+    <div class="contenedor-detalle">
+        <div class="titulo-detalle">
+            <button class="btn btn-danger cierre-detalle" @click="$emit('cerrar-detalle')">X</button>
         </div>
-        <div class="datos-insumos">
+        <div class="datos-detalle">
             <div>
                 <button class="btn btn-primary btn-block" @click="formulario=1">Ingresar</button>
             </div>
-            <table class="display" id="tabla-ai">
+            <table class="display" id="tabla-detalle">
                 <thead>
                     <tr>
-                        <td>Insumo</td>
+                        <td>Articulo</td>
                         <td>Cantidad</td>
+                        <td>Precio</td>
+                        <td>Costo</td>
                         <td>Acciones</td>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(articuloInsumo, index) in articulosInsumos">
-                        <td>{{articuloInsumo.nombre}}</td>
-                        <td>{{articuloInsumo.cantidad}}</td>
+                    <tr v-for="(ventaDetalle, index) in ventasDetalle">
+                        <td>{{ventaDetalle.nombre}}</td>
+                        <td>{{ventaDetalle.cantidad}}</td>
+                        <td>{{ventaDetalle.precio}}</td>
+                        <td>{{ventaDetalle.costo}}</td>
                         <td>
-                            <button class="btn btn-warning" @click="formulario=2;asignar(articuloInsumo)">Editar</button>
-                            <button class="btn btn-danger" @click="formulario=3;asignar(articuloInsumo);pos=index">Eliminar</button>
+                            <button class="btn btn-warning" @click="formulario=2;asignar(ventaDetalle)">Editar</button>
+                            <button class="btn btn-danger" @click="formulario=3;asignar(ventaDetalle);pos=index">Eliminar</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <articulo-insumo-formulario-component
+            <venta-detalle-formulario
                 v-if="formulario==1"
                 :formulario="formulario"
-                :articuloInsumoRegistro="[]"
-                :articulo_id="articuloRegistroB.id"
+                :ventaDetalleRegistro="[]"
+                :venta_cabecera_id="ventaCabeceraRegistroB.id"
                 @cerrar-formulario="formulario=0"
-                @alta="alta($event);formulario=0"></articulo-insumo-formulario-component>
-            <articulo-insumo-formulario-component
+                @alta="alta($event);formulario=0"></venta-detalle-formulario>
+            <venta-detalle-formulario
                 v-if="formulario>1"
                 :formulario="formulario"
-                :articuloInsumoRegistro="articuloInsumoRegistro"
+                :ventaDetalleRegistro="ventaDetalleRegistro"
                 @cerrar-formulario="formulario=0"
-                @modificar="formulario=0"
-                @eliminar="eliminar();formulario=0"></articulo-insumo-formulario-component>
+                @modificar="modificar();formulario=0"
+                @eliminar="eliminar();formulario=0"></venta-detalle-formulario>
             </div>
     </div>
 </template>
 
 <script>
     export default {
-        props: ['articuloRegistroB'],
+        props: ['ventaCabeceraRegistroB'],
         data: function() {
             return{
                 formulario:0,
                 pos:0,
-                articulosInsumos:[],
-                articuloInsumoRegistro: ''
+                ventasDetalle:[],
+                ventaDetalleRegistro: '',
+                importe:0,
             }
         },
         mounted() {
@@ -61,23 +65,36 @@
         },
         methods: {
             mostrar:function() {
-                axios.get('articulos-insumos/'+ this.articuloRegistroB.id).then(response=>{
-                    this.articulosInsumos = response.data;
+                axios.get('ventas-detalle/'+ this.ventaCabeceraRegistroB.id).then(response=>{
+                    this.ventasDetalle = response.data;
                     this.tabla();
                 })
             },
             asignar:function(datos) {
-                this.articuloInsumoRegistro = datos;
+                this.ventaDetalleRegistro = datos;
             },
             alta:function(datos) {
-                this.articulosInsumos.push(datos);
+                this.ventasDetalle.push(datos);
+                this.calculoImporte();
+            },
+            modificar:function() {
+                this.calculoImporte();
             },
             eliminar:function() {
-                this.articulosInsumos.splice(this.pos, 1)
+                this.ventasDetalle.splice(this.pos, 1)
+                this.calculoImporte();
+            },
+            calculoImporte:function() {
+                this.importe = 0;
+                for (let i = 0; i < this.ventasDetalle.length; i++) {
+                    this.importe += this.ventasDetalle[i].precio * this.ventasDetalle[i].cantidad;
+                };
+                this.importe = Math.round(this.importe * 100) / 100;
+                this.$emit('importe', this.importe);
             },
             tabla:function() {
                 $(document).ready(function() {
-                    $('#tabla-ai').DataTable({
+                    $('#tabla-detalle').DataTable({
                         "lengthMenu": [[5], [5]],
                         "pagingType": "full_numbers",
                         language: {
@@ -112,14 +129,14 @@
 </script>
 
 <style>
-	.contenedor-insumos {
+	.contenedor-detalle {
         display: grid;
         grid-template-columns: 1fr 10fr 1fr;
         grid-template-rows: 1fr 1fr 9fr 1fr;
         grid-template-areas: 
         " . . ."
-        " . titulo-insumos ."
-        " . datos-insumos ."
+        " . titulo-detalle ."
+        " . datos-detalle ."
         " . . .";
         position: fixed;
 		top: 0;
@@ -128,15 +145,15 @@
 		height: 100%;
 		background-color: rgba(0,0,0,0.5);
 	}
-	.titulo-insumos {
+	.titulo-detalle {
 		background-color: burlywood;
-        grid-area: titulo-insumos;
+        grid-area: titulo-detalle;
 	}
-	.datos-insumos {
+	.datos-detalle {
 		background-color: lemonchiffon;
-        grid-area: datos-insumos;
+        grid-area: datos-detalle;
 	}
-	.cierre-insumos {
+	.cierre-detalle {
 		float: right;
 	}
 </style>

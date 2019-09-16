@@ -7,36 +7,36 @@
             <thead>
                 <tr>
                     <td>Nombre</td>
-                    <td>Precio</td>
-                    <td>Cantidad</td>
+                    <td>Direccion</td>
+                    <td>Telefono</td>
                     <td>Acciones</td>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(insumo, index) in insumos">
-                    <td>{{insumo.nombre}}</td>
-                    <td>{{insumo.precio}}</td>
-                    <td>{{insumo.cantidad}}</td>
+                <tr v-for="(cliente, index) in clientes">
+                    <td>{{cliente.nombre}}</td>
+                    <td>{{cliente.direccion}}</td>
+                    <td>{{cliente.telefono}}</td>
                     <td>
-                        <button class="btn btn-warning" @click="formulario=2;asignar(insumo)">Editar</button>
-                        <button class="btn btn-danger" @click="formulario=3;asignar(insumo);pos=index">Eliminar</button>
+                        <button class="btn btn-warning" @click="formulario=2;asignar(cliente)">Editar</button>
+                        <button class="btn btn-danger" @click="formulario=3;asignar(cliente);pos=index">Eliminar</button>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <insumo-formulario-component
+        <cliente-formulario
             v-if="formulario==1"
             :formulario="formulario"
-            :insumoRegistro="[]"
+            :clienteRegistro="[]"
             @cerrar-ventana="formulario=0"
-            @alta="alta($event);formulario=0"></insumo-formulario-component>
-        <insumo-formulario-component
+            @alta="alta($event);formulario=0"></cliente-formulario>
+        <cliente-formulario
             v-if="formulario>1"
             :formulario="formulario"
-            :insumoRegistro="insumoRegistro"
+            :clienteRegistro="clienteRegistro"
             @cerrar-ventana="formulario=0"
             @modificar="formulario=0"
-            @eliminar="eliminar();formulario=0"></insumo-formulario-component>
+            @eliminar="eliminar();formulario=0"></cliente-formulario>
     </div>
 </template>
 
@@ -47,8 +47,8 @@
             return{
                 formulario:0,
                 pos:0,
-                insumos:[],
-                insumoRegistro:''
+                clientes:[],
+                clienteRegistro:''
             }
         },
         mounted() {
@@ -56,19 +56,19 @@
         },
         methods: {
             mostrar:function() {
-                axios.get('insumos-datos').then(response=>{
-                    this.insumos = response.data;
+                axios.get('clientes-datos').then(response=>{
+                    this.clientes = response.data;
                     this.tabla();
                 })
             },
             asignar:function(datos) {
-                this.insumoRegistro = datos;
+                this.clienteRegistro = datos;
             },
             alta:function(datos) {
-                this.insumos.push(datos);
+                this.clientes.push(datos);
             },
             eliminar:function() {
-                this.insumos.splice(this.pos, 1)
+                this.clientes.splice(this.pos, 1)
             },
             tabla:function() {
                 $(document).ready(function() {

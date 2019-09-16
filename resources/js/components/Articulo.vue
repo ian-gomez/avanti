@@ -31,23 +31,23 @@
                 </tr>
             </tbody>
         </table>
-        <articulo-formulario-component
+        <articulo-formulario
             v-if="formulario==1"
             :formulario="formulario"
             :articuloRegistro="[]"
             @cerrar-formulario="formulario=0"
-            @alta="alta($event);formulario=0"></articulo-formulario-component>
-        <articulo-formulario-component
+            @alta="alta($event);formulario=0"></articulo-formulario>
+        <articulo-formulario
             v-if="formulario>1"
             :formulario="formulario"
             :articuloRegistro="articuloRegistro"
             @cerrar-formulario="formulario=0"
             @modificar="formulario=0"
-            @eliminar="eliminar();formulario=0"></articulo-formulario-component>
-        <articulo-insumo-component
+            @eliminar="eliminar();formulario=0"></articulo-formulario>
+        <articulo-insumo
          v-if="insumos"
          :articuloRegistroB="articuloRegistroB"
-         @cerrar-insumos="insumos=false"></articulo-insumo-component>
+         @cerrar-insumos="insumos=false"></articulo-insumo>
     </div>
 </template>
 

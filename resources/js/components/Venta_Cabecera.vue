@@ -6,37 +6,47 @@
         <table class="display" id="tabla">
             <thead>
                 <tr>
-                    <td>Nombre</td>
-                    <td>Direccion</td>
-                    <td>Telefono</td>
+                    <td>Número de Ticket</td>
+                    <td>Empleado</td>
+                    <td>Cliente</td>
+                    <td>Fecha de Venta</td>
+                    <td>Importe</td>
                     <td>Acciones</td>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(cliente, index) in clientes">
-                    <td>{{cliente.nombre}}</td>
-                    <td>{{cliente.direccion}}</td>
-                    <td>{{cliente.telefono}}</td>
+                <tr v-for="(ventaCabecera, index) in ventasCabecera">
+                    <td>{{ventaCabecera.numero_ticket}}</td>
+                    <td>{{ventaCabecera.user_nombre}}</td>
+                    <td>{{ventaCabecera.cliente_nombre}}</td>
+                    <td>{{ventaCabecera.created_at | moment("HH:mm DD/MM/YYYY")}}</td>
+                    <td>{{ventaCabecera.importe}}</td>
                     <td>
-                        <button class="btn btn-warning" @click="formulario=2;asignar(cliente)">Editar</button>
-                        <button class="btn btn-danger" @click="formulario=3;asignar(cliente);pos=index">Eliminar</button>
+                        <button class="btn btn-warning" @click="formulario=2;pos=index;asignar(ventaCabecera)">Editar</button>
+                        <button class="btn btn-danger" @click="formulario=3;asignar(ventaCabecera);pos=index">Eliminar</button>
+                        <button class="btn btn-info" @click="detalle=true;asignarB(ventaCabecera),pos=index">Detalle</button>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <cliente-formulario-component
+        <venta-cabecera-formulario
             v-if="formulario==1"
             :formulario="formulario"
-            :clienteRegistro="[]"
-            @cerrar-ventana="formulario=0"
-            @alta="alta($event);formulario=0"></cliente-formulario-component>
-        <cliente-formulario-component
+            :ventaCabeceraRegistro="[]"
+            @cerrar-formulario="formulario=0"
+            @alta="alta($event);formulario=0"></venta-cabecera-formulario>
+        <venta-cabecera-formulario
             v-if="formulario>1"
             :formulario="formulario"
-            :clienteRegistro="clienteRegistro"
-            @cerrar-ventana="formulario=0"
-            @modificar="formulario=0"
-            @eliminar="eliminar();formulario=0"></cliente-formulario-component>
+            :ventaCabeceraRegistro="ventaCabeceraRegistro"
+            @cerrar-formulario="formulario=0"
+            @modificar="modificar($event);formulario=0"
+            @eliminar="eliminar();formulario=0"></venta-cabecera-formulario>
+        <venta-detalle
+         v-if="detalle"
+         :ventaCabeceraRegistroB="ventaCabeceraRegistroB"
+         @cerrar-detalle="detalle=false"
+         @importe="actualizarImporte($event)"></venta-detalle>
     </div>
 </template>
 
@@ -47,8 +57,10 @@
             return{
                 formulario:0,
                 pos:0,
-                clientes:[],
-                clienteRegistro:''
+                ventasCabecera:[],
+                ventaCabeceraRegistro:'',
+                ventaCabeceraRegistroB:'',
+                detalle:false
             }
         },
         mounted() {
@@ -56,19 +68,28 @@
         },
         methods: {
             mostrar:function() {
-                axios.get('clientes-datos').then(response=>{
-                    this.clientes = response.data;
+                axios.get('ventas-cabecera-datos').then(response=>{
+                    this.ventasCabecera = response.data;
                     this.tabla();
                 })
             },
             asignar:function(datos) {
-                this.clienteRegistro = datos;
+                this.ventaCabeceraRegistro = datos;
+            },
+            asignarB:function(datos) {
+                this.ventaCabeceraRegistroB = datos;
             },
             alta:function(datos) {
-                this.clientes.push(datos);
+                this.ventasCabecera.push(datos);
+            },
+            modificar:function(datos) {
+                this.ventasCabecera[this.pos] = datos;
             },
             eliminar:function() {
-                this.clientes.splice(this.pos, 1)
+                this.ventasCabecera.splice(this.pos, 1)
+            },
+            actualizarImporte:function(importe) {
+                this.ventasCabecera[this.pos].importe = importe;
             },
             tabla:function() {
                 $(document).ready(function() {

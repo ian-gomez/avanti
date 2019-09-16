@@ -2,6 +2,6 @@
 
 @section('content')
 <div class="container">
-    <insumo-component></insumo-component>
+    <insumo></insumo>
 </div>
 @endsection

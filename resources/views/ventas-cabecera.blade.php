@@ -2,6 +2,6 @@
 
 @section('content')
 <div class="container">
-    <venta-cabecera-component></venta-cabecera-component>
+    <venta-cabecera></venta-cabecera>
 </div>
 @endsection
