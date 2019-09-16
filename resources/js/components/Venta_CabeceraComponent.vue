@@ -24,7 +24,7 @@
                     <td>
                         <button class="btn btn-warning" @click="formulario=2;pos=index;asignar(ventaCabecera)">Editar</button>
                         <button class="btn btn-danger" @click="formulario=3;asignar(ventaCabecera);pos=index">Eliminar</button>
-                        <button class="btn btn-info" @click="detalle=true;asignarB(ventaCabecera)">Detalle</button>
+                        <button class="btn btn-info" @click="detalle=true;asignarB(ventaCabecera),pos=index">Detalle</button>
                     </td>
                 </tr>
             </tbody>
@@ -45,7 +45,8 @@
         <venta-detalle-component
          v-if="detalle"
          :ventaCabeceraRegistroB="ventaCabeceraRegistroB"
-         @cerrar-detalle="detalle=false"></venta-detalle-component>
+         @cerrar-detalle="detalle=false"
+         @importe="actualizarImporte($event)"></venta-detalle-component>
     </div>
 </template>
 
@@ -86,6 +87,9 @@
             },
             eliminar:function() {
                 this.ventasCabecera.splice(this.pos, 1)
+            },
+            actualizarImporte:function(importe) {
+                this.ventasCabecera[this.pos].importe = importe;
             },
             tabla:function() {
                 $(document).ready(function() {

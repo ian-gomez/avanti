@@ -42,7 +42,7 @@
                 :formulario="formulario"
                 :ventaDetalleRegistro="ventaDetalleRegistro"
                 @cerrar-formulario="formulario=0"
-                @modificar="formulario=0"
+                @modificar="modificar();formulario=0"
                 @eliminar="eliminar();formulario=0"></venta-detalle-formulario-component>
             </div>
     </div>
@@ -56,7 +56,8 @@
                 formulario:0,
                 pos:0,
                 ventasDetalle:[],
-                ventaDetalleRegistro: ''
+                ventaDetalleRegistro: '',
+                importe:0,
             }
         },
         mounted() {
@@ -74,9 +75,22 @@
             },
             alta:function(datos) {
                 this.ventasDetalle.push(datos);
+                this.calculoImporte();
+            },
+            modificar:function() {
+                this.calculoImporte();
             },
             eliminar:function() {
                 this.ventasDetalle.splice(this.pos, 1)
+                this.calculoImporte();
+            },
+            calculoImporte:function() {
+                this.importe = 0;
+                for (let i = 0; i < this.ventasDetalle.length; i++) {
+                    this.importe += this.ventasDetalle[i].precio * this.ventasDetalle[i].cantidad;
+                };
+                this.importe = Math.round(this.importe * 100) / 100;
+                this.$emit('importe', this.importe);
             },
             tabla:function() {
                 $(document).ready(function() {

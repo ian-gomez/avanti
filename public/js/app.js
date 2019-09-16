@@ -2947,6 +2947,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2986,6 +2987,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     eliminar: function eliminar() {
       this.ventasCabecera.splice(this.pos, 1);
+    },
+    actualizarImporte: function actualizarImporte(importe) {
+      this.ventasCabecera[this.pos].importe = importe;
     },
     tabla: function tabla() {
       $(document).ready(function () {
@@ -3226,7 +3230,8 @@ __webpack_require__.r(__webpack_exports__);
       formulario: 0,
       pos: 0,
       ventasDetalle: [],
-      ventaDetalleRegistro: ''
+      ventaDetalleRegistro: '',
+      importe: 0
     };
   },
   mounted: function mounted() {
@@ -3247,9 +3252,25 @@ __webpack_require__.r(__webpack_exports__);
     },
     alta: function alta(datos) {
       this.ventasDetalle.push(datos);
+      this.calculoImporte();
+    },
+    modificar: function modificar() {
+      this.calculoImporte();
     },
     eliminar: function eliminar() {
       this.ventasDetalle.splice(this.pos, 1);
+      this.calculoImporte();
+    },
+    calculoImporte: function calculoImporte() {
+      this.importe = 0;
+
+      for (var i = 0; i < this.ventasDetalle.length; i++) {
+        this.importe += this.ventasDetalle[i].precio * this.ventasDetalle[i].cantidad;
+      }
+
+      ;
+      this.importe = Math.round(this.importe * 100) / 100;
+      this.$emit('importe', this.importe);
     },
     tabla: function tabla() {
       $(document).ready(function () {
@@ -56561,7 +56582,7 @@ var render = function() {
                     on: {
                       click: function($event) {
                         _vm.detalle = true
-                        _vm.asignarB(ventaCabecera)
+                        _vm.asignarB(ventaCabecera), (_vm.pos = index)
                       }
                     }
                   },
@@ -56617,6 +56638,9 @@ var render = function() {
             on: {
               "cerrar-detalle": function($event) {
                 _vm.detalle = false
+              },
+              importe: function($event) {
+                return _vm.actualizarImporte($event)
               }
             }
           })
@@ -57012,6 +57036,7 @@ var render = function() {
                   _vm.formulario = 0
                 },
                 modificar: function($event) {
+                  _vm.modificar()
                   _vm.formulario = 0
                 },
                 eliminar: function($event) {
