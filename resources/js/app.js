@@ -25,6 +25,9 @@ Vue.component('proveedor-component', require('./components/ProveedorComponent.vu
 Vue.component('proveedor-formulario-component', require('./components/ProveedorFormularioComponent.vue').default);
 Vue.component('remito-cabecera-component', require('./components/RemitoCabeceraComponent.vue').default);
 Vue.component('remito-cabecera-formulario-component', require('./components/RemitoCabeceraFormularioComponent.vue').default);
+Vue.component('remito-detalle-component', require('./components/RemitoDetalleComponent.vue').default);
+Vue.component('remito-detalle-formulario-component', require('./components/RemitoDetalleFormularioComponent.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

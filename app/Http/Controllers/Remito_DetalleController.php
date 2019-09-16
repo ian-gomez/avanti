@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Remito_Detalle;
+use App\Articulo;
+
 
 class Remito_DetalleController extends Controller
 {
@@ -12,9 +15,14 @@ class Remito_DetalleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($remitocabecera)
     {
-        //
+        $remitodetalle = DB::table('remitos_detalle')
+                                ->join('articulos', 'remitos_detalle.articulos_id','=','articulos.id')
+                                ->where('remitos_detalle.remito_cabecera_id','=', $remitocabecera)
+                                ->select('remitos_detalle.*','articulos.nombre')
+                                ->get();
+        return $remitodetalle;
     }
 
     /**

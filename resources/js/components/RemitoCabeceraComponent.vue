@@ -24,6 +24,7 @@
                             <td>
                                 <button class="btn btn-warning btn-large" @click="operacion=2;registroremitos=remito">Editar</button>
                                 <button class="btn btn-danger btn-large" @click="pos=index;operacion=3;registroremitos=remito">Borrar</button>
+                                <button class="btn btn-info" @click="rdetalle=true;asignardetalle(remito)">Detalle</button>
                             </td>
                         </tr>
                       </tbody>
@@ -34,6 +35,11 @@
                         :operacion="operacion"
                         :registroremitos="registroremitos">
                   </remito-cabecera-formulario-component>
+                  <remito-detalle-component 
+                  v-if='rdetalle'
+                  :registroremitosb="registroremitosb"
+                  @cerrar-detalle="rdetalle=false">
+                  </remito-detalle-component>
                 </div>
             </div>
     </div>
@@ -48,6 +54,8 @@
                 remitos:[],
                 busqueda:'',
                 registroremitos:[],
+                registroremitosb:[],
+                rdetalle:false,
                 pos:0
 
             }
@@ -58,6 +66,9 @@
         },
 
         methods:{
+            asignardetalle:function(dato) {
+                this.registroremitosb= dato;
+            },
             altaremito:function(dato){
                 alert("hhhh");
                 console.log(dato);

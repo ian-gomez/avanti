@@ -1,23 +1,161 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
+    <div class="conten">
+            <div>
+                <input type="text" class="form-control" name="busqueda" v-model="busqueda" placeholder="Buscar...">
+            </div>
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Example Component</div>
-
-                    <div class="card-body">
-                        I'm an example component.
-                    </div>
+                  <button class="btn btn-info btn-block" @click="operacion=1; registrodetalles=[]">Ingresar</button>
+                   <table id="tabla" class="display; color">
+                    <thead>
+                       <tr>
+                           <td>ID</td>
+                           <td>Precio</td>
+                           <td>Cantidad</td>
+                       </tr>
+                    </thead>
+                      <tbody>
+                        <tr v-for="(detalle, index) in detalles">
+                            <td>{{detalle.id}}</td>
+                            <td>{{detalle.precio}}</td>
+                            <td>{{detalle.cantidad}}</td>
+                            <td>
+                                <button class="btn btn-warning btn-large" @click="operacion=2;registrodetalles=detalle">Editar</button>
+                                <button class="btn btn-danger btn-large" @click="pos=index;operacion=3;registrodetalles=detalle">Borrar</button>
+                            </td>
+                        </tr>
+                      </tbody>
+                  </table>
+                  <detalle-formulario-component @detallealta="altadetalle($event)" @detallebaja="bajadetalle()" @detalleeditar="editardetalle($event)"
+                  @cerrar-ventana="operacion=0"
+                        v-if="operacion>0" 
+                        :operacion="operacion"
+                        :registrodetalles="registrodetalles">
+            </detalle-formulario-component>
                 </div>
             </div>
-        </div>
     </div>
 </template>
 
 <script>
-    export default {
+    import datatables from 'datatables'
+    export default{
+        data(){
+            return{
+                operacion:0,
+                detalles:[],
+                busqueda:'',
+                registrodetalles:[],
+                pos:0,
+
+            }
+        },
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component mounteda.');
+            this.mostrardetalle();
+        },
+        computed:{
+            buscardetalles:function(){
+            return this.rdetalles.filter(
+            (rdetalle)=>rdetalle.nombre.includes(this.busqueda)
+                );
+            }
+        },
+        methods:{
+          mostrardetalle:function(){
+                axios.get('remitos-detalle').then(response =>{
+                  console.log(response.data);
+                    this.detalles = response.data;
+                    this.tabla();
+                });
+            },
+            cerrardetalle:function(){
+                this.$emit('cerrar-detalle');
+            }, 
+
+            altardetalle:function(dato){
+                alert("hhhh");
+               this.rdetalles.push(dato);
+               this.operacion=0;
+            },
+
+            editarrdetalle:function(dato){
+                console.log(dato); 
+                this.operacion=0;   
+            },
+            bajardetalle:function(){
+                this.rdetalles.splice(this.pos,1);
+                this.operacion=0;
+            },
+            tabla:function(){
+                $(document).ready( function () {
+                $('#tabla').DataTable({
+                    "scrollY":        "500px",
+                    "scrollCollapse": true,
+                    "paging":         false,
+
+                    
+                        language:{
+                            "sProcessing":     "Procesando...",
+                            "sLengthMenu":     "Mostrar _MENU_ registros",
+                            "sZeroRecords":    "No se encontraron resultados",
+                            "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                            "sInfoPostFix":    "",
+                            "sSearch":         "Buscar:",
+                            "sUrl":            "",
+                            "sInfoThousands":  ",",
+                            "sLoadingRecords": "Cargando...",
+                            "oPaginate": {
+                                "sFirst":    "Primero",
+                                "sLast":     "Último",
+                                "sNext":     "Siguiente",
+                                "sPrevious": "Anterior"
+                            },
+                            "oAria": {
+                                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                            }
+                        }
+                    });
+                } );
+            }
         }
-    }
+       } 
 </script>
+<style>
+    .conten {
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
+        grid-template-rows: 1fr 1fr 3fr 1fr 1fr;
+        grid-template-areas: 
+        " . . ."
+        " . titulo ."
+        " . dato ."
+        " . aceptar ."
+        " . . .";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+    }
+    .titulo {
+        background-color: burlywood;
+        grid-area: titulo;
+    }
+    .dato {
+        background-color: lemonchiffon;
+        grid-area: dato;
+    }
+    .cierre {
+        float: right;
+    }
+    .aceptar {
+        text-align: center;
+        grid-area: aceptar;
+    }
+</style>

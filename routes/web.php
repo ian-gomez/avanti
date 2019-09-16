@@ -30,6 +30,8 @@ Route::middleware(['auth'])->group(function() {
     Route::get('remito-cabecera', 'Remito_CabeceraController@cabeceraView');
     Route::resource('ventas-cabecera', 'Venta_CabeceraController');
     Route::resource('ventas-detalle', 'Venta_DetalleController');
+    Route::get('remitos-detalle/{remitocabecera}', ['as' => 'remitos-detalle.index', 'uses' => 'Remito_DetalleController@index']);
+    Route::resource('remitos-detalle', 'Remito_DetalleController', ['except' => ['index']]);
 });
 
 Auth::routes();

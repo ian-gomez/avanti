@@ -1,6 +1,7 @@
 <template>
     <div class="contenedor">
         <div class="titulo">
+            
             <label>{{titulo}}</label>
             <button class="btn btn-danger cierre" @click="cerrar()">X</button>
         </div>
