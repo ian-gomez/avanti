@@ -19,7 +19,7 @@
                     <td>{{ventaCabecera.numero_ticket}}</td>
                     <td>{{ventaCabecera.user_nombre}}</td>
                     <td>{{ventaCabecera.cliente_nombre}}</td>
-                    <td>{{ventaCabecera.created_at}}</td>
+                    <td>{{ventaCabecera.created_at | moment("HH:mm DD/MM/YYYY")}}</td>
                     <td>{{ventaCabecera.importe}}</td>
                     <td>
                         <button class="btn btn-warning" @click="formulario=2;pos=index;asignar(ventaCabecera)">Editar</button>
