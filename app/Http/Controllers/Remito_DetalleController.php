@@ -43,7 +43,15 @@ class Remito_DetalleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $remitodetalle = new Venta_Detalle();
+        $remitodetalle->remito_cabecera_id = $request->remito_cabecera_id;
+        $remitodetalle->articulo_id = $request->articulo_id;
+        $remitodetalle->cantidad = $request->cantidad;
+        $articulo = Articulo::find($request->articulo_id);
+        $remitodetalle->precio = $articulo->precio;
+        $remitodetalle->save();
+        $remitodetalle->nombre = $articulo->nombre;
+        return $remitodetalle;
     }
 
     /**

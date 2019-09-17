@@ -2449,8 +2449,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["registroremitosb"],
   data: function data() {
     return {
       operacion: 0,
@@ -2477,7 +2479,8 @@ __webpack_require__.r(__webpack_exports__);
     mostrardetalle: function mostrardetalle() {
       var _this2 = this;
 
-      axios.get('remitos-detalle').then(function (response) {
+      //console.log( this.registroremitosb);
+      axios.get('remitos-detalle/' + this.registroremitosb.id).then(function (response) {
         console.log(response.data);
         _this2.detalles = response.data;
 
@@ -2635,9 +2638,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var formdata = new FormData();
-      formdata.append("name", this.registrodetalles.name);
-      formdata.append("email", this.registrodetalles.email);
-      formdata.append("password", this.registrodetalles.password);
+      formdata.append("cantidad", this.registrodetalles.cantidad);
+      formdata.append("precio", this.registrodetalles.precio);
       axios.post('detalles', formdata).then(function (response) {
         _this.$emit('detallealta', response.data);
       });
@@ -55142,7 +55144,7 @@ var render = function() {
           ),
           _vm._v(" "),
           _vm.operacion > 0
-            ? _c("detalle-formulario-component", {
+            ? _c("remito-detalle-formulario-component", {
                 attrs: {
                   operacion: _vm.operacion,
                   registrodetalles: _vm.registrodetalles
@@ -55180,7 +55182,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("td", [_vm._v("Precio")]),
         _vm._v(" "),
-        _c("td", [_vm._v("Cantidad")])
+        _c("td", [_vm._v("Cantidad")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Acciones")])
       ])
     ])
   }
@@ -55259,19 +55263,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.registrodetalles.email,
-                expression: "registrodetalles.email"
+                value: _vm.registrodetalles.precio,
+                expression: "registrodetalles.precio"
               }
             ],
             staticClass: "form-control",
             attrs: { type: "text" },
-            domProps: { value: _vm.registrodetalles.email },
+            domProps: { value: _vm.registrodetalles.precio },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.registrodetalles, "email", $event.target.value)
+                _vm.$set(_vm.registrodetalles, "precio", $event.target.value)
               }
             }
           }),

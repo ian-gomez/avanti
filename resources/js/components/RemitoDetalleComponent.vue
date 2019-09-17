@@ -12,6 +12,7 @@
                            <td>ID</td>
                            <td>Precio</td>
                            <td>Cantidad</td>
+                           <td>Acciones</td>
                        </tr>
                     </thead>
                       <tbody>
@@ -26,12 +27,12 @@
                         </tr>
                       </tbody>
                   </table>
-                  <detalle-formulario-component @detallealta="altadetalle($event)" @detallebaja="bajadetalle()" @detalleeditar="editardetalle($event)"
+                  <remito-detalle-formulario-component @detallealta="altadetalle($event)" @detallebaja="bajadetalle()" @detalleeditar="editardetalle($event)"
                   @cerrar-ventana="operacion=0"
                         v-if="operacion>0" 
                         :operacion="operacion"
                         :registrodetalles="registrodetalles">
-            </detalle-formulario-component>
+            </remito-detalle-formulario-component>
                 </div>
             </div>
     </div>
@@ -40,6 +41,7 @@
 <script>
     import datatables from 'datatables'
     export default{
+        props: ["registroremitosb"],
         data(){
             return{
                 operacion:0,
@@ -63,7 +65,8 @@
         },
         methods:{
           mostrardetalle:function(){
-                axios.get('remitos-detalle').then(response =>{
+            //console.log( this.registroremitosb);
+                axios.get('remitos-detalle/'+this.registroremitosb.id).then(response =>{
                   console.log(response.data);
                     this.detalles = response.data;
                     this.tabla();

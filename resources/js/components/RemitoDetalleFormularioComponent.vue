@@ -10,7 +10,7 @@
             <input class="form-control" type="text" v-model="registrodetalles.cantidad">
             <br>
             <label>Precio</label>
-            <input class="form-control" type="text" v-model="registrodetalles.email">
+            <input class="form-control" type="text" v-model="registrodetalles.precio">
             <br>
         </div>
         <!-- Editar -->
@@ -68,9 +68,8 @@
             },
             altadetalle:function(){
                 let formdata = new FormData();
-                formdata.append("name", this.registrodetalles.name);
-                formdata.append("email", this.registrodetalles.email);
-                formdata.append("password", this.registrodetalles.password);
+                formdata.append("cantidad", this.registrodetalles.cantidad);
+                formdata.append("precio", this.registrodetalles.precio);
                 axios.post('detalles',formdata).then(response => {
                     
                 this.$emit('detallealta', response.data);
