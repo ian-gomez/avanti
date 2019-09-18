@@ -111,8 +111,9 @@
                 })
             },
             eliminar:function() {
-                axios.post('articulos/'+this.articuloRegistro.id, {_method: 'delete'});
-                this.$emit('eliminar');
+                axios.delete('articulos/'+this.articuloRegistro.id).then(response =>{
+                    this.$emit('eliminar');
+                });
             }
         }
     }

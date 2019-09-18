@@ -118,6 +118,6 @@ class Venta_CabeceraController extends Controller
     {
         $venta_cabecera = Venta_Cabecera::find($id);
         $venta_cabecera->delete();
-        return back();
+        return $venta_cabecera;
     }
 }

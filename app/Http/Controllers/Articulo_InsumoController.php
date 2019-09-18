@@ -105,6 +105,6 @@ class Articulo_InsumoController extends Controller
     {
         $articulo_insumo = Articulo_Insumo::find($id);
         $articulo_insumo->delete();
-        return back();
+        return $articulo_insumo;
     }
 }

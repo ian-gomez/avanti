@@ -93,8 +93,9 @@
                 })
             },
             eliminar:function() {
-                axios.post('ventas-cabecera/'+this.ventaCabeceraRegistro.id, {_method: 'delete'});
-                this.$emit('eliminar');
+                axios.delete('ventas-cabecera/'+this.ventaCabeceraRegistro.id).then(response => {
+                    this.$emit('eliminar');
+                })
             }
         }
     }

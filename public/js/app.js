@@ -2108,10 +2108,11 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     eliminar: function eliminar() {
-      axios.post('articulos/' + this.articuloRegistro.id, {
-        _method: 'delete'
+      var _this4 = this;
+
+      axios["delete"]('articulos/' + this.articuloRegistro.id).then(function (response) {
+        _this4.$emit('eliminar');
       });
-      this.$emit('eliminar');
     }
   }
 });
@@ -2366,10 +2367,11 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     eliminar: function eliminar() {
-      axios.post('articulos-insumos/' + this.articuloInsumoRegistro.id, {
-        _method: 'delete'
+      var _this4 = this;
+
+      axios["delete"]('articulos-insumos/' + this.articuloInsumoRegistro.id).then(function (response) {
+        _this4.$emit('eliminar');
       });
-      this.$emit('eliminar');
     }
   }
 });
@@ -2604,10 +2606,11 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     eliminar: function eliminar() {
-      axios.post('clientes/' + this.clienteRegistro.id, {
-        _method: 'delete'
+      var _this3 = this;
+
+      axios["delete"]('clientes/' + this.clienteRegistro.id).then(function (response) {
+        _this3.$emit('eliminar');
       });
-      this.$emit('eliminar');
     }
   }
 });
@@ -2842,10 +2845,11 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     eliminar: function eliminar() {
-      axios.post('insumos/' + this.insumoRegistro.id, {
-        _method: 'delete'
+      var _this3 = this;
+
+      axios["delete"]('insumos/' + this.insumoRegistro.id).then(function (response) {
+        _this3.$emit('eliminar');
       });
-      this.$emit('eliminar');
     }
   }
 });
@@ -3121,10 +3125,11 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     eliminar: function eliminar() {
-      axios.post('ventas-cabecera/' + this.ventaCabeceraRegistro.id, {
-        _method: 'delete'
+      var _this4 = this;
+
+      axios["delete"]('ventas-cabecera/' + this.ventaCabeceraRegistro.id).then(function (response) {
+        _this4.$emit('eliminar');
       });
-      this.$emit('eliminar');
     }
   }
 });
@@ -3401,10 +3406,11 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     eliminar: function eliminar() {
-      axios.post('ventas-detalle/' + this.ventaDetalleRegistro.id, {
-        _method: 'delete'
+      var _this4 = this;
+
+      axios["delete"]('ventas-detalle/' + this.ventaDetalleRegistro.id).then(function (response) {
+        _this4.$emit('eliminar');
       });
-      this.$emit('eliminar');
     }
   }
 });
@@ -74541,14 +74547,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!*******************************************************!*\
   !*** ./resources/js/components/ClienteFormulario.vue ***!
   \*******************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ClienteFormulario_vue_vue_type_template_id_e69a029e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ClienteFormulario.vue?vue&type=template&id=e69a029e& */ "./resources/js/components/ClienteFormulario.vue?vue&type=template&id=e69a029e&");
 /* harmony import */ var _ClienteFormulario_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ClienteFormulario.vue?vue&type=script&lang=js& */ "./resources/js/components/ClienteFormulario.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _ClienteFormulario_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ClienteFormulario.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/ClienteFormulario.vue?vue&type=style&index=0&lang=css&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _ClienteFormulario_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _ClienteFormulario_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _ClienteFormulario_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ClienteFormulario.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/ClienteFormulario.vue?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -74580,7 +74587,7 @@ component.options.__file = "resources/js/components/ClienteFormulario.vue"
 /*!********************************************************************************!*\
   !*** ./resources/js/components/ClienteFormulario.vue?vue&type=script&lang=js& ***!
   \********************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -74697,14 +74704,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************************!*\
   !*** ./resources/js/components/InsumoFormulario.vue ***!
   \******************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _InsumoFormulario_vue_vue_type_template_id_b6828434___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./InsumoFormulario.vue?vue&type=template&id=b6828434& */ "./resources/js/components/InsumoFormulario.vue?vue&type=template&id=b6828434&");
 /* harmony import */ var _InsumoFormulario_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./InsumoFormulario.vue?vue&type=script&lang=js& */ "./resources/js/components/InsumoFormulario.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _InsumoFormulario_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./InsumoFormulario.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/InsumoFormulario.vue?vue&type=style&index=0&lang=css&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _InsumoFormulario_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _InsumoFormulario_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _InsumoFormulario_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./InsumoFormulario.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/InsumoFormulario.vue?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -74736,7 +74744,7 @@ component.options.__file = "resources/js/components/InsumoFormulario.vue"
 /*!*******************************************************************************!*\
   !*** ./resources/js/components/InsumoFormulario.vue?vue&type=script&lang=js& ***!
   \*******************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -75128,8 +75136,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\avanti\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\avanti\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /opt/lampp/htdocs/avanti/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /opt/lampp/htdocs/avanti/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

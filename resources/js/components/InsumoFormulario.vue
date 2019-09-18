@@ -76,8 +76,9 @@
                 })
             },
             eliminar:function() {
-                axios.post('insumos/'+this.insumoRegistro.id, {_method: 'delete'});
-                this.$emit('eliminar');
+                axios.delete('insumos/'+this.insumoRegistro.id).then(response => {
+                    this.$emit('eliminar');
+                })
             }
         }
     }

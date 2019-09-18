@@ -76,8 +76,9 @@
                 })
             },
             eliminar:function() {
-                axios.post('clientes/'+this.clienteRegistro.id, {_method: 'delete'});
-                this.$emit('eliminar');
+                axios.delete('clientes/'+this.clienteRegistro.id).then(response => {
+                    this.$emit('eliminar');
+                })
             }
         }
     }

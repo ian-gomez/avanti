@@ -90,8 +90,9 @@
                 })
             },
             eliminar:function() {
-                axios.post('articulos-insumos/'+this.articuloInsumoRegistro.id, {_method: 'delete'});
-                this.$emit('eliminar');
+                axios.delete('articulos-insumos/'+this.articuloInsumoRegistro.id).then(response => {
+                    this.$emit('eliminar');
+                });
             }
         }
     }

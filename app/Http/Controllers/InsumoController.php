@@ -98,6 +98,6 @@ class InsumoController extends Controller
     {
         $insumo = Insumo::find($id);
         $insumo->delete();
-        return back();
+        return $insumo;
     }
 }

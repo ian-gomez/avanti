@@ -92,8 +92,9 @@
                 })
             },
             eliminar:function() {
-                axios.post('ventas-detalle/'+this.ventaDetalleRegistro.id, {_method: 'delete'});
-                this.$emit('eliminar');
+                axios.delete('ventas-detalle/'+this.ventaDetalleRegistro.id).then(response => {
+                    this.$emit('eliminar');
+                })
             }
         }
     }

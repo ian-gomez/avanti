@@ -105,6 +105,6 @@ class Venta_DetalleController extends Controller
     {
         $venta_detalle = Venta_Detalle::find($id);
         $venta_detalle->delete();
-        return back();
+        return $venta_detalle;
     }
 }

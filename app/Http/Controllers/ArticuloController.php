@@ -110,6 +110,6 @@ class ArticuloController extends Controller
     {
         $articulo = Articulo::find($id);
         $articulo->delete();
-        return back();
+        return $articulo;
     }
 }
