@@ -24,10 +24,11 @@ Route::middleware(['auth'])->group(function() {
     Route::resource('remitos-detalle', 'Remito_DetalleController');
     Route::resource('stock-cabecera', 'Stock_CabeceraController');
     Route::get('stock-cabecera-vista', 'Stock_CabeceraController@vista');
-    Route::resource('stock-detalle', 'Stock_DetalleController');
     Route::resource('users', 'UserController');
     Route::resource('ventas-cabecera', 'Venta_CabeceraController');
     Route::resource('ventas-detalle', 'Venta_DetalleController');
+    Route::get('stock-detalle/{stockcabecera}', ['as' => 'stock-detalle.index', 'uses' => 'Stock_DetalleController@index']);
+    Route::resource('stock-detalle', 'Stock_DetalleController', ['except' => ['index']]);
 });
 
 Auth::routes();

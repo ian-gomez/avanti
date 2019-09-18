@@ -21,7 +21,7 @@
                     @click="pos=index;operacion=2;cabecerasR=cabecera">Editar</button>
                     <button class="btn btn-danger" 
                     @click="pos=index;operacion=3;cabecerasR=cabecera">Borrar</button>
-                    <button @click="operacion=4"class="btn btn-success">Detalle</button>
+                    <button @click="detalle=true"class="btn btn-success">Detalle</button>
                 </td>
                 </tr>
             </tbody>    
@@ -39,8 +39,8 @@
                 <pre>{{$data}}</pre>
             </div>
         <stock-detalle-formulario-component
-                @cerrar-ventana="operacion=0"
-                v-if="operacion==4"
+                @cerrar-detalle="detalle=false"
+                v-if="detalle"
                 :detallev="detallev"
                 :operacion="operacion">
         </stock-detalle-formulario-component>
@@ -58,7 +58,8 @@
                 pos:0,
                 cabeceras:[],
                 cabecerasR:[],
-                detallev:[]
+                detallev:[],
+                detalle:false
                }
         },
         mounted() {
@@ -67,6 +68,10 @@
         },
 
         methods:{
+            asignardetalle:function(dato)
+            {
+                this.detallev = dato;
+            },
             mostrar:function()
             {
                 axios.get('stock-cabecera').then(respose =>{
@@ -88,10 +93,6 @@
             {
                 this.cabeceras.splice(this.pos,1);
                 this.operacion=0;
-            },
-            detalle:function()
-            {
-               this.detallev = datos;       
             },
 
             tabla:function(){

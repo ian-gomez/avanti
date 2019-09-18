@@ -1,12 +1,15 @@
 <template>
 	<div class="contenedor">
+
 		<div class="dato">
+			<button class="btn btn-success btn-block">Ingresar</button>
 			<table class="display" id="tabla-detalle">
 				<thead>
                 	<tr>
                 		<td>Articulo</td>
                     	<td>Cantidad</td>
                     	<td>Precio</td>
+                    	<td>Operaciones</td>
                 	</tr>
             	</thead>
             	<tbody>
@@ -14,6 +17,7 @@
 	                    <td>{{detalle.nombre}}</td>
 	                    <td>{{detalle.cantidad}}</td>
 	                    <td>{{detalle.precio}}</td>
+            			<button class="btn btn-danger">Borrar</button>
                 	</tr>
             	</tbody>
 			</table>
@@ -22,16 +26,24 @@
 				<pre>{{$data}}</pre>
 			</div>	
 		</div>
+		<stock-detalle-component
+				@altad='altadetalle($event)'
+				@bajad="bajadetalle()"
+				v-if="operaciond>0"
+				@cerrar-ventana="operaciond=0">
+		</stock-detalle-component>
 	</div>
 </template>
 
 <script>
 	import datatables from 'datatables'
 	export default{
-		props: ['operacion','detallev'],		
+		props: ["detallev"],		
 		data:function(){
             return{
-            	detalleR:[]
+            	detalleR:[],
+            	pos:0,
+            	operaciond:0
             }
         },
         mounted() {
@@ -44,19 +56,26 @@
 
         	mostrard:function()
             {
-                axios.get('stock-detalle').then(respose =>{
+                axios.get('stock-detalle/'+this.detallev.id).then(respose =>{
+                	console.log(respose.data);
                     this.detalleR = respose.data;
                     this.tabla();
                 });
             },
-        
-       	 	cerrar:function(){
-                this.$emit('cerrar-ventana');
+            altadetalle:function(dato)
+            {
+                this.detalleR.push(dato);
+                this.operaciond=0;
             },
-        	detalle:function(){
-                if (this.operacion == 4){
-            	};
-        	},
+            bajadetalle:function()
+            {
+                this.detalleR.splice(this.pos,1);
+                this.operaciond=0;
+            },
+       	 	cerrar:function(){
+                this.$emit('cerrar-detalle');
+            },
+        	
         	tabla:function(){
                 $(document).ready(function(){
                     $('#tabla-detalle').DataTable({

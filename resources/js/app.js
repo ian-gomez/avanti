@@ -22,6 +22,7 @@ window.Vue = require('vue');
 Vue.component('stock-cabecera-component', require('./components/StockCabeceraComponent.vue').default);
 Vue.component('stock-formulario-component', require('./components/StockFormularioComponent.vue').default);
 Vue.component('stock-detalle-formulario-component', require('./components/StockDetalleFormularioComponent.vue').default);
+Vue.component('stock-detalle-component', require('./components/StockDetalleComponent').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

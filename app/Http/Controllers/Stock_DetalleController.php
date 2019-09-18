@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Stock_Detalle;
-use App\articulos;   
+use App\articulos;
+use App\Stock_Cabecera;   
 
 class Stock_DetalleController extends Controller
 {
@@ -14,10 +15,11 @@ class Stock_DetalleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($stockcabecera)
     {
         $Stock_Detalle = DB::table('Stock_Detalle')
                     ->join('articulos','Stock_Detalle.articulo_id','=','articulos.id')
+                    ->where('Stock_Detalle.stock_cabecera_id','=', $stockcabecera)
                     ->select('Stock_Detalle.*','articulos.nombre')
                     ->get();
         return $Stock_Detalle; 
@@ -41,7 +43,12 @@ class Stock_DetalleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $Stock_Detalle = new Stock_Detalle(); 
+        $Stock_Detalle->cantidad = $request->cantidad;
+        $Stock_Detalle->precio = $request->precio;
+        $Stock_Detalle->costo = $request->costo;
+        $Stock_Detalle->save();
+        return $Stock_Detalle;
     }
 
     /**
@@ -86,6 +93,7 @@ class Stock_DetalleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $Stock_Detalle = Stock_Detalle::find($id);
+        $Stock_Detalle->delete();
     }
 }
