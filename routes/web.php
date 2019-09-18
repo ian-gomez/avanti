@@ -22,7 +22,6 @@ Route::middleware(['auth'])->group(function() {
     Route::resource('proveedores', 'ProveedorController');
     Route::get('proveedores-datos', 'ProveedorController@datos');
     Route::resource('remitos-cabecera', 'Remito_CabeceraController');
-    Route::resource('remitos-detalle', 'Remito_DetalleController');
     Route::resource('stock-cabecera', 'Stock_CabeceraController');
     Route::resource('stock-detalle', 'Stock_DetalleController');
     Route::resource('users', 'UserController');

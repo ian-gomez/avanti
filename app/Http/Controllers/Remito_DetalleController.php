@@ -18,7 +18,7 @@ class Remito_DetalleController extends Controller
     public function index($remitocabecera)
     {
         $remitodetalle = DB::table('remitos_detalle')
-                                ->join('articulos', 'remitos_detalle.articulos_id','=','articulos.id')
+                                ->join('articulos', 'remitos_detalle.articulo_id','=','articulos.id')
                                 ->where('remitos_detalle.remito_cabecera_id','=', $remitocabecera)
                                 ->select('remitos_detalle.*','articulos.nombre')
                                 ->get();
@@ -43,7 +43,7 @@ class Remito_DetalleController extends Controller
      */
     public function store(Request $request)
     {
-        $remitodetalle = new Venta_Detalle();
+        $remitodetalle = new Remito_Detalle();
         $remitodetalle->remito_cabecera_id = $request->remito_cabecera_id;
         $remitodetalle->articulo_id = $request->articulo_id;
         $remitodetalle->cantidad = $request->cantidad;

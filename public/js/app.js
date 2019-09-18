@@ -2450,6 +2450,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["registroremitosb"],
@@ -2584,7 +2585,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['operacion', "registrodetalles"],
+  props: ['operacion', "registrodetalles", "remito_cabecera_id"],
   data: function data() {
     return {
       titulo: ''
@@ -2638,9 +2639,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var formdata = new FormData();
+      formdata.append("remito_cabecera_id", this.remito_cabecera_id);
       formdata.append("cantidad", this.registrodetalles.cantidad);
       formdata.append("precio", this.registrodetalles.precio);
-      axios.post('detalles', formdata).then(function (response) {
+      axios.post('remitos-detalle', formdata).then(function (response) {
         _this.$emit('detallealta', response.data);
       });
     },
@@ -2653,7 +2655,8 @@ __webpack_require__.r(__webpack_exports__);
       formdata.append("password", this.registrodetalles.password);
       formdata.append("_method", "PATCH");
       axios.post('detalles/' + this.registrodetalles.id, formdata).then(function (response) {
-        //console.log(response.data);
+        console.log(response.data);
+
         _this2.$emit('detalleeditar', response.data);
       });
     },
@@ -55146,6 +55149,7 @@ var render = function() {
           _vm.operacion > 0
             ? _c("remito-detalle-formulario-component", {
                 attrs: {
+                  remito_cabecera_id: _vm.registroremitosb.id,
                   operacion: _vm.operacion,
                   registrodetalles: _vm.registrodetalles
                 },

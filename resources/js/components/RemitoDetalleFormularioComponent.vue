@@ -33,7 +33,7 @@
 </template>
 <script>
    export default {
-        props: ['operacion',"registrodetalles"],
+        props: ['operacion',"registrodetalles","remito_cabecera_id"],
         data:function(){
             return{
              titulo:''   
@@ -68,21 +68,22 @@
             },
             altadetalle:function(){
                 let formdata = new FormData();
+                formdata.append("remito_cabecera_id", this.remito_cabecera_id);
                 formdata.append("cantidad", this.registrodetalles.cantidad);
                 formdata.append("precio", this.registrodetalles.precio);
-                axios.post('detalles',formdata).then(response => {
+                axios.post('remitos-detalle',formdata).then(response => {
                     
                 this.$emit('detallealta', response.data);
                 })
             },
-             editardetalle:function(){
+            editardetalle:function(){
                 let formdata = new FormData();
                 formdata.append("name",this.registrodetalles.name);
                 formdata.append("email",this.registrodetalles.email);
                 formdata.append("password",this.registrodetalles.password);
                 formdata.append("_method","PATCH");
                 axios.post('detalles/'+this.registrodetalles.id,formdata).then(response => {
-                    //console.log(response.data);
+                    console.log(response.data);
                 this.$emit('detalleeditar', response.data);
                 })
             },
