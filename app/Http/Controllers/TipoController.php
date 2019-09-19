@@ -3,26 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Remito_Detalle;
-use App\Articulo;
+use App\Tipo;
 
-
-class Remito_DetalleController extends Controller
+class TipoController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($remitocabecera)
+    public function index()
     {
-        $remitodetalle = DB::table('remitos_detalle')
-                                ->join('articulos', 'remitos_detalle.articulo_id','=','articulos.id')
-                                ->where('remitos_detalle.remito_cabecera_id','=', $remitocabecera)
-                                ->select('remitos_detalle.*','articulos.nombre')
-                                ->get();
-        return $remitodetalle;
+        $tipo = Tipo::get();
+        return $tipo;
     }
 
     /**
@@ -43,15 +36,7 @@ class Remito_DetalleController extends Controller
      */
     public function store(Request $request)
     {
-        $remitodetalle = new Remito_Detalle();
-        $remitodetalle->remito_cabecera_id = $request->remito_cabecera_id;
-        $remitodetalle->articulo_id = $request->articulo_id;
-        $remitodetalle->cantidad = $request->cantidad;
-        $articulo = Articulo::find($request->articulo_id);
-        $remitodetalle->precio = $articulo->precio;
-        $remitodetalle->save();
-        $remitodetalle->nombre = $articulo->nombre;
-        return $remitodetalle;
+        //
     }
 
     /**
@@ -85,13 +70,7 @@ class Remito_DetalleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $remitodetalle = remitoDetalle::find($id);
-        $remitodetalle->remitocabecera_id = $request->remito_cabecera_id;
-        $remitodetalle->articulo_id = $request->articulo_id;
-        $remitodetalle->cantidad = $request->cantidad;
-        $remitodetalle->precio = $request->precio;
-        $remitodetalle->save();
-        return $remitodetalle;
+        //
     }
 
     /**

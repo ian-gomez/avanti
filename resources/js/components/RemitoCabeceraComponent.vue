@@ -38,7 +38,8 @@
                   <remito-detalle-component 
                   v-if='rdetalle'
                   :registroremitosb="registroremitosb"
-                  @cerrar-detalle="rdetalle=false">
+                  @cerrar-detalle="rdetalle=false"
+                    @importe="actualizarImporte($event)">
                   </remito-detalle-component>
                 </div>
             </div>
@@ -89,6 +90,9 @@
             bajaremito:function(){
                 this.remitos.splice(this.pos,1);
                 this.operacion=0;
+            },
+            actualizarImporte:function(importe) {
+                this.remito[this.pos].importe = importe;
             },
             tabla:function(){
                 $(document).ready( function () {

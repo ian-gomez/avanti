@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Venta_Cabecera;
 
 class Venta_CabeceraController extends Controller
@@ -12,9 +14,22 @@ class Venta_CabeceraController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function datos()
+    {
+        $venta_cabecera = DB::table('ventas_cabecera')
+                          ->join('clientes', 'ventas_cabecera.cliente_id', '=', 'clientes.id')
+                          ->join('users', 'ventas_cabecera.user_id', '=', 'users.id')
+                          ->select('ventas_cabecera.*',
+                                   'clientes.nombre as cliente_nombre',
+                                   'users.name as user_nombre',
+                                   DB::raw("(SELECT SUM(ventas_detalle.cantidad * ventas_detalle.precio) FROM ventas_detalle WHERE ventas_detalle.venta_cabecera_id = ventas_cabecera.id) AS importe"))
+                          ->get();
+        return $venta_cabecera;
+    }
+    
     public function index()
     {
-        //
+        return view('ventas-cabecera');
     }
 
     /**
@@ -35,7 +50,18 @@ class Venta_CabeceraController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $venta_cabecera = new Venta_Cabecera();
+        $venta_cabecera->cliente_id = $request->cliente_id;
+        $venta_cabecera->user_id = Auth::id();
+        $venta_cabecera->numero_ticket = $request->numero_ticket;
+        $venta_cabecera->save();
+
+        $cabecera = Venta_Cabecera::where('numero_ticket', $request->numero_ticket)->first();
+        $user = $cabecera->user;
+        $venta_cabecera->user_nombre = $user->name;
+        $cliente = $cabecera->cliente;
+        $venta_cabecera->cliente_nombre = $cliente->nombre;
+        return $venta_cabecera;
     }
 
     /**
@@ -69,7 +95,17 @@ class Venta_CabeceraController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $venta_cabecera = Venta_Cabecera::find($id);
+        $venta_cabecera->cliente_id = $request->cliente_id;
+        $venta_cabecera->numero_ticket = $request->numero_ticket;
+        $venta_cabecera->save();
+
+        $cabecera = Venta_Cabecera::find($id);
+        $user = $cabecera->user;
+        $venta_cabecera->user_nombre = $user->name;
+        $cliente = $cabecera->cliente;
+        $venta_cabecera->cliente_nombre = $cliente->nombre;
+        return $venta_cabecera;
     }
 
     /**
@@ -80,6 +116,8 @@ class Venta_CabeceraController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $venta_cabecera = Venta_Cabecera::find($id);
+        $venta_cabecera->delete();
+        return $venta_cabecera;
     }
 }

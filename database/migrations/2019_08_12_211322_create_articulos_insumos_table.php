@@ -17,7 +17,10 @@ class CreateArticulosInsumosTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('articulo_id')->unsigned();
             $table->bigInteger('insumo_id')->unsigned();
-            $table->integer('cantidad');
+            $table->decimal('cantidad', 10, 2);
+
+            $table->foreign('articulo_id')->references('id')->on('articulos');
+            $table->foreign('insumo_id')->references('id')->on('insumos');
         });
     }
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStockCabeceraTable extends Migration
+class CreateInsumosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateStockCabeceraTable extends Migration
      */
     public function up()
     {
-        Schema::create('stock_cabecera', function (Blueprint $table) {
+        Schema::create('insumos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('user_id')->unsigned();
-            $table->decimal('importe', 10, 2);
-            $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('nombre');
+            $table->decimal('precio', 10, 2);
+            $table->decimal('cantidad', 10, 2);
         });
     }
 
@@ -30,6 +28,6 @@ class CreateStockCabeceraTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stock_cabecera');
+        Schema::dropIfExists('insumos');
     }
 }

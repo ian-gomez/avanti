@@ -50,6 +50,7 @@
                 busqueda:'',
                 registrodetalles:[],
                 pos:0,
+                importe:0,
 
             }
         },
@@ -59,8 +60,8 @@
         },
         computed:{
             buscardetalles:function(){
-            return this.rdetalles.filter(
-            (rdetalle)=>rdetalle.nombre.includes(this.busqueda)
+            return this.detalles.filter(
+            (detalle)=>detalle.nombre.includes(this.busqueda)
                 );
             }
         },
@@ -77,19 +78,27 @@
                 this.$emit('cerrar-detalle');
             }, 
 
-            altardetalle:function(dato){
+            altadetalle:function(dato){
                 alert("hhhh");
-               this.rdetalles.push(dato);
+               this.detalles.push(dato);
                this.operacion=0;
             },
 
-            editarrdetalle:function(dato){
+            editardetalle:function(dato){
                 console.log(dato); 
                 this.operacion=0;   
             },
-            bajardetalle:function(){
-                this.rdetalles.splice(this.pos,1);
+            bajadetalle:function(){
+                this.detalles.splice(this.pos,1);
                 this.operacion=0;
+            },
+            calculoImporte:function() {
+                this.importe = 0;
+                for (let i = 0; i < this.detalle.length; i++) {
+                    this.importe += this.detalle[i].precio * this.detalle[i].cantidad;
+                };
+                this.importe = Math.round(this.importe * 100) / 100;
+                this.$emit('importe', this.importe);
             },
             tabla:function(){
                 $(document).ready( function () {

@@ -9,18 +9,22 @@
             <label>Cantidad</label>
             <input class="form-control" type="text" v-model="registrodetalles.cantidad">
             <br>
-            <label>Precio</label>
-            <input class="form-control" type="text" v-model="registrodetalles.precio">
-            <br>
+            <select class="form-control" v-model="opcionArticulo">
+                <option v-for="articulo in articulos" v-bind:value="articulo.id" v-bind:selected="(articulo.id == opcionArticulo)">
+                    {{articulo.nombre}}
+                </option>
+            </select>
         </div>
         <!-- Editar -->
         <div class="dato" v-if="operacion==2">
             <label>Cantidad</label>
             <input class="form-control" type="text" v-model="registrodetalles.cantidad">
             <br>
-            <label>Precio</label>
-            <input class="form-control" type="text" v-model="registrodetalles.precio">
-            <br>
+            <select class="form-control" v-model="opcionArticulo">
+                <option v-for="articulo in articulos" v-bind:value="articulo.id" v-bind:selected="(articulo.id == opcionArticulo)">
+                    {{articulo.nombre}}
+                </option>
+            </select>
         </div>
          <!-- Baja -->
         <div class="dato" v-if="operacion==3">
@@ -36,7 +40,9 @@
         props: ['operacion',"registrodetalles","remito_cabecera_id"],
         data:function(){
             return{
-             titulo:''   
+             titulo:'',
+             opcionArticulo:1,
+             articulos:[]
             }
         },
         mounted() {
@@ -50,8 +56,14 @@
                 if (this.operacion==3) {
                     this.titulo="Baja";
                 };
+            this.cargarArticulos();
         },
         methods:{
+            cargarArticulos:function() {
+                axios.get('articulos-datos').then(response=>{
+                    this.articulos = response.data
+                })
+            },
             cerrar:function(){
                 this.$emit('cerrar-ventana');
             },   
@@ -70,7 +82,7 @@
                 let formdata = new FormData();
                 formdata.append("remito_cabecera_id", this.remito_cabecera_id);
                 formdata.append("cantidad", this.registrodetalles.cantidad);
-                formdata.append("precio", this.registrodetalles.precio);
+                formdata.append("articulo_id", this.opcionArticulo);
                 axios.post('remitos-detalle',formdata).then(response => {
                     
                 this.$emit('detallealta', response.data);
@@ -78,18 +90,19 @@
             },
             editardetalle:function(){
                 let formdata = new FormData();
-                formdata.append("name",this.registrodetalles.name);
-                formdata.append("email",this.registrodetalles.email);
-                formdata.append("password",this.registrodetalles.password);
+                formdata.append("remito_cabecera_id", this.remito_cabecera_id);
+                formdata.append("cantidad", this.registrodetalles.cantidad);
+                formdata.append("articulo_id", this.registrodetalles.articulo_id);
+                formdata.append("precio", this.registrodetalles.precio);
                 formdata.append("_method","PATCH");
-                axios.post('detalles/'+this.registrodetalles.id,formdata).then(response => {
+                axios.post('remitos-detalle/'+this.registrodetalles.id,formdata).then(response => {
                     console.log(response.data);
                 this.$emit('detalleeditar', response.data);
                 })
             },
 
             bajadetalle:function(){
-                axios.delete('detalles/'+this.registrodetalles.id).then(response => {
+                axios.delete('remitos-detalle/'+this.registrodetalles.id).then(response => {
                     this.$emit('detallebaja');
                 })
             },

@@ -3,29 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Articulo;
+use App\Insumo;
 
-class ArticuloController extends Controller
+class InsumoController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
     public function datos()
     {
-        $articulo = DB::table('articulos')
-                    ->join('tipos', 'articulos.tipo_id', '=', 'tipos.id')
-                    ->select('articulos.*', 'tipos.nombre as tipo_nombre')
-                    ->get();
-        return $articulo;
+        $insumo = Insumo::get();
+        return $insumo;
     }
 
     public function index()
     {
-        return view('articulos');
+        return view('insumos');
     }
 
     /**
@@ -46,18 +41,12 @@ class ArticuloController extends Controller
      */
     public function store(Request $request)
     {
-        $articulo = new Articulo();
-        $articulo->nombre = $request->nombre;
-        $articulo->tipo_id = $request->tipo_id;
-        $articulo->precio = $request->precio;
-        $articulo->costo = $request->costo;
-        $articulo->save();
-
-        $tipo_nombre = Articulo::all();
-        $tipo_nombre = $tipo_nombre->where('nombre', $request->nombre);
-        $tipo_nombre = $tipo_nombre->first();
-        $articulo->tipo_nombre = $tipo_nombre->tipo->nombre;
-        return $articulo;
+        $insumo = new Insumo();
+        $insumo->nombre = $request->nombre;
+        $insumo->precio = $request->precio;
+        $insumo->cantidad = $request->cantidad;
+        $insumo->save();
+        return $insumo;
     }
 
     /**
@@ -91,13 +80,12 @@ class ArticuloController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $articulo = Articulo::find($id);
-        $articulo->nombre = $request->nombre;
-        $articulo->tipo_id = $request->tipo_id;
-        $articulo->precio = $request->precio;
-        $articulo->costo = $request->costo;
-        $articulo->save();
-        return $articulo;
+        $insumo = Insumo::find($id);
+        $insumo->nombre = $request->nombre;
+        $insumo->precio = $request->precio;
+        $insumo->cantidad = $request->cantidad;
+        $insumo->save();
+        return $insumo;
     }
 
     /**
@@ -108,8 +96,8 @@ class ArticuloController extends Controller
      */
     public function destroy($id)
     {
-        $articulo = Articulo::find($id);
-        $articulo->delete();
-        return $articulo;
+        $insumo = Insumo::find($id);
+        $insumo->delete();
+        return $insumo;
     }
 }
