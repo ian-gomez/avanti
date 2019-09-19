@@ -12,9 +12,15 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function datos()
+    {
+        $cliente = Cliente::get();
+        return $cliente;
+    }
+
     public function index()
     {
-        //
+        return view('clientes');
     }
 
     /**
@@ -35,7 +41,12 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cliente = new Cliente();
+        $cliente->nombre = $request->nombre;
+        $cliente->direccion = $request->direccion;
+        $cliente->telefono = $request->telefono;
+        $cliente->save();
+        return $cliente;
     }
 
     /**
@@ -69,7 +80,12 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cliente = Cliente::find($id);
+        $cliente->nombre = $request->nombre;
+        $cliente->direccion = $request->direccion;
+        $cliente->telefono = $request->telefono;
+        $cliente->save();
+        return $cliente;
     }
 
     /**
@@ -80,6 +96,8 @@ class ClienteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cliente = Cliente::find($id);
+        $cliente->delete();
+        return $cliente;
     }
 }
