@@ -2085,25 +2085,26 @@ __webpack_require__.r(__webpack_exports__);
     alta: function alta() {
       var _this2 = this;
 
-      var formdata = new FormData();
-      formdata.append("nombre", this.articuloRegistro.nombre);
-      formdata.append("tipo_id", this.opcionTipo);
-      formdata.append("precio", this.articuloRegistro.precio);
-      formdata.append("costo", this.articuloRegistro.costo);
-      axios.post('articulos', formdata).then(function (response) {
+      var params = {
+        nombre: this.articuloRegistro.nombre,
+        tipo_id: this.opcionTipo,
+        precio: this.articuloRegistro.precio,
+        costo: this.articuloRegistro.costo
+      };
+      axios.post('articulos', params).then(function (response) {
         _this2.$emit('alta', response.data);
       });
     },
     modificar: function modificar() {
       var _this3 = this;
 
-      var formdata = new FormData();
-      formdata.append("nombre", this.articuloRegistro.nombre);
-      formdata.append("tipo_id", this.articuloRegistro.tipo_id);
-      formdata.append("precio", this.articuloRegistro.precio);
-      formdata.append("costo", this.articuloRegistro.costo);
-      formdata.append("_method", "PATCH");
-      axios.post('articulos/' + this.articuloRegistro.id, formdata).then(function (response) {
+      var params = {
+        nombre: this.articuloRegistro.nombre,
+        tipo_id: this.articuloRegistro.tipo_id,
+        precio: this.articuloRegistro.precio,
+        costo: this.articuloRegistro.costo
+      };
+      axios.put('articulos/' + this.articuloRegistro.id, params).then(function (response) {
         _this3.$emit('modificar');
       });
     },
@@ -2346,23 +2347,24 @@ __webpack_require__.r(__webpack_exports__);
     alta: function alta() {
       var _this2 = this;
 
-      var formdata = new FormData();
-      formdata.append("articulo_id", this.articulo_id);
-      formdata.append("insumo_id", this.opcionInsumo);
-      formdata.append("cantidad", this.articuloInsumoRegistro.cantidad);
-      axios.post('articulos-insumos', formdata).then(function (response) {
+      var params = {
+        articulo_id: this.articulo_id,
+        insumo_id: this.opcionInsumo,
+        cantidad: this.articuloInsumoRegistro.cantidad
+      };
+      axios.post('articulos-insumos', params).then(function (response) {
         _this2.$emit('alta', response.data);
       });
     },
     modificar: function modificar() {
       var _this3 = this;
 
-      var formdata = new FormData();
-      formdata.append("articulo_id", this.articuloInsumoRegistro.articulo_id);
-      formdata.append("insumo_id", this.articuloInsumoRegistro.insumo_id);
-      formdata.append("cantidad", this.articuloInsumoRegistro.cantidad);
-      formdata.append("_method", "PATCH");
-      axios.post('articulos-insumos/' + this.articuloInsumoRegistro.id, formdata).then(function (response) {
+      var params = {
+        articulo_id: this.articuloInsumoRegistro.articulo_id,
+        insumo_id: this.articuloInsumoRegistro.insumo_id,
+        cantidad: this.articuloInsumoRegistro.cantidad
+      };
+      axios.put('articulos-insumos/' + this.articuloInsumoRegistro.id, params).then(function (response) {
         _this3.$emit('modificar');
       });
     },
@@ -2585,23 +2587,24 @@ __webpack_require__.r(__webpack_exports__);
     alta: function alta() {
       var _this = this;
 
-      var formdata = new FormData();
-      formdata.append("nombre", this.clienteRegistro.nombre);
-      formdata.append("direccion", this.clienteRegistro.direccion);
-      formdata.append("telefono", this.clienteRegistro.telefono);
-      axios.post('clientes', formdata).then(function (response) {
+      var params = {
+        nombre: this.clienteRegistro.nombre,
+        direccion: this.clienteRegistro.direccion,
+        telefono: this.clienteRegistro.telefono
+      };
+      axios.post('clientes', params).then(function (response) {
         _this.$emit('alta', response.data);
       });
     },
     modificar: function modificar() {
       var _this2 = this;
 
-      var formdata = new FormData();
-      formdata.append("nombre", this.clienteRegistro.nombre);
-      formdata.append("direccion", this.clienteRegistro.direccion);
-      formdata.append("telefono", this.clienteRegistro.telefono);
-      formdata.append("_method", "PATCH");
-      axios.post('clientes/' + this.clienteRegistro.id, formdata).then(function (response) {
+      var params = {
+        nombre: this.clienteRegistro.nombre,
+        direccion: this.clienteRegistro.direccion,
+        telefono: this.clienteRegistro.telefono
+      };
+      axios.put('clientes/' + this.clienteRegistro.id, params).then(function (response) {
         _this2.$emit('modificar');
       });
     },
@@ -2824,23 +2827,24 @@ __webpack_require__.r(__webpack_exports__);
     alta: function alta() {
       var _this = this;
 
-      var formdata = new FormData();
-      formdata.append("nombre", this.insumoRegistro.nombre);
-      formdata.append("precio", this.insumoRegistro.precio);
-      formdata.append("cantidad", this.insumoRegistro.cantidad);
-      axios.post('insumos', formdata).then(function (response) {
+      var params = {
+        nombre: this.insumoRegistro.nombre,
+        precio: this.insumoRegistro.precio,
+        cantidad: this.insumoRegistro.cantidad
+      };
+      axios.post('insumos', params).then(function (response) {
         _this.$emit('alta', response.data);
       });
     },
     modificar: function modificar() {
       var _this2 = this;
 
-      var formdata = new FormData();
-      formdata.append("nombre", this.insumoRegistro.nombre);
-      formdata.append("precio", this.insumoRegistro.precio);
-      formdata.append("cantidad", this.insumoRegistro.cantidad);
-      formdata.append("_method", "PATCH");
-      axios.post('insumos/' + this.insumoRegistro.id, formdata).then(function (response) {
+      var params = {
+        nombre: this.insumoRegistro.nombre,
+        precio: this.insumoRegistro.precio,
+        cantidad: this.insumoRegistro.cantidad
+      };
+      axios.put('insumos/' + this.insumoRegistro.id, params).then(function (response) {
         _this2.$emit('modificar');
       });
     },
@@ -3106,21 +3110,22 @@ __webpack_require__.r(__webpack_exports__);
     alta: function alta() {
       var _this2 = this;
 
-      var formdata = new FormData();
-      formdata.append("cliente_id", this.opcionCliente);
-      formdata.append("numero_ticket", this.ventaCabeceraRegistro.numero_ticket);
-      axios.post('ventas-cabecera', formdata).then(function (response) {
+      var params = {
+        cliente_id: this.opcionCliente,
+        numero_ticket: this.ventaCabeceraRegistro.numero_ticket
+      };
+      axios.post('ventas-cabecera', params).then(function (response) {
         _this2.$emit('alta', response.data);
       });
     },
     modificar: function modificar() {
       var _this3 = this;
 
-      var formdata = new FormData();
-      formdata.append("cliente_id", this.ventaCabeceraRegistro.cliente_id);
-      formdata.append("numero_ticket", this.ventaCabeceraRegistro.numero_ticket);
-      formdata.append("_method", "PATCH");
-      axios.post('ventas-cabecera/' + this.ventaCabeceraRegistro.id, formdata).then(function (response) {
+      var params = {
+        cliente_id: this.ventaCabeceraRegistro.cliente_id,
+        numero_ticket: this.ventaCabeceraRegistro.numero_ticket
+      };
+      axios.put('ventas-cabecera/' + this.ventaCabeceraRegistro.id, params).then(function (response) {
         _this3.$emit('modificar', response.data);
       });
     },
@@ -3383,25 +3388,26 @@ __webpack_require__.r(__webpack_exports__);
     alta: function alta() {
       var _this2 = this;
 
-      var formdata = new FormData();
-      formdata.append("venta_cabecera_id", this.venta_cabecera_id);
-      formdata.append("articulo_id", this.opcionArticulo);
-      formdata.append("cantidad", this.ventaDetalleRegistro.cantidad);
-      axios.post('ventas-detalle', formdata).then(function (response) {
+      var params = {
+        venta_cabecera_id: this.venta_cabecera_id,
+        articulo_id: this.opcionArticulo,
+        cantidad: this.ventaDetalleRegistro.cantidad
+      };
+      axios.post('ventas-detalle', params).then(function (response) {
         _this2.$emit('alta', response.data);
       });
     },
     modificar: function modificar() {
       var _this3 = this;
 
-      var formdata = new FormData();
-      formdata.append("venta_cabecera_id", this.ventaDetalleRegistro.venta_cabecera_id);
-      formdata.append("articulo_id", this.ventaDetalleRegistro.articulo_id);
-      formdata.append("cantidad", this.ventaDetalleRegistro.cantidad);
-      formdata.append("precio", this.ventaDetalleRegistro.precio);
-      formdata.append("costo", this.ventaDetalleRegistro.costo);
-      formdata.append("_method", "PATCH");
-      axios.post('ventas-detalle/' + this.ventaDetalleRegistro.id, formdata).then(function (response) {
+      var params = {
+        venta_cabecera_id: this.ventaDetalleRegistro.venta_cabecera_id,
+        articulo_id: this.ventaDetalleRegistro.articulo_id,
+        cantidad: this.ventaDetalleRegistro.cantidad,
+        precio: this.ventaDetalleRegistro.precio,
+        costo: this.ventaDetalleRegistro.costo
+      };
+      axios.put('ventas-detalle/' + this.ventaDetalleRegistro.id, params).then(function (response) {
         _this3.$emit('modificar');
       });
     },

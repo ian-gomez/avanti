@@ -71,23 +71,24 @@
                 };
             },
             alta:function(){
-                let formdata = new FormData();
-                formdata.append("venta_cabecera_id", this.venta_cabecera_id);
-                formdata.append("articulo_id", this.opcionArticulo);
-                formdata.append("cantidad", this.ventaDetalleRegistro.cantidad);
-                axios.post('ventas-detalle', formdata).then(response => {
+                const params = {
+                    venta_cabecera_id: this.venta_cabecera_id,
+                    articulo_id: this.opcionArticulo,
+                    cantidad: this.ventaDetalleRegistro.cantidad,
+                }
+                axios.post('ventas-detalle', params).then(response => {
                     this.$emit('alta', response.data);
                 })
             },
             modificar:function(){
-                let formdata = new FormData();
-                formdata.append("venta_cabecera_id", this.ventaDetalleRegistro.venta_cabecera_id);
-                formdata.append("articulo_id", this.ventaDetalleRegistro.articulo_id);
-                formdata.append("cantidad", this.ventaDetalleRegistro.cantidad);
-                formdata.append("precio", this.ventaDetalleRegistro.precio);
-                formdata.append("costo", this.ventaDetalleRegistro.costo);
-                formdata.append("_method", "PATCH");
-                axios.post('ventas-detalle/'+this.ventaDetalleRegistro.id, formdata).then(response => {
+                const params = {
+                    venta_cabecera_id: this.ventaDetalleRegistro.venta_cabecera_id,
+                    articulo_id: this.ventaDetalleRegistro.articulo_id,
+                    cantidad: this.ventaDetalleRegistro.cantidad,
+                    precio: this.ventaDetalleRegistro.precio,
+                    costo: this.ventaDetalleRegistro.costo,
+                }
+                axios.put('ventas-detalle/'+this.ventaDetalleRegistro.id, params).then(response => {
                     this.$emit('modificar');
                 })
             },
