@@ -49,7 +49,6 @@
                 })
             },
             restaurar:function(articulo) {
-                console.log(articulo);
                 const params = {
                     nombre: articulo.nombre,
                     tipo_id: articulo.tipo_id,

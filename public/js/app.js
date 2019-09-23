@@ -2193,7 +2193,6 @@ __webpack_require__.r(__webpack_exports__);
     restaurar: function restaurar(articulo) {
       var _this2 = this;
 
-      console.log(articulo);
       var params = {
         nombre: articulo.nombre,
         tipo_id: articulo.tipo_id,
