@@ -47,7 +47,6 @@
             }
         },
         mounted() {
-            console.log('Component mounted8888888888')
               if (this.operacion==1) {
                     this.titulo="Alta";
                 };
@@ -90,7 +89,6 @@
                 formdata.append("direccion",this.registroproveedores.direccion);
                 formdata.append("_method","PATCH");
                 axios.post('proveedores/'+this.registroproveedores.id,formdata).then(response => {
-                    //console.log(response.data);
                 this.$emit('proveedoreditar', response.data);
                 })
             },

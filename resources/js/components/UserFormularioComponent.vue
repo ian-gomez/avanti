@@ -47,7 +47,7 @@
             }
         },
         mounted() {
-            console.log('Component mounted8888888888')
+
               if (this.operacion==1) {
                     this.titulo="Alta";
                 };
@@ -90,7 +90,6 @@
 				formdata.append("password",this.registrousers.password);
                 formdata.append("_method","PATCH");
                 axios.post('users/'+this.registrousers.id,formdata).then(response => {
-                    //console.log(response.data);
                 this.$emit('usereditar', response.data);
                 })
             },

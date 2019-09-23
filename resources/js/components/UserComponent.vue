@@ -52,7 +52,6 @@
             }
         },
         mounted() {
-            console.log('Component mounteda.');
             this.mostraruser();
         },
         computed:{
@@ -64,19 +63,16 @@
         },
         methods:{
             altauser:function(dato){
-                alert("hhhh");
                this.users.push(dato);
                this.operacion=0;
             },
             mostraruser:function(){
                 axios.get('users').then(response =>{
-                  console.log(response.data);
                     this.users = response.data;
                     this.tabla();
                 });
             },
             editaruser:function(dato){
-                console.log(dato); 
                 this.operacion=0;   
             },
             bajauser:function(){

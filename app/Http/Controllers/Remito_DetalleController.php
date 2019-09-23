@@ -85,8 +85,8 @@ class Remito_DetalleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $remitodetalle = remitoDetalle::find($id);
-        $remitodetalle->remitocabecera_id = $request->remito_cabecera_id;
+        $remitodetalle = Remito_Detalle::find($id);
+        $remitodetalle->remito_cabecera_id = $request->remito_cabecera_id;
         $remitodetalle->articulo_id = $request->articulo_id;
         $remitodetalle->cantidad = $request->cantidad;
         $remitodetalle->precio = $request->precio;
@@ -102,6 +102,7 @@ class Remito_DetalleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $remitodetalle = Remito_Detalle::find($id);
+        $remitodetalle->delete();
     }
 }

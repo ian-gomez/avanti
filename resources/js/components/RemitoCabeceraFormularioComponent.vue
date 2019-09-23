@@ -7,8 +7,6 @@
         </div>
         <!-- Alta -->
         <div class="dato" v-if="operacion==1">
-            <label>Importe:</label>
-            <input class="form-control" type="text" v-model="registroremitos.importe">
             <label>Proveedor:</label>
             <select class="form-control" v-model="registroremitos.proveedor_id">
                 <option v-for="proveedor in proveedores" v-bind:value="proveedor.id" v-bind:selected="(proveedor.id == opcionproveedor)">
@@ -19,8 +17,6 @@
         </div>
         <!-- Editar -->
         <div class="dato" v-if="operacion==2">
-            <label>Importe:</label>
-            <input class="form-control" type="text" v-model="registroremitos.importe">
             <label>Proveedor:</label>
             <select class="form-control" v-model="registroremitos.proveedor_id">
                 <option v-for="proveedor in proveedores" v-bind:value="proveedor.id" v-bind:selected="(proveedor.id == opcionproveedor)">
@@ -30,7 +26,7 @@
         </div>
          <!-- Baja -->
         <div class="dato" v-if="operacion==3">
-            ¿Está seguro que desea eliminar {{registroremitos.importe}}?
+            ¿Está seguro que desea eliminar este remito?
         </div>
         <div class="aceptar">
             <button @click="operacionremito()">Aceptar</button>
@@ -49,7 +45,6 @@
             }
         },
         mounted() {
-            console.log('Component mounted8888888888')
             this.cargarProveedores();
               if (this.operacion==1) {
                     this.titulo="Alta";
@@ -90,7 +85,6 @@
             },            
             altaremito:function(){
                 let formdata = new FormData();
-                formdata.append("importe", this.registroremitos.importe);
                 formdata.append("proveedor_id", this.registroremitos.proveedor_id);
                 axios.post('remitos-cabecera',formdata).then(response => {
                     
@@ -104,11 +98,9 @@
             },
              editarremito:function(){
                 let formdata = new FormData();
-                formdata.append("importe",this.registroremitos.importe);
                 formdata.append("proveedor_id", this.registroremitos.proveedor_id);
                 formdata.append("_method","PATCH");
                 axios.post('remitos-cabecera/'+this.registroremitos.id,formdata).then(response => {
-                    console.log(response.data);
                 this.$emit('remitoeditar', response.data);
                 })
             },

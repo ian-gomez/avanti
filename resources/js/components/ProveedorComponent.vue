@@ -55,7 +55,6 @@
             }
         },
         mounted() {
-            console.log('Component mounteda.');
             this.mostrarproveedor();
         },
         computed:{
@@ -67,19 +66,16 @@
         },
         methods:{
             altaproveedor:function(dato){
-                alert("hhhh");
                this.proveedores.push(dato);
                this.operacion=0;
             },
             mostrarproveedor:function(){
                 axios.get('proveedores-datos').then(response =>{
-                  console.log(response.data);
                     this.proveedores = response.data;
                     this.tabla();
                 });
             },
-            editarproveedor:function(dato){
-                console.log(dato); 
+            editarproveedor:function(dato){ 
                 this.operacion=0;   
             },
             bajaproveedor:function(){

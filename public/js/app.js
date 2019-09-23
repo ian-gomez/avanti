@@ -2922,7 +2922,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log('Component mounteda.');
     this.mostrarproveedor();
   },
   computed: {
@@ -2936,7 +2935,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     altaproveedor: function altaproveedor(dato) {
-      alert("hhhh");
       this.proveedores.push(dato);
       this.operacion = 0;
     },
@@ -2944,14 +2942,12 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios.get('proveedores-datos').then(function (response) {
-        console.log(response.data);
         _this2.proveedores = response.data;
 
         _this2.tabla();
       });
     },
     editarproveedor: function editarproveedor(dato) {
-      console.log(dato);
       this.operacion = 0;
     },
     bajaproveedor: function bajaproveedor() {
@@ -3053,8 +3049,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log('Component mounted8888888888');
-
     if (this.operacion == 1) {
       this.titulo = "Alta";
     }
@@ -3116,7 +3110,6 @@ __webpack_require__.r(__webpack_exports__);
       formdata.append("direccion", this.registroproveedores.direccion);
       formdata.append("_method", "PATCH");
       axios.post('proveedores/' + this.registroproveedores.id, formdata).then(function (response) {
-        //console.log(response.data);
         _this2.$emit('proveedoreditar', response.data);
       });
     },
@@ -3205,7 +3198,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log('Component mounteda.');
     this.mostrarremito();
   },
   methods: {
@@ -3213,8 +3205,6 @@ __webpack_require__.r(__webpack_exports__);
       this.registroremitosb = dato;
     },
     altaremito: function altaremito(dato) {
-      alert("hhhh");
-      console.log(dato);
       this.remitos.push(dato);
       this.operacion = 0;
     },
@@ -3222,14 +3212,12 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get('remitos-cabecera').then(function (response) {
-        console.log(response.data);
         _this.remitos = response.data;
 
         _this.tabla();
       });
     },
     editarremito: function editarremito(dato) {
-      console.log(dato);
       this.operacion = 0;
     },
     bajaremito: function bajaremito() {
@@ -3237,7 +3225,7 @@ __webpack_require__.r(__webpack_exports__);
       this.operacion = 0;
     },
     actualizarImporte: function actualizarImporte(importe) {
-      this.remito[this.pos].importe = importe;
+      this.remitos[this.pos].importe = importe;
     },
     tabla: function tabla() {
       $(document).ready(function () {
@@ -3322,10 +3310,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['operacion', "registroremitos"],
   data: function data() {
@@ -3336,7 +3320,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log('Component mounted8888888888');
     this.cargarProveedores();
 
     if (this.operacion == 1) {
@@ -3396,7 +3379,6 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       var formdata = new FormData();
-      formdata.append("importe", this.registroremitos.importe);
       formdata.append("proveedor_id", this.registroremitos.proveedor_id);
       axios.post('remitos-cabecera', formdata).then(function (response) {
         _this2.$emit('remitoalta', {
@@ -3410,12 +3392,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       var formdata = new FormData();
-      formdata.append("importe", this.registroremitos.importe);
       formdata.append("proveedor_id", this.registroremitos.proveedor_id);
       formdata.append("_method", "PATCH");
       axios.post('remitos-cabecera/' + this.registroremitos.id, formdata).then(function (response) {
-        console.log(response.data);
-
         _this3.$emit('remitoeditar', response.data);
       });
     },
@@ -3479,9 +3458,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["registroremitosb"],
@@ -3496,7 +3472,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log('Component mounteda.');
     this.mostrardetalle();
   },
   computed: {
@@ -3512,9 +3487,7 @@ __webpack_require__.r(__webpack_exports__);
     mostrardetalle: function mostrardetalle() {
       var _this2 = this;
 
-      //console.log( this.registroremitosb);
       axios.get('remitos-detalle/' + this.registroremitosb.id).then(function (response) {
-        console.log(response.data);
         _this2.detalles = response.data;
 
         _this2.tabla();
@@ -3524,23 +3497,24 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('cerrar-detalle');
     },
     altadetalle: function altadetalle(dato) {
-      alert("hhhh");
       this.detalles.push(dato);
+      this.calculoImporte();
       this.operacion = 0;
     },
     editardetalle: function editardetalle(dato) {
-      console.log(dato);
+      this.calculoImporte();
       this.operacion = 0;
     },
     bajadetalle: function bajadetalle() {
       this.detalles.splice(this.pos, 1);
+      this.calculoImporte();
       this.operacion = 0;
     },
     calculoImporte: function calculoImporte() {
       this.importe = 0;
 
-      for (var i = 0; i < this.detalle.length; i++) {
-        this.importe += this.detalle[i].precio * this.detalle[i].cantidad;
+      for (var i = 0; i < this.detalles.length; i++) {
+        this.importe += this.detalles[i].precio * this.detalles[i].cantidad;
       }
 
       ;
@@ -3549,7 +3523,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     tabla: function tabla() {
       $(document).ready(function () {
-        $('#tabla').DataTable({
+        $('#tabla-detalle').DataTable({
           "scrollY": "500px",
           "scrollCollapse": true,
           "paging": false,
@@ -3641,8 +3615,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log('Component mounted8888888888');
-
     if (this.operacion == 1) {
       this.titulo = "Alta";
     }
@@ -3713,8 +3685,6 @@ __webpack_require__.r(__webpack_exports__);
       formdata.append("precio", this.registrodetalles.precio);
       formdata.append("_method", "PATCH");
       axios.post('remitos-detalle/' + this.registrodetalles.id, formdata).then(function (response) {
-        console.log(response.data);
-
         _this3.$emit('detalleeditar', response.data);
       });
     },
@@ -3793,7 +3763,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log('Component mounteda.');
     this.mostraruser();
   },
   computed: {
@@ -3807,7 +3776,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     altauser: function altauser(dato) {
-      alert("hhhh");
       this.users.push(dato);
       this.operacion = 0;
     },
@@ -3815,14 +3783,12 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios.get('users').then(function (response) {
-        console.log(response.data);
         _this2.users = response.data;
 
         _this2.tabla();
       });
     },
     editaruser: function editaruser(dato) {
-      console.log(dato);
       this.operacion = 0;
     },
     bajauser: function bajauser() {
@@ -3924,8 +3890,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log('Component mounted8888888888');
-
     if (this.operacion == 1) {
       this.titulo = "Alta";
     }
@@ -3987,7 +3951,6 @@ __webpack_require__.r(__webpack_exports__);
       formdata.append("password", this.registrousers.password);
       formdata.append("_method", "PATCH");
       axios.post('users/' + this.registrousers.id, formdata).then(function (response) {
-        //console.log(response.data);
         _this2.$emit('usereditar', response.data);
       });
     },
@@ -9116,7 +9079,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.conten {\n    display: grid;\n    grid-template-columns: 1fr 3fr 1fr;\n    grid-template-rows: 1fr 1fr 3fr 1fr 1fr;\n    grid-template-areas: \n    \" . . .\"\n    \" . titulo .\"\n    \" . dato .\"\n    \" . aceptar .\"\n    \" . . .\";\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0,0,0,0.5);\n}\n.titulo {\n    background-color: burlywood;\n    grid-area: titulo;\n}\n.dato {\n    background-color: lemonchiffon;\n    grid-area: dato;\n}\n.cierre {\n    float: right;\n}\n.aceptar {\n    text-align: center;\n    grid-area: aceptar;\n}\n", ""]);
+exports.push([module.i, "\n.conten {\n    display: grid;\n    grid-template-columns: 1fr 10fr 1fr;\n    grid-template-rows: 1fr 1fr 9fr 1fr;\n    grid-template-areas: \n    \" . . .\"\n    \" . titulo-detalle .\"\n    \" . dato-detalle .\"\n    \" . . .\";\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0,0,0,0.5);\n}\n.titulo-detalle {\n    background-color: burlywood;\n    grid-area: titulo-detalle;\n}\n.dato-detalle {\n    background-color: lemonchiffon;\n    grid-area: dato-detalle;\n}\n.cierre-detalle {\n    float: right;\n}\n", ""]);
 
 // exports
 
@@ -58185,7 +58148,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-info",
+                          staticClass: "btn btn-success",
                           on: {
                             click: function($event) {
                               _vm.rdetalle = true
@@ -58304,30 +58267,6 @@ var render = function() {
     _vm._v(" "),
     _vm.operacion == 1
       ? _c("div", { staticClass: "dato" }, [
-          _c("label", [_vm._v("Importe:")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.registroremitos.importe,
-                expression: "registroremitos.importe"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text" },
-            domProps: { value: _vm.registroremitos.importe },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.registroremitos, "importe", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
           _c("label", [_vm._v("Proveedor:")]),
           _vm._v(" "),
           _c(
@@ -58385,30 +58324,6 @@ var render = function() {
     _vm._v(" "),
     _vm.operacion == 2
       ? _c("div", { staticClass: "dato" }, [
-          _c("label", [_vm._v("Importe:")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.registroremitos.importe,
-                expression: "registroremitos.importe"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text" },
-            domProps: { value: _vm.registroremitos.importe },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.registroremitos, "importe", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
           _c("label", [_vm._v("Proveedor:")]),
           _vm._v(" "),
           _c(
@@ -58466,11 +58381,7 @@ var render = function() {
     _vm._v(" "),
     _vm.operacion == 3
       ? _c("div", { staticClass: "dato" }, [
-          _vm._v(
-            "\n        ¿Está seguro que desea eliminar " +
-              _vm._s(_vm.registroremitos.importe) +
-              "?\n    "
-          )
+          _vm._v("\n        ¿Está seguro que desea eliminar este remito?\n    ")
         ])
       : _vm._e(),
     _vm._v(" "),
@@ -58512,129 +58423,118 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "conten" }, [
-    _c("div", [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.busqueda,
-            expression: "busqueda"
-          }
-        ],
-        staticClass: "form-control",
-        attrs: { type: "text", name: "busqueda", placeholder: "Buscar..." },
-        domProps: { value: _vm.busqueda },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
+    _c("div", { staticClass: "titulo-detalle" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger cierre-detalle",
+          on: {
+            click: function($event) {
+              return _vm.$emit("cerrar-detalle")
             }
-            _vm.busqueda = $event.target.value
           }
-        }
-      })
+        },
+        [_vm._v("X")]
+      )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-md-8" }, [
-      _c(
-        "div",
-        { staticClass: "card" },
-        [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-info btn-block",
+    _c(
+      "div",
+      { staticClass: "dato-detalle" },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-info btn-block",
+            on: {
+              click: function($event) {
+                _vm.operacion = 1
+                _vm.registrodetalles = []
+              }
+            }
+          },
+          [_vm._v("Ingresar")]
+        ),
+        _vm._v(" "),
+        _c(
+          "table",
+          { staticClass: "display; color", attrs: { id: "tabla-detalle" } },
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.detalles, function(detalle, index) {
+                return _c("tr", [
+                  _c("td", [_vm._v(_vm._s(detalle.id))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(detalle.precio))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(detalle.cantidad))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-warning btn-large",
+                        on: {
+                          click: function($event) {
+                            _vm.operacion = 2
+                            _vm.registrodetalles = detalle
+                          }
+                        }
+                      },
+                      [_vm._v("Editar")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger btn-large",
+                        on: {
+                          click: function($event) {
+                            _vm.pos = index
+                            _vm.operacion = 3
+                            _vm.registrodetalles = detalle
+                          }
+                        }
+                      },
+                      [_vm._v("Borrar")]
+                    )
+                  ])
+                ])
+              }),
+              0
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _vm.operacion > 0
+          ? _c("remito-detalle-formulario-component", {
+              attrs: {
+                remito_cabecera_id: _vm.registroremitosb.id,
+                operacion: _vm.operacion,
+                registrodetalles: _vm.registrodetalles
+              },
               on: {
-                click: function($event) {
-                  _vm.operacion = 1
-                  _vm.registrodetalles = []
+                detallealta: function($event) {
+                  return _vm.altadetalle($event)
+                },
+                detallebaja: function($event) {
+                  return _vm.bajadetalle()
+                },
+                detalleeditar: function($event) {
+                  return _vm.editardetalle($event)
+                },
+                "cerrar-ventana": function($event) {
+                  _vm.operacion = 0
                 }
               }
-            },
-            [_vm._v("Ingresar")]
-          ),
-          _vm._v(" "),
-          _c(
-            "table",
-            { staticClass: "display; color", attrs: { id: "tabla" } },
-            [
-              _vm._m(0),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.detalles, function(detalle, index) {
-                  return _c("tr", [
-                    _c("td", [_vm._v(_vm._s(detalle.id))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(detalle.precio))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(detalle.cantidad))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-warning btn-large",
-                          on: {
-                            click: function($event) {
-                              _vm.operacion = 2
-                              _vm.registrodetalles = detalle
-                            }
-                          }
-                        },
-                        [_vm._v("Editar")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-danger btn-large",
-                          on: {
-                            click: function($event) {
-                              _vm.pos = index
-                              _vm.operacion = 3
-                              _vm.registrodetalles = detalle
-                            }
-                          }
-                        },
-                        [_vm._v("Borrar")]
-                      )
-                    ])
-                  ])
-                }),
-                0
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _vm.operacion > 0
-            ? _c("remito-detalle-formulario-component", {
-                attrs: {
-                  remito_cabecera_id: _vm.registroremitosb.id,
-                  operacion: _vm.operacion,
-                  registrodetalles: _vm.registrodetalles
-                },
-                on: {
-                  detallealta: function($event) {
-                    return _vm.altadetalle($event)
-                  },
-                  detallebaja: function($event) {
-                    return _vm.bajadetalle()
-                  },
-                  detalleeditar: function($event) {
-                    return _vm.editardetalle($event)
-                  },
-                  "cerrar-ventana": function($event) {
-                    _vm.operacion = 0
-                  }
-                }
-              })
-            : _vm._e()
-        ],
-        1
-      )
-    ])
+            })
+          : _vm._e()
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = [

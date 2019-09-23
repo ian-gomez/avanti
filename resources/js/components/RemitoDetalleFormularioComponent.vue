@@ -46,7 +46,6 @@
             }
         },
         mounted() {
-            console.log('Component mounted8888888888')
               if (this.operacion==1) {
                     this.titulo="Alta";
                 };
@@ -84,7 +83,6 @@
                 formdata.append("cantidad", this.registrodetalles.cantidad);
                 formdata.append("articulo_id", this.opcionArticulo);
                 axios.post('remitos-detalle',formdata).then(response => {
-                    
                 this.$emit('detallealta', response.data);
                 })
             },
@@ -96,7 +94,6 @@
                 formdata.append("precio", this.registrodetalles.precio);
                 formdata.append("_method","PATCH");
                 axios.post('remitos-detalle/'+this.registrodetalles.id,formdata).then(response => {
-                    console.log(response.data);
                 this.$emit('detalleeditar', response.data);
                 })
             },
