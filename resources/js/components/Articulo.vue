@@ -31,6 +31,7 @@
                 </tr>
             </tbody>
         </table>
+        <button class="btn btn-secondary btn-block" @click="eliminados=true">Eliminados</button>
         <articulo-formulario
             v-if="formulario==1"
             :formulario="formulario"
@@ -48,6 +49,10 @@
          v-if="insumos"
          :articuloRegistroB="articuloRegistroB"
          @cerrar-insumos="insumos=false"></articulo-insumo>
+         <articulo-eliminado
+          v-if="eliminados"
+          @cerrar-eliminados="eliminados=false"
+          @restaurar="restaurar($event)"></articulo-eliminado>
     </div>
 </template>
 
@@ -59,6 +64,7 @@
                 pos:0,
                 articulos:[],
                 insumos:false,
+                eliminados:false,
                 articuloRegistro:'',
                 articuloRegistroB:''
             }
@@ -84,6 +90,9 @@
             },
             eliminar:function() {
                 this.articulos.splice(this.pos, 1)
+            },
+            restaurar:function(datos) {
+                this.articulos.push(datos);
             },
             tabla:function() {
                 $(document).ready(function() {
