@@ -2908,8 +2908,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3182,8 +3180,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3386,6 +3382,8 @@ __webpack_require__.r(__webpack_exports__);
           importe: response.data.importe,
           nombre: _this2.buscaprov(response.data.proveedor_id)[0].nombre
         });
+
+        console.log(response.data);
       });
     },
     editarremito: function editarremito() {
@@ -3711,8 +3709,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var datatables__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! datatables */ "./node_modules/datatables/media/js/jquery.dataTables.js");
 /* harmony import */ var datatables__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(datatables__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
 //
 //
 //
@@ -9079,7 +9075,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.conten {\n    display: grid;\n    grid-template-columns: 1fr 10fr 1fr;\n    grid-template-rows: 1fr 1fr 9fr 1fr;\n    grid-template-areas: \n    \" . . .\"\n    \" . titulo-detalle .\"\n    \" . dato-detalle .\"\n    \" . . .\";\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0,0,0,0.5);\n}\n.titulo-detalle {\n    background-color: burlywood;\n    grid-area: titulo-detalle;\n}\n.dato-detalle {\n    background-color: lemonchiffon;\n    grid-area: dato-detalle;\n}\n.cierre-detalle {\n    float: right;\n}\n", ""]);
+exports.push([module.i, "\n.contenedor-rdetalle {\n    display: grid;\n    grid-template-columns: 1fr 10fr 1fr;\n    grid-template-rows: 1fr 1fr 9fr 1fr;\n    grid-template-areas: \n    \" . . .\"\n    \" . titulo-detalle .\"\n    \" . dato-detalle .\"\n    \" . . .\";\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0,0,0,0.5);\n}\n.titulo-detalle {\n    background-color: burlywood;\n    grid-area: titulo-detalle;\n}\n.dato-detalle {\n    background-color: lemonchiffon;\n    grid-area: dato-detalle;\n}\n.cierre-detalle {\n    float: right;\n}\n", ""]);
 
 // exports
 
@@ -57642,7 +57638,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "con-tenedor" }, [
+  return _c("div", { staticClass: "container" }, [
     _c("div", [
       _c("input", {
         directives: [
@@ -57667,106 +57663,100 @@ var render = function() {
       })
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-md-8" }, [
-      _c(
-        "div",
-        { staticClass: "card" },
-        [
+    _c(
+      "div",
+      { staticClass: "card" },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-info btn-block",
+            on: {
+              click: function($event) {
+                _vm.operacion = 1
+                _vm.registroproveedores = []
+              }
+            }
+          },
+          [_vm._v("Ingresar")]
+        ),
+        _vm._v(" "),
+        _c("table", { staticClass: "display; color", attrs: { id: "tabla" } }, [
+          _vm._m(0),
+          _vm._v(" "),
           _c(
-            "button",
-            {
-              staticClass: "btn btn-info btn-block",
+            "tbody",
+            _vm._l(_vm.buscaproveedores, function(proveedor, index) {
+              return _c("tr", [
+                _c("td", [_vm._v(_vm._s(proveedor.id))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(proveedor.nombre))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(proveedor.telefono))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(proveedor.direccion))]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-warning btn-large",
+                      on: {
+                        click: function($event) {
+                          _vm.operacion = 2
+                          _vm.registroproveedores = proveedor
+                        }
+                      }
+                    },
+                    [_vm._v("Editar")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger btn-large",
+                      on: {
+                        click: function($event) {
+                          _vm.pos = index
+                          _vm.operacion = 3
+                          _vm.registroproveedores = proveedor
+                        }
+                      }
+                    },
+                    [_vm._v("Borrar")]
+                  )
+                ])
+              ])
+            }),
+            0
+          )
+        ]),
+        _vm._v(" "),
+        _vm.operacion > 0
+          ? _c("proveedor-formulario-component", {
+              attrs: {
+                operacion: _vm.operacion,
+                registroproveedores: _vm.registroproveedores
+              },
               on: {
-                click: function($event) {
-                  _vm.operacion = 1
-                  _vm.registroproveedores = []
+                proveedoralta: function($event) {
+                  return _vm.altaproveedor($event)
+                },
+                proveedorbaja: function($event) {
+                  return _vm.bajaproveedor()
+                },
+                proveedoreditar: function($event) {
+                  return _vm.editarproveedor($event)
+                },
+                "cerrar-ventana": function($event) {
+                  _vm.operacion = 0
                 }
               }
-            },
-            [_vm._v("Ingresar")]
-          ),
-          _vm._v(" "),
-          _c(
-            "table",
-            { staticClass: "display; color", attrs: { id: "tabla" } },
-            [
-              _vm._m(0),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.buscaproveedores, function(proveedor, index) {
-                  return _c("tr", [
-                    _c("td", [_vm._v(_vm._s(proveedor.id))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(proveedor.nombre))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(proveedor.telefono))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(proveedor.direccion))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-warning btn-large",
-                          on: {
-                            click: function($event) {
-                              _vm.operacion = 2
-                              _vm.registroproveedores = proveedor
-                            }
-                          }
-                        },
-                        [_vm._v("Editar")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-danger btn-large",
-                          on: {
-                            click: function($event) {
-                              _vm.pos = index
-                              _vm.operacion = 3
-                              _vm.registroproveedores = proveedor
-                            }
-                          }
-                        },
-                        [_vm._v("Borrar")]
-                      )
-                    ])
-                  ])
-                }),
-                0
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _vm.operacion > 0
-            ? _c("proveedor-formulario-component", {
-                attrs: {
-                  operacion: _vm.operacion,
-                  registroproveedores: _vm.registroproveedores
-                },
-                on: {
-                  proveedoralta: function($event) {
-                    return _vm.altaproveedor($event)
-                  },
-                  proveedorbaja: function($event) {
-                    return _vm.bajaproveedor()
-                  },
-                  proveedoreditar: function($event) {
-                    return _vm.editarproveedor($event)
-                  },
-                  "cerrar-ventana": function($event) {
-                    _vm.operacion = 0
-                  }
-                }
-              })
-            : _vm._e()
-        ],
-        1
-      )
-    ])
+            })
+          : _vm._e()
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = [
@@ -58055,7 +58045,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "con-tenedor" }, [
+  return _c("div", { staticClass: "container" }, [
     _c("div", [
       _c("input", {
         directives: [
@@ -58080,132 +58070,126 @@ var render = function() {
       })
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-md-8" }, [
-      _c(
-        "div",
-        { staticClass: "card" },
-        [
+    _c(
+      "div",
+      { staticClass: "card" },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-info btn-block",
+            on: {
+              click: function($event) {
+                _vm.operacion = 1
+                _vm.registroremitos = []
+              }
+            }
+          },
+          [_vm._v("Ingresar")]
+        ),
+        _vm._v(" "),
+        _c("table", { staticClass: "display; color", attrs: { id: "tabla" } }, [
+          _vm._m(0),
+          _vm._v(" "),
           _c(
-            "button",
-            {
-              staticClass: "btn btn-info btn-block",
+            "tbody",
+            _vm._l(_vm.remitos, function(remito, index) {
+              return _c("tr", [
+                _c("td", [_vm._v(_vm._s(remito.id))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(remito.importe))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(remito.nombre))]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-warning btn-large",
+                      on: {
+                        click: function($event) {
+                          _vm.operacion = 2
+                          _vm.registroremitos = remito
+                        }
+                      }
+                    },
+                    [_vm._v("Editar")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger btn-large",
+                      on: {
+                        click: function($event) {
+                          _vm.pos = index
+                          _vm.operacion = 3
+                          _vm.registroremitos = remito
+                        }
+                      }
+                    },
+                    [_vm._v("Borrar")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      on: {
+                        click: function($event) {
+                          _vm.rdetalle = true
+                          _vm.asignardetalle(remito)
+                        }
+                      }
+                    },
+                    [_vm._v("Detalle")]
+                  )
+                ])
+              ])
+            }),
+            0
+          )
+        ]),
+        _vm._v(" "),
+        _vm.operacion > 0
+          ? _c("remito-cabecera-formulario-component", {
+              attrs: {
+                operacion: _vm.operacion,
+                registroremitos: _vm.registroremitos
+              },
               on: {
-                click: function($event) {
-                  _vm.operacion = 1
-                  _vm.registroremitos = []
+                remitoalta: function($event) {
+                  return _vm.altaremito($event)
+                },
+                remitobaja: function($event) {
+                  return _vm.bajaremito()
+                },
+                remitoeditar: function($event) {
+                  return _vm.editarremito($event)
+                },
+                "cerrar-ventana": function($event) {
+                  _vm.operacion = 0
                 }
               }
-            },
-            [_vm._v("Ingresar")]
-          ),
-          _vm._v(" "),
-          _c(
-            "table",
-            { staticClass: "display; color", attrs: { id: "tabla" } },
-            [
-              _vm._m(0),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.remitos, function(remito, index) {
-                  return _c("tr", [
-                    _c("td", [_vm._v(_vm._s(remito.id))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(remito.importe))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(remito.nombre))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-warning btn-large",
-                          on: {
-                            click: function($event) {
-                              _vm.operacion = 2
-                              _vm.registroremitos = remito
-                            }
-                          }
-                        },
-                        [_vm._v("Editar")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-danger btn-large",
-                          on: {
-                            click: function($event) {
-                              _vm.pos = index
-                              _vm.operacion = 3
-                              _vm.registroremitos = remito
-                            }
-                          }
-                        },
-                        [_vm._v("Borrar")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-success",
-                          on: {
-                            click: function($event) {
-                              _vm.rdetalle = true
-                              _vm.asignardetalle(remito)
-                            }
-                          }
-                        },
-                        [_vm._v("Detalle")]
-                      )
-                    ])
-                  ])
-                }),
-                0
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _vm.operacion > 0
-            ? _c("remito-cabecera-formulario-component", {
-                attrs: {
-                  operacion: _vm.operacion,
-                  registroremitos: _vm.registroremitos
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.rdetalle
+          ? _c("remito-detalle-component", {
+              attrs: { registroremitosb: _vm.registroremitosb },
+              on: {
+                "cerrar-detalle": function($event) {
+                  _vm.rdetalle = false
                 },
-                on: {
-                  remitoalta: function($event) {
-                    return _vm.altaremito($event)
-                  },
-                  remitobaja: function($event) {
-                    return _vm.bajaremito()
-                  },
-                  remitoeditar: function($event) {
-                    return _vm.editarremito($event)
-                  },
-                  "cerrar-ventana": function($event) {
-                    _vm.operacion = 0
-                  }
+                importe: function($event) {
+                  return _vm.actualizarImporte($event)
                 }
-              })
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.rdetalle
-            ? _c("remito-detalle-component", {
-                attrs: { registroremitosb: _vm.registroremitosb },
-                on: {
-                  "cerrar-detalle": function($event) {
-                    _vm.rdetalle = false
-                  },
-                  importe: function($event) {
-                    return _vm.actualizarImporte($event)
-                  }
-                }
-              })
-            : _vm._e()
-        ],
-        1
-      )
-    ])
+              }
+            })
+          : _vm._e()
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = [
@@ -58422,7 +58406,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "conten" }, [
+  return _c("div", { staticClass: "contenedor-rdetalle" }, [
     _c("div", { staticClass: "titulo-detalle" }, [
       _c(
         "button",
@@ -58799,7 +58783,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "con-tenedor" }, [
+  return _c("div", { staticClass: "container" }, [
     _c("div", [
       _c("input", {
         directives: [
@@ -58824,104 +58808,98 @@ var render = function() {
       })
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-md-8" }, [
-      _c(
-        "div",
-        { staticClass: "card" },
-        [
+    _c(
+      "div",
+      { staticClass: "card" },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-info btn-block",
+            on: {
+              click: function($event) {
+                _vm.operacion = 1
+                _vm.registrousers = []
+              }
+            }
+          },
+          [_vm._v("Ingresar")]
+        ),
+        _vm._v(" "),
+        _c("table", { staticClass: "display; color", attrs: { id: "tabla" } }, [
+          _vm._m(0),
+          _vm._v(" "),
           _c(
-            "button",
-            {
-              staticClass: "btn btn-info btn-block",
+            "tbody",
+            _vm._l(_vm.buscausers, function(user, index) {
+              return _c("tr", [
+                _c("td", [_vm._v(_vm._s(user.id))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(user.name))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(user.email))]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-warning btn-large",
+                      on: {
+                        click: function($event) {
+                          _vm.operacion = 2
+                          _vm.registrousers = user
+                        }
+                      }
+                    },
+                    [_vm._v("Editar")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger btn-large",
+                      on: {
+                        click: function($event) {
+                          _vm.pos = index
+                          _vm.operacion = 3
+                          _vm.registrousers = user
+                        }
+                      }
+                    },
+                    [_vm._v("Borrar")]
+                  )
+                ])
+              ])
+            }),
+            0
+          )
+        ]),
+        _vm._v(" "),
+        _vm.operacion > 0
+          ? _c("user-formulario-component", {
+              attrs: {
+                operacion: _vm.operacion,
+                registrousers: _vm.registrousers
+              },
               on: {
-                click: function($event) {
-                  _vm.operacion = 1
-                  _vm.registrousers = []
+                useralta: function($event) {
+                  return _vm.altauser($event)
+                },
+                userbaja: function($event) {
+                  return _vm.bajauser()
+                },
+                usereditar: function($event) {
+                  return _vm.editaruser($event)
+                },
+                "cerrar-ventana": function($event) {
+                  _vm.operacion = 0
                 }
               }
-            },
-            [_vm._v("Ingresar")]
-          ),
-          _vm._v(" "),
-          _c(
-            "table",
-            { staticClass: "display; color", attrs: { id: "tabla" } },
-            [
-              _vm._m(0),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.buscausers, function(user, index) {
-                  return _c("tr", [
-                    _c("td", [_vm._v(_vm._s(user.id))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(user.name))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(user.email))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-warning btn-large",
-                          on: {
-                            click: function($event) {
-                              _vm.operacion = 2
-                              _vm.registrousers = user
-                            }
-                          }
-                        },
-                        [_vm._v("Editar")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-danger btn-large",
-                          on: {
-                            click: function($event) {
-                              _vm.pos = index
-                              _vm.operacion = 3
-                              _vm.registrousers = user
-                            }
-                          }
-                        },
-                        [_vm._v("Borrar")]
-                      )
-                    ])
-                  ])
-                }),
-                0
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _vm.operacion > 0
-            ? _c("user-formulario-component", {
-                attrs: {
-                  operacion: _vm.operacion,
-                  registrousers: _vm.registrousers
-                },
-                on: {
-                  useralta: function($event) {
-                    return _vm.altauser($event)
-                  },
-                  userbaja: function($event) {
-                    return _vm.bajauser()
-                  },
-                  usereditar: function($event) {
-                    return _vm.editaruser($event)
-                  },
-                  "cerrar-ventana": function($event) {
-                    _vm.operacion = 0
-                  }
-                }
-              })
-            : _vm._e()
-        ],
-        1
-      )
-    ])
+            })
+          : _vm._e()
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = [

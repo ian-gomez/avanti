@@ -1,9 +1,8 @@
 <template>
-    <div class="con-tenedor">
+    <div class="container">
             <div>
                 <input type="text" class="form-control" name="busqueda" v-model="busqueda" placeholder="Buscar...">
             </div>
-            <div class="col-md-8">
                 <div class="card">
                   <button class="btn btn-info btn-block" @click="operacion=1; registroproveedores=[]">Ingresar</button>
                    <table id="tabla" class="display; color">
@@ -36,7 +35,6 @@
                         :registroproveedores="registroproveedores">
             </proveedor-formulario-component>
                 </div>
-            </div>
     </div>
 </template>
 

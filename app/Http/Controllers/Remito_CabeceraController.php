@@ -89,7 +89,6 @@ class Remito_CabeceraController extends Controller
     public function update(Request $request, $id)
     {
         $remito= Remito_Cabecera::find($id);
-        $remito->importe = $request->importe;
         $remito->user_id = auth()->user()['id'];
         $remito->proveedor_id = $request->proveedor_id;
         $remito->save();

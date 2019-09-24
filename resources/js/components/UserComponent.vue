@@ -1,9 +1,8 @@
 <template>
-    <div class="con-tenedor">
+    <div class="container">
             <div>
                 <input type="text" class="form-control" name="busqueda" v-model="busqueda" placeholder="Buscar...">
             </div>
-            <div class="col-md-8">
                 <div class="card">
                   <button class="btn btn-info btn-block" @click="operacion=1; registrousers=[]">Ingresar</button>
                    <table id="tabla" class="display; color">
@@ -32,9 +31,8 @@
                         v-if="operacion>0" 
                         :operacion="operacion"
                         :registrousers="registrousers">
-            </user-formulario-component>
+                    </user-formulario-component>
                 </div>
-            </div>
     </div>
 </template>
 

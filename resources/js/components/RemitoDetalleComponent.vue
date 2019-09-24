@@ -1,5 +1,5 @@
 <template>
-    <div class="conten">
+    <div class="contenedor-rdetalle">
         <div class="titulo-detalle">
             <button class="btn btn-danger cierre-detalle" @click="$emit('cerrar-detalle')">X</button>
         </div>
@@ -134,7 +134,7 @@
        } 
 </script>
 <style>
-    .conten {
+    .contenedor-rdetalle {
         display: grid;
         grid-template-columns: 1fr 10fr 1fr;
         grid-template-rows: 1fr 1fr 9fr 1fr;
