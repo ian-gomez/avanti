@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Venta_Cabecera;
+use App\Venta_Detalle;
 
 class Venta_CabeceraController extends Controller
 {
@@ -116,8 +117,12 @@ class Venta_CabeceraController extends Controller
      */
     public function destroy($id)
     {
+        $venta_detalle = Venta_Detalle::where('venta_cabecera_id', $id);
         $venta_cabecera = Venta_Cabecera::find($id);
-        $venta_cabecera->delete();
+        DB::transaction(function() use ($venta_detalle, $venta_cabecera) {
+            $venta_detalle->delete();
+            $venta_cabecera->delete();
+        });
         return $venta_cabecera;
     }
 }

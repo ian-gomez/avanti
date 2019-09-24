@@ -71,21 +71,22 @@
                 };
             },
             alta:function(){
-                let formdata = new FormData();
-                formdata.append("articulo_id", this.articulo_id);
-                formdata.append("insumo_id", this.opcionInsumo);
-                formdata.append("cantidad", this.articuloInsumoRegistro.cantidad);
-                axios.post('articulos-insumos', formdata).then(response => {
+                const params = {
+                    articulo_id: this.articulo_id,
+                    insumo_id: this.opcionInsumo,
+                    cantidad: this.articuloInsumoRegistro.cantidad,
+                };
+                axios.post('articulos-insumos', params).then(response => {
                     this.$emit('alta', response.data);
                 })
             },
             modificar:function(){
-                let formdata = new FormData();
-                formdata.append("articulo_id", this.articuloInsumoRegistro.articulo_id);
-                formdata.append("insumo_id", this.articuloInsumoRegistro.insumo_id);
-                formdata.append("cantidad", this.articuloInsumoRegistro.cantidad);
-                formdata.append("_method", "PATCH");
-                axios.post('articulos-insumos/'+this.articuloInsumoRegistro.id, formdata).then(response => {
+                const params = {
+                    articulo_id: this.articuloInsumoRegistro.articulo_id,
+                    insumo_id: this.articuloInsumoRegistro.insumo_id,
+                    cantidad: this.articuloInsumoRegistro.cantidad,
+                };
+                axios.put('articulos-insumos/'+this.articuloInsumoRegistro.id, params).then(response => {
                     this.$emit('modificar');
                 })
             },

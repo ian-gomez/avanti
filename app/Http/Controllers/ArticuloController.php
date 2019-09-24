@@ -19,6 +19,7 @@ class ArticuloController extends Controller
         $articulo = DB::table('articulos')
                     ->join('tipos', 'articulos.tipo_id', '=', 'tipos.id')
                     ->select('articulos.*', 'tipos.nombre as tipo_nombre')
+                    ->where('articulos.deleted_at', '=', null)
                     ->get();
         return $articulo;
     }
@@ -110,6 +111,22 @@ class ArticuloController extends Controller
     {
         $articulo = Articulo::find($id);
         $articulo->delete();
+        return $articulo;
+    }
+
+    public function eliminadosDatos()
+    {
+        $articulo = Articulo::onlyTrashed()->get();
+        return $articulo;
+    }
+
+    public function restaurar($id)
+    {
+        $articulo = Articulo::onlyTrashed()->where('id', '=', $id)->first();
+        $articulo->restore();
+
+        $tipo_nombre = Articulo::find($id);
+        $articulo->tipo_nombre = $tipo_nombre->tipo->nombre;
         return $articulo;
     }
 }
