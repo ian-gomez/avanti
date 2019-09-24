@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('index', function () {
+    return view('index');
+});
+
 Route::middleware(['auth'])->group(function() {
     Route::get('articulos-insumos/{articulo_id}', ['as' => 'articulos-insumos.index', 'uses' => 'Articulo_InsumoController@index']);
     Route::resource('articulos-insumos', 'Articulo_InsumoController', ['except' => ['index']]);
