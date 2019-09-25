@@ -1991,7 +1991,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    console.log('Component mounteddddddddddddddd.');
+    console.log('Component mounted.');
   }
 });
 
@@ -37527,9 +37527,11 @@ var render = function() {
     "div",
     { staticClass: "container" },
     [
-      _c("router-link", { attrs: { to: { name: "articulos" } } }, [
-        _vm._v("Articulos")
-      ]),
+      _c(
+        "router-link",
+        { staticClass: "btn btn-outline-primary", attrs: { to: "/articulos" } },
+        [_vm._v("Articulos")]
+      ),
       _vm._v(" "),
       _c("router-view")
     ],
@@ -57540,12 +57542,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
+var routes = [{
+  path: '/articulos',
+  component: __webpack_require__(/*! ./components/Articulo.vue */ "./resources/js/components/Articulo.vue")
+}];
 /* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
-  routes: [{
-    name: 'articulos',
-    path: '/articulos',
-    component: __webpack_require__(/*! ./components/Articulo.vue */ "./resources/js/components/Articulo.vue")
-  }],
+  routes: routes,
   mode: 'history'
 }));
 
