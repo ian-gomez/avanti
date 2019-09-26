@@ -14,7 +14,7 @@ class ArticuloController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function datos()
+    public function index()
     {
         $articulo = DB::table('articulos')
                     ->join('tipos', 'articulos.tipo_id', '=', 'tipos.id')
@@ -22,11 +22,6 @@ class ArticuloController extends Controller
                     ->where('articulos.deleted_at', '=', null)
                     ->get();
         return $articulo;
-    }
-
-    public function index()
-    {
-        return view('articulos');
     }
 
     /**

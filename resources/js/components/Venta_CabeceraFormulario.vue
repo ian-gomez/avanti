@@ -60,7 +60,7 @@
         },
         methods: {
             cargarClientes:function() {
-                axios.get('clientes-datos').then(response=>{
+                axios.get('clientes').then(response=>{
                     this.clientes = response.data
                 })
             },

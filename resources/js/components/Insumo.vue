@@ -1,6 +1,9 @@
 <template>
     <div class="container">
         <div>
+            <label>Insumos</label>
+        </div>
+        <div>
             <button class="btn btn-primary btn-block" @click="formulario=1">Ingresar</button>
         </div>
         <table class="display" id="tabla">
@@ -56,7 +59,7 @@
         },
         methods: {
             mostrar:function() {
-                axios.get('insumos-datos').then(response=>{
+                axios.get('insumos').then(response=>{
                     this.insumos = response.data;
                     this.tabla();
                 })

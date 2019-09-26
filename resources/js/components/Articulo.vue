@@ -1,6 +1,9 @@
 <template>
     <div class="container">
         <div>
+            <label>Articulos</label>
+        </div>
+        <div>
             <button class="btn btn-primary btn-block" @click="formulario=1">Ingresar</button>
         </div>
         <table class="display" id="tabla">
@@ -57,6 +60,7 @@
 </template>
 
 <script>
+    import datatables from 'datatables'
     export default {
         data: function() {
             return{
@@ -74,7 +78,7 @@
         },
         methods: {
             mostrar:function() {
-                axios.get('articulos-datos').then(response=>{
+                axios.get('articulos').then(response=>{
                     this.articulos = response.data;
                     this.tabla();
                 })

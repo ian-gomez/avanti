@@ -55,7 +55,7 @@
         },
         methods: {
             cargarInsumos:function() {
-                axios.get('insumos-datos').then(response=>{
+                axios.get('insumos').then(response=>{
                     this.insumos = response.data
                 })
             },

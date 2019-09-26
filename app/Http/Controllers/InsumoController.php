@@ -12,15 +12,10 @@ class InsumoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function datos()
+    public function index()
     {
         $insumo = Insumo::get();
         return $insumo;
-    }
-
-    public function index()
-    {
-        return view('insumos');
     }
 
     /**
