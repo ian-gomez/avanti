@@ -31,6 +31,7 @@ Vue.component('remito-detalle-formulario-component', require('./components/Remit
 
 Vue.component('articulo', require('./components/Articulo.vue').default);
 Vue.component('articulo-formulario', require('./components/ArticuloFormulario.vue').default);
+Vue.component('articulo-eliminado', require('./components/Articulo_Eliminado.vue').default);
 Vue.component('articulo-insumo', require('./components/Articulo_Insumo.vue').default);
 Vue.component('articulo-insumo-formulario', require('./components/Articulo_InsumoFormulario.vue').default);
 Vue.component('cliente', require('./components/Cliente.vue').default);

@@ -1,5 +1,5 @@
 <template>
-    <div class="contenedor">
+    <div class="contenedors">
         <div class="titulo">
             <label>{{titulo}}</label>
             <button class="btn btn-danger cierre" @click="$emit('cerrar-formulario')">X</button>
@@ -90,23 +90,24 @@
                 };
             },
             alta:function(){
-                let formdata = new FormData();
-                formdata.append("nombre", this.articuloRegistro.nombre);
-                formdata.append("tipo_id", this.opcionTipo);
-                formdata.append("precio", this.articuloRegistro.precio);
-                formdata.append("costo", this.articuloRegistro.costo);
-                axios.post('articulos', formdata).then(response => {
+                const params = {
+                    nombre: this.articuloRegistro.nombre,
+                    tipo_id: this.opcionTipo,
+                    precio: this.articuloRegistro.precio,
+                    costo: this.articuloRegistro.costo,
+                };
+                axios.post('articulos', params).then(response => {
                     this.$emit('alta', response.data);
                 })
             },
             modificar:function(){
-                let formdata = new FormData();
-                formdata.append("nombre", this.articuloRegistro.nombre);
-                formdata.append("tipo_id", this.articuloRegistro.tipo_id);
-                formdata.append("precio", this.articuloRegistro.precio);
-                formdata.append("costo", this.articuloRegistro.costo);
-                formdata.append("_method", "PATCH");
-                axios.post('articulos/'+this.articuloRegistro.id, formdata).then(response => {
+                const params = {
+                    nombre: this.articuloRegistro.nombre,
+                    tipo_id: this.articuloRegistro.tipo_id,
+                    precio: this.articuloRegistro.precio,
+                    costo: this.articuloRegistro.costo,
+                };
+                axios.put('articulos/'+this.articuloRegistro.id, params).then(response => {
                     this.$emit('modificar');
                 })
             },

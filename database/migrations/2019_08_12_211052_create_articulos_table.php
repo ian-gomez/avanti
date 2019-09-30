@@ -19,6 +19,7 @@ class CreateArticulosTable extends Migration
             $table->string('nombre');
             $table->decimal('precio', 10, 2);
             $table->decimal('costo', 10, 2);
+            $table->softDeletes();
 
             $table->foreign('tipo_id')->references('id')->on('tipos');
         });

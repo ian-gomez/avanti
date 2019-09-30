@@ -57,21 +57,22 @@
                 };
             },
             alta:function(){
-                let formdata = new FormData();
-                formdata.append("nombre", this.clienteRegistro.nombre);
-                formdata.append("direccion", this.clienteRegistro.direccion);
-                formdata.append("telefono", this.clienteRegistro.telefono);
-                axios.post('clientes', formdata).then(response => {
+                const params = {
+                    nombre: this.clienteRegistro.nombre,
+                    direccion: this.clienteRegistro.direccion,
+                    telefono: this.clienteRegistro.telefono,
+                }
+                axios.post('clientes', params).then(response => {
                     this.$emit('alta', response.data);
                 })
             },
             modificar:function(){
-                let formdata = new FormData();
-                formdata.append("nombre", this.clienteRegistro.nombre);
-                formdata.append("direccion", this.clienteRegistro.direccion);
-                formdata.append("telefono", this.clienteRegistro.telefono);
-                formdata.append("_method", "PATCH");
-                axios.post('clientes/'+this.clienteRegistro.id, formdata).then(response => {
+                const params = {
+                    nombre: this.clienteRegistro.nombre,
+                    direccion: this.clienteRegistro.direccion,
+                    telefono: this.clienteRegistro.telefono,
+                }
+                axios.put('clientes/'+this.clienteRegistro.id, params).then(response => {
                     this.$emit('modificar');
                 })
             },

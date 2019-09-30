@@ -5,6 +5,7 @@
             <label>{{titulo}}</label>
             <button class="btn btn-danger cierre" @click="cerrar()">X</button>
         </div>
+
         <!-- Alta -->
         <div class="dato" v-if="operacion==1">
             <label>Proveedor:</label>
@@ -13,8 +14,8 @@
                     {{proveedor.nombre}}
                 </option>
             </select>
-        </select>
         </div>
+
         <!-- Editar -->
         <div class="dato" v-if="operacion==2">
             <label>Proveedor:</label>
@@ -24,10 +25,12 @@
                 </option>
             </select>
         </div>
-         <!-- Baja -->
+        
         <div class="dato" v-if="operacion==3">
             ¿Está seguro que desea eliminar este remito?
         </div>
+        
+
         <div class="aceptar">
             <button @click="operacionremito()">Aceptar</button>
         </div>
@@ -41,7 +44,7 @@
             return{
              titulo:'',
              opcionproveedor:1,
-             proveedores:[]   
+             proveedores:[]
             }
         },
         mounted() {
@@ -57,10 +60,10 @@
                 };
         },
         methods:{
-
             cargarProveedores:function() {
                 axios.get('proveedores-datos').then(response=>{
                     this.proveedores = response.data
+                    console.log(this.proveedores);
                 })
             },
 
@@ -78,24 +81,24 @@
                     this.bajaremito();
                 };
             },
+
             buscaprov:function(dato){
-            return this.proveedores.filter(
-            (prov)=>prov.id=dato
-                );
+                return this.proveedores.filter((prov)=>prov.id==dato);
             },            
+
             altaremito:function(){
                 let formdata = new FormData();
                 formdata.append("proveedor_id", this.registroremitos.proveedor_id);
                 axios.post('remitos-cabecera',formdata).then(response => {
-                    
-
+              
                 this.$emit('remitoalta',
                     {id:response.data.id,
                      importe:response.data.importe,
                      nombre:this.buscaprov(response.data.proveedor_id)[0].nombre}
                    );
-                console.log(response.data);
+
                 })
+
             },
              editarremito:function(){
                 let formdata = new FormData();

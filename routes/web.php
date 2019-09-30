@@ -20,6 +20,8 @@ Route::middleware(['auth'])->group(function() {
     Route::resource('articulos-insumos', 'Articulo_InsumoController', ['except' => ['index']]);
     Route::resource('articulos', 'ArticuloController');
     Route::get('articulos-datos', 'ArticuloController@datos');
+    Route::get('articulos-eliminados-datos', 'ArticuloController@eliminadosDatos');
+    Route::put('articulos-restaurar/{articulo}', 'ArticuloController@restaurar');
     Route::resource('clientes', 'ClienteController');
     Route::get('clientes-datos', 'ClienteController@datos');
     Route::resource('insumos', 'InsumoController');

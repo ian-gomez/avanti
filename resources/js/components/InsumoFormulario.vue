@@ -57,21 +57,22 @@
                 };
             },
             alta:function(){
-                let formdata = new FormData();
-                formdata.append("nombre", this.insumoRegistro.nombre);
-                formdata.append("precio", this.insumoRegistro.precio);
-                formdata.append("cantidad", this.insumoRegistro.cantidad);
-                axios.post('insumos', formdata).then(response => {
+                const params = {
+                    nombre: this.insumoRegistro.nombre,
+                    precio: this.insumoRegistro.precio,
+                    cantidad: this.insumoRegistro.cantidad,
+                };
+                axios.post('insumos', params).then(response => {
                     this.$emit('alta', response.data);
                 })
             },
             modificar:function(){
-                let formdata = new FormData();
-                formdata.append("nombre", this.insumoRegistro.nombre);
-                formdata.append("precio", this.insumoRegistro.precio);
-                formdata.append("cantidad", this.insumoRegistro.cantidad);
-                formdata.append("_method", "PATCH");
-                axios.post('insumos/'+this.insumoRegistro.id, formdata).then(response => {
+                const params = {
+                    nombre: this.insumoRegistro.nombre,
+                    precio: this.insumoRegistro.precio,
+                    cantidad: this.insumoRegistro.cantidad,
+                }
+                axios.put('insumos/'+this.insumoRegistro.id, params).then(response => {
                     this.$emit('modificar');
                 })
             },

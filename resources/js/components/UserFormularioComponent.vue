@@ -13,8 +13,10 @@
             <input class="form-control" type="text" v-model="registrousers.email">
             <br>
             <label>Password</label>
-            <input class="form-control" type="password" v-model="registrousers.password">
+            <input class="form-control" id="password" type="password" v-model="registrousers.password">
             <br>
+            <label>Confirmar password</label>
+            <input class="form-control" type="password" name="confirm_password" id="confirm_password">             
         </div>
         <!-- Editar -->
         <div class="dato" v-if="operacion==2">
@@ -61,10 +63,18 @@
         methods:{
             cerrar:function(){
                 this.$emit('cerrar-ventana');
+            },
+            check:function() {
+              if (document.getElementById('password').value ==
+                document.getElementById('confirm_password').value) {
+                this.altauser()
+              } else {
+               alert('Las contraseñas no son iguales');
+              }
             },   
             operacionuser:function(){
                 if (this.operacion==1) {
-                    this.altauser();
+                    this.check();
                 };
                 if (this.operacion==2) {
                     this.editaruser();

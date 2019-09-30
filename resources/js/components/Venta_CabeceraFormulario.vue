@@ -76,19 +76,20 @@
                 };
             },
             alta:function(){
-                let formdata = new FormData();
-                formdata.append("cliente_id", this.opcionCliente);
-                formdata.append("numero_ticket", this.ventaCabeceraRegistro.numero_ticket);
-                axios.post('ventas-cabecera', formdata).then(response => {
+                const params = {
+                    cliente_id: this.opcionCliente,
+                    numero_ticket: this.ventaCabeceraRegistro.numero_ticket,
+                }
+                axios.post('ventas-cabecera', params).then(response => {
                     this.$emit('alta', response.data);
                 })
             },
             modificar:function(){
-                let formdata = new FormData();
-                formdata.append("cliente_id", this.ventaCabeceraRegistro.cliente_id);
-                formdata.append("numero_ticket", this.ventaCabeceraRegistro.numero_ticket);
-                formdata.append("_method", "PATCH");
-                axios.post('ventas-cabecera/'+this.ventaCabeceraRegistro.id, formdata).then(response => {
+                const params = {
+                    cliente_id: this.ventaCabeceraRegistro.cliente_id,
+                    numero_ticket: this.ventaCabeceraRegistro.numero_ticket,
+                };
+                axios.put('ventas-cabecera/'+this.ventaCabeceraRegistro.id, params).then(response => {
                     this.$emit('modificar', response.data);
                 })
             },
