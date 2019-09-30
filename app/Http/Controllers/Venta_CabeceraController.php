@@ -15,7 +15,7 @@ class Venta_CabeceraController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function datos()
+    public function index()
     {
         $venta_cabecera = DB::table('ventas_cabecera')
                           ->join('clientes', 'ventas_cabecera.cliente_id', '=', 'clientes.id')
@@ -26,11 +26,6 @@ class Venta_CabeceraController extends Controller
                                    DB::raw("(SELECT SUM(ventas_detalle.cantidad * ventas_detalle.precio) FROM ventas_detalle WHERE ventas_detalle.venta_cabecera_id = ventas_cabecera.id) AS importe"))
                           ->get();
         return $venta_cabecera;
-    }
-    
-    public function index()
-    {
-        return view('ventas-cabecera');
     }
 
     /**

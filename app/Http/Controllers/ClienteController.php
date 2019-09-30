@@ -12,15 +12,10 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function datos()
+    public function index()
     {
         $cliente = Cliente::get();
         return $cliente;
-    }
-
-    public function index()
-    {
-        return view('clientes');
     }
 
     /**

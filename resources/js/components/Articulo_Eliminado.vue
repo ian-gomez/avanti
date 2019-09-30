@@ -43,7 +43,7 @@
         },
         methods: {
             mostrar:function() {
-                axios.get('articulos-eliminados-datos').then(response=>{
+                axios.get('articulos-eliminados').then(response=>{
                     this.articulosEliminados = response.data;
                     this.tabla();
                 })
