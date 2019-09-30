@@ -30,7 +30,7 @@ Route::middleware(['auth'])->group(function() {
     Route::resource('tipos', 'TipoController');
     Route::resource('users', 'UserController');
     Route::resource('ventas-cabecera', 'Venta_CabeceraController');
-    Route::get('ventas-detalle/{cabecera_id}', ['as' => 'ventas-detalle.index', 'uses' => 'Venta_DetalleController@index']);
+    Route::get('ventas-detalle/{venta_cabecera_id}', ['as' => 'ventas-detalle.index', 'uses' => 'Venta_DetalleController@index']);
     Route::resource('ventas-detalle', 'Venta_DetalleController', ['except' => ['index']]);
 });
 

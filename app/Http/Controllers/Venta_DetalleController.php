@@ -14,11 +14,11 @@ class Venta_DetalleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($cabecera_id)
+    public function index($venta_cabecera_id)
     {
         $venta_detalle = DB::table('ventas_detalle')
                     ->join('articulos', 'ventas_detalle.articulo_id', '=', 'articulos.id')
-                    ->where('ventas_detalle.venta_cabecera_id', '=', $cabecera_id)
+                    ->where('ventas_detalle.venta_cabecera_id', '=', $venta_cabecera_id)
                     ->select('ventas_detalle.*', 'articulos.nombre')
                     ->get();
         return $venta_detalle;
