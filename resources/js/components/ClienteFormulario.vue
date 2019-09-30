@@ -64,7 +64,9 @@
                 }
                 axios.post('clientes', params).then(response => {
                     this.$emit('alta', response.data);
-                })
+                }).catch(function (error) {
+                    alert("Los datos ingresados no son válidos.");
+                });
             },
             modificar:function(){
                 const params = {
@@ -74,7 +76,9 @@
                 }
                 axios.put('clientes/'+this.clienteRegistro.id, params).then(response => {
                     this.$emit('modificar');
-                })
+                }).catch(function (error) {
+                    alert("Los datos ingresados no son válidos.");
+                });
             },
             eliminar:function() {
                 axios.delete('clientes/'+this.clienteRegistro.id).then(response => {

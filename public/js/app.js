@@ -2108,6 +2108,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.post('articulos', params).then(function (response) {
         _this2.$emit('alta', response.data);
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     modificar: function modificar() {
@@ -2121,6 +2123,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.put('articulos/' + this.articuloRegistro.id, params).then(function (response) {
         _this3.$emit('modificar');
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     eliminar: function eliminar() {
@@ -2482,6 +2486,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.post('articulos-insumos', params).then(function (response) {
         _this2.$emit('alta', response.data);
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     modificar: function modificar() {
@@ -2494,6 +2500,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.put('articulos-insumos/' + this.articuloInsumoRegistro.id, params).then(function (response) {
         _this3.$emit('modificar');
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     eliminar: function eliminar() {
@@ -2725,6 +2733,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.post('clientes', params).then(function (response) {
         _this.$emit('alta', response.data);
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     modificar: function modificar() {
@@ -2737,6 +2747,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.put('clientes/' + this.clienteRegistro.id, params).then(function (response) {
         _this2.$emit('modificar');
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     eliminar: function eliminar() {
@@ -2995,6 +3007,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.post('insumos', params).then(function (response) {
         _this.$emit('alta', response.data);
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     modificar: function modificar() {
@@ -3007,6 +3021,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.put('insumos/' + this.insumoRegistro.id, params).then(function (response) {
         _this2.$emit('modificar');
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     eliminar: function eliminar() {
@@ -3280,6 +3296,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.post('ventas-cabecera', params).then(function (response) {
         _this2.$emit('alta', response.data);
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     modificar: function modificar() {
@@ -3291,6 +3309,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.put('ventas-cabecera/' + this.ventaCabeceraRegistro.id, params).then(function (response) {
         _this3.$emit('modificar', response.data);
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     eliminar: function eliminar() {
@@ -3559,6 +3579,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.post('ventas-detalle', params).then(function (response) {
         _this2.$emit('alta', response.data);
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     modificar: function modificar() {
@@ -3573,6 +3595,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.put('ventas-detalle/' + this.ventaDetalleRegistro.id, params).then(function (response) {
         _this3.$emit('modificar');
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     eliminar: function eliminar() {

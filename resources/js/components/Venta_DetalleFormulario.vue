@@ -78,7 +78,9 @@
                 }
                 axios.post('ventas-detalle', params).then(response => {
                     this.$emit('alta', response.data);
-                })
+                }).catch(function (error) {
+                    alert("Los datos ingresados no son válidos.");
+                });
             },
             modificar:function(){
                 const params = {
@@ -90,7 +92,9 @@
                 }
                 axios.put('ventas-detalle/'+this.ventaDetalleRegistro.id, params).then(response => {
                     this.$emit('modificar');
-                })
+                }).catch(function (error) {
+                    alert("Los datos ingresados no son válidos.");
+                });
             },
             eliminar:function() {
                 axios.delete('ventas-detalle/'+this.ventaDetalleRegistro.id).then(response => {
