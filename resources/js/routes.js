@@ -8,6 +8,8 @@ import Clientes from './components/Cliente.vue'
 import Insumos from './components/Insumo.vue'
 import VentasCabecera from './components/Venta_Cabecera'
 
+Vue.component('indice', require('./components/Indice.vue').default);
+
 Vue.component('articulo-formulario', require('./components/ArticuloFormulario.vue').default);
 Vue.component('articulo-eliminado', require('./components/Articulo_Eliminado.vue').default);
 Vue.component('articulo-insumo', require('./components/Articulo_Insumo.vue').default);
@@ -23,7 +25,7 @@ export default new VueRouter({
         {path: '/articulos', component: Articulos},
         {path: '/clientes', component: Clientes},
         {path: '/insumos', component: Insumos},
-        {path: '/ventas-cabecera', component: VentasCabecera}
+        {path: '/ventas-cabecera', component: VentasCabecera, alias: '/ventas'}
     ],
     scrollBehavior (to, from, savedPosition) {
         return { x: 0, y: 0 }

@@ -56524,12 +56524,7 @@ var render = function() {
           "router-link",
           {
             staticClass: "btn btn-outline-primary",
-            attrs: { to: "/articulos" },
-            on: {
-              click: function($event) {
-                return _vm.cambiarTitulo(0)
-              }
-            }
+            attrs: { to: "/articulos" }
           },
           [_vm._v("Articulos")]
         ),
@@ -56551,10 +56546,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "router-link",
-          {
-            staticClass: "btn btn-outline-primary",
-            attrs: { to: "/ventas-cabecera" }
-          },
+          { staticClass: "btn btn-outline-primary", attrs: { to: "/ventas" } },
           [_vm._v("Ventas")]
         )
       ],
@@ -77402,7 +77394,6 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 window.Axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["default"];
 Vue.use(__webpack_require__(/*! vue-moment */ "./node_modules/vue-moment/dist/vue-moment.js"));
-Vue.component('indice', __webpack_require__(/*! ./components/Indice.vue */ "./resources/js/components/Indice.vue")["default"]);
 
 var app = new Vue({
   el: '#app',
@@ -78620,6 +78611,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 
 
 
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('indice', __webpack_require__(/*! ./components/Indice.vue */ "./resources/js/components/Indice.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('articulo-formulario', __webpack_require__(/*! ./components/ArticuloFormulario.vue */ "./resources/js/components/ArticuloFormulario.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('articulo-eliminado', __webpack_require__(/*! ./components/Articulo_Eliminado.vue */ "./resources/js/components/Articulo_Eliminado.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('articulo-insumo', __webpack_require__(/*! ./components/Articulo_Insumo.vue */ "./resources/js/components/Articulo_Insumo.vue")["default"]);
@@ -78641,7 +78633,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('venta-detalle-formulario',
     component: _components_Insumo_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   }, {
     path: '/ventas-cabecera',
-    component: _components_Venta_Cabecera__WEBPACK_IMPORTED_MODULE_5__["default"]
+    component: _components_Venta_Cabecera__WEBPACK_IMPORTED_MODULE_5__["default"],
+    alias: '/ventas'
   }],
   scrollBehavior: function scrollBehavior(to, from, savedPosition) {
     return {
