@@ -46,10 +46,15 @@ class Venta_CabeceraController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedRequest = $request->validate([
+            'cliente_id' => 'numeric|required',
+            'numero_ticket' => 'numeric|required',
+        ]);
+
         $venta_cabecera = new Venta_Cabecera();
-        $venta_cabecera->cliente_id = $request->cliente_id;
+        $venta_cabecera->cliente_id = $validatedRequest['cliente_id'];
         $venta_cabecera->user_id = Auth::id();
-        $venta_cabecera->numero_ticket = $request->numero_ticket;
+        $venta_cabecera->numero_ticket = $validatedRequest['numero_ticket'];
         $venta_cabecera->save();
 
         $cabecera = Venta_Cabecera::where('numero_ticket', $request->numero_ticket)->first();
@@ -91,9 +96,14 @@ class Venta_CabeceraController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validatedRequest = $request->validate([
+            'cliente_id' => 'numeric|required',
+            'numero_ticket' => 'numeric|required',
+        ]);
+
         $venta_cabecera = Venta_Cabecera::find($id);
-        $venta_cabecera->cliente_id = $request->cliente_id;
-        $venta_cabecera->numero_ticket = $request->numero_ticket;
+        $venta_cabecera->cliente_id = $validatedRequest['cliente_id'];
+        $venta_cabecera->numero_ticket = $validatedRequest['numero_ticket'];
         $venta_cabecera->save();
 
         $cabecera = Venta_Cabecera::find($id);
