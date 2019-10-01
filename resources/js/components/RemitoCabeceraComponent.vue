@@ -85,6 +85,7 @@
                 this.operacion=0;
             },
             actualizarImporte:function(importe) {
+                console.log(this.pos)
                 this.remitos[this.pos].importe = importe;
             },
             tabla:function(){

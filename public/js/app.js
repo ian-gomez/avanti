@@ -3347,6 +3347,7 @@ __webpack_require__.r(__webpack_exports__);
       this.operacion = 0;
     },
     actualizarImporte: function actualizarImporte(importe) {
+      console.log(this.pos);
       this.remitos[this.pos].importe = importe;
     },
     tabla: function tabla() {
@@ -3509,7 +3510,6 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('remitos-cabecera', formdata).then(function (response) {
         _this2.$emit('remitoalta', {
           id: response.data.id,
-          importe: response.data.importe,
           nombre: _this2.buscaprov(response.data.proveedor_id)[0].nombre
         });
       });

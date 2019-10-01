@@ -93,7 +93,6 @@
               
                 this.$emit('remitoalta',
                     {id:response.data.id,
-                     importe:response.data.importe,
                      nombre:this.buscaprov(response.data.proveedor_id)[0].nombre}
                    );
 
