@@ -7,7 +7,7 @@
         <!-- En caso de alta -->
         <div class="datos" v-if="formulario==1">
             <label>Número de Ticket</label>
-            <input class="form-control" type="number" v-model="ventaCabeceraRegistro.numero_ticket">
+            <input class="form-control" type="number" min="1" v-model="ventaCabeceraRegistro.numero_ticket">
             <label>Cliente:</label>
             <select class="form-control" v-model="opcionCliente">
                 <option v-for="cliente in clientes" v-bind:value="cliente.id" v-bind:selected="(cliente.id == opcionCliente)">
@@ -18,7 +18,7 @@
         <!-- En caso de modificacion -->
         <div class="datos" v-else-if="formulario==2">
             <label>Número de Ticket</label>
-            <input class="form-control" type="number" v-model="ventaCabeceraRegistro.numero_ticket">
+            <input class="form-control" type="number" min="1" v-model="ventaCabeceraRegistro.numero_ticket">
             <label>Cliente:</label>
             <select class="form-control" v-model="ventaCabeceraRegistro.cliente_id">
                 <option v-for="cliente in clientes" v-bind:value="cliente.id" v-bind:selected="(cliente.id == ventaCabeceraRegistro.cliente_id)">

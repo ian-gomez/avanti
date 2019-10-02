@@ -14,12 +14,12 @@
                 </option>
             </select>
             <label>Cantidad</label>
-            <input class="form-control" step="0.01" type="number" v-model="articuloInsumoRegistro.cantidad">
+            <input class="form-control" step="0.01" min="0.01" type="number" v-model="articuloInsumoRegistro.cantidad">
         </div>
         <!-- En caso de modificacion -->
         <div class="datos-formulario" v-else-if="formulario==2">
             <label>Cantidad</label>
-            <input class="form-control" step="0.01" type="number" v-model="articuloInsumoRegistro.cantidad">
+            <input class="form-control" step="0.01" min="0.01" type="number" v-model="articuloInsumoRegistro.cantidad">
         </div>
         <!-- En caso de baja -->
         <div class="datos-formulario" v-else>

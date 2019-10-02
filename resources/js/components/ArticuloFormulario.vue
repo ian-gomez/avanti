@@ -17,10 +17,10 @@
                 </option>
             </select>
             <label>Precio</label>
-            <input class="form-control" step="0.01" type="number" v-model="articuloRegistro.precio">
+            <input class="form-control" step="0.01" min="0.01" type="number" v-model="articuloRegistro.precio">
             <br>
             <label>Costo:</label>
-            <input class="form-control" step="0.01" type="number" v-model="articuloRegistro.costo">
+            <input class="form-control" step="0.01" min="0.01" type="number" v-model="articuloRegistro.costo">
         </div>
         <!-- En caso de modificacion -->
         <div class="datos" v-else-if="formulario==2">
@@ -35,10 +35,10 @@
             </select>
             <br>
             <label>Precio</label>
-            <input class="form-control" step="0.01" type="number" v-model="articuloRegistro.precio">
+            <input class="form-control" step="0.01" min="0.01" type="number" v-model="articuloRegistro.precio">
             <br>
             <label>Costo:</label>
-            <input class="form-control" step="0.01" type="number" v-model="articuloRegistro.costo">
+            <input class="form-control" step="0.01" min="0.01" type="number" v-model="articuloRegistro.costo">
         </div>
         <!-- En caso de baja -->
         <div class="datos" v-else>
