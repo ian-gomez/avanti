@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ArticuloSeeder extends Seeder
+class InsumosTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class ArticuloSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Articulo::class,4)->create();
+        factory(App\Insumo::class, 10)->create();
     }
 }

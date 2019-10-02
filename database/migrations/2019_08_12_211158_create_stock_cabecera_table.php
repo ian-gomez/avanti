@@ -19,6 +19,7 @@ class CreateStockCabeceraTable extends Migration
             $table->bigInteger('proveedor_id')->unsigned();
             $table->date('fecha');
             $table->bigInteger('numero_remito');
+
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

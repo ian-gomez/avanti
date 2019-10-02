@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Cliente;
+use App\Tipo;
 
-class ClienteController extends Controller
+class TipoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        $cliente = Cliente::get();
-        return $cliente;
+        $tipo = Tipo::get();
+        return $tipo;
     }
 
     /**
@@ -36,12 +36,7 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        $cliente = new Cliente();
-        $cliente->nombre = $request->nombre;
-        $cliente->direccion = $request->direccion;
-        $cliente->telefono = $request->telefono;
-        $cliente->save();
-        return $cliente;
+        //
     }
 
     /**
@@ -75,12 +70,7 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $cliente = Cliente::find($id);
-        $cliente->nombre = $request->nombre;
-        $cliente->direccion = $request->direccion;
-        $cliente->telefono = $request->telefono;
-        $cliente->save();
-        return $cliente;
+        //
     }
 
     /**
@@ -91,8 +81,6 @@ class ClienteController extends Controller
      */
     public function destroy($id)
     {
-        $cliente = Cliente::find($id);
-        $cliente->delete();
-        return $cliente;
+        //
     }
 }
