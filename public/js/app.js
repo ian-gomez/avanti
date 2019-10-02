@@ -1935,12 +1935,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     alta: function alta(datos) {
       this.articulos.push(datos);
+      window.location.reload(true);
     },
     eliminar: function eliminar() {
       this.articulos.splice(this.pos, 1);
+      window.location.reload(true);
     },
     restaurar: function restaurar(datos) {
       this.articulos.push(datos);
+      window.location.reload(true);
     },
     tabla: function tabla() {
       $(document).ready(function () {
@@ -2336,9 +2339,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     alta: function alta(datos) {
       this.articulosInsumos.push(datos);
+      window.location.reload(true);
     },
     eliminar: function eliminar() {
       this.articulosInsumos.splice(this.pos, 1);
+      window.location.reload(true);
     },
     tabla: function tabla() {
       $(document).ready(function () {
@@ -2600,9 +2605,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     alta: function alta(datos) {
       this.clientes.push(datos);
+      window.location.reload(true);
     },
     eliminar: function eliminar() {
       this.clientes.splice(this.pos, 1);
+      window.location.reload(true);
     },
     tabla: function tabla() {
       $(document).ready(function () {
@@ -2872,9 +2879,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     alta: function alta(datos) {
       this.insumos.push(datos);
+      window.location.reload(true);
     },
     eliminar: function eliminar() {
       this.insumos.splice(this.pos, 1);
+      window.location.reload(true);
     },
     tabla: function tabla() {
       $(document).ready(function () {
@@ -3129,12 +3138,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     alta: function alta(datos) {
       this.ventasCabecera.push(datos);
+      window.location.reload(true);
     },
     modificar: function modificar(datos) {
       this.ventasCabecera[this.pos] = datos;
     },
     eliminar: function eliminar() {
       this.ventasCabecera.splice(this.pos, 1);
+      window.location.reload(true);
     },
     actualizarImporte: function actualizarImporte(importe) {
       this.ventasCabecera[this.pos].importe = importe;
@@ -3407,6 +3418,7 @@ __webpack_require__.r(__webpack_exports__);
     alta: function alta(datos) {
       this.ventasDetalle.push(datos);
       this.calculoImporte();
+      window.location.reload(true);
     },
     modificar: function modificar() {
       this.calculoImporte();
@@ -3414,6 +3426,7 @@ __webpack_require__.r(__webpack_exports__);
     eliminar: function eliminar() {
       this.ventasDetalle.splice(this.pos, 1);
       this.calculoImporte();
+      window.location.reload(true);
     },
     calculoImporte: function calculoImporte() {
       this.importe = 0;
@@ -55406,7 +55419,8 @@ var render = function() {
                 _vm.eliminados = false
               },
               restaurar: function($event) {
-                return _vm.restaurar($event)
+                _vm.eliminados = false
+                _vm.restaurar($event)
               }
             }
           })

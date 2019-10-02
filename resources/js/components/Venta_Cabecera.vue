@@ -84,12 +84,14 @@
             },
             alta:function(datos) {
                 this.ventasCabecera.push(datos);
+                window.location.reload(true);
             },
             modificar:function(datos) {
                 this.ventasCabecera[this.pos] = datos;
             },
             eliminar:function() {
-                this.ventasCabecera.splice(this.pos, 1)
+                this.ventasCabecera.splice(this.pos, 1);
+                window.location.reload(true);
             },
             actualizarImporte:function(importe) {
                 this.ventasCabecera[this.pos].importe = importe;
