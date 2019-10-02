@@ -38,7 +38,7 @@ class InsumoController extends Controller
     {
         $validatedRequest = $request->validate([
             'nombre' => 'string|required',
-            'precio' => 'numeric|required',
+            'precio' => 'numeric|min:0.01|required',
         ]);
 
         $insumo = new Insumo();
@@ -81,7 +81,7 @@ class InsumoController extends Controller
     {
         $validatedRequest = $request->validate([
             'nombre' => 'string|required',
-            'precio' => 'numeric|required',
+            'precio' => 'numeric|min:0.01|required',
         ]);
 
         $insumo = Insumo::find($id);

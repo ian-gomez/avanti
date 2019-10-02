@@ -44,8 +44,8 @@ class ArticuloController extends Controller
     {
         $validatedRequest = $request->validate([
             'nombre' => 'string|required',
-            'tipo_id' => 'numeric|required',
-            'precio' => 'numeric|required',
+            'tipo_id' => 'numeric|min:0.01|required',
+            'precio' => 'numeric|min:0.01|required',
             'costo' => 'numeric|required',
         ]);
 
@@ -96,8 +96,8 @@ class ArticuloController extends Controller
     {
         $validatedRequest = $request->validate([
             'nombre' => 'string|required',
-            'tipo_id' => 'numeric|required',
-            'precio' => 'numeric|required',
+            'tipo_id' => 'numeric|min:0.01|required',
+            'precio' => 'numeric|min:0.01|required',
             'costo' => 'numeric|required',
         ]);
 

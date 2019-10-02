@@ -48,7 +48,7 @@ class Venta_CabeceraController extends Controller
     {
         $validatedRequest = $request->validate([
             'cliente_id' => 'numeric|required',
-            'numero_ticket' => 'numeric|required',
+            'numero_ticket' => 'numeric|min:1|required',
         ]);
 
         $venta_cabecera = new Venta_Cabecera();
@@ -98,7 +98,7 @@ class Venta_CabeceraController extends Controller
     {
         $validatedRequest = $request->validate([
             'cliente_id' => 'numeric|required',
-            'numero_ticket' => 'numeric|required',
+            'numero_ticket' => 'numeric|min:1|required',
         ]);
 
         $venta_cabecera = Venta_Cabecera::find($id);

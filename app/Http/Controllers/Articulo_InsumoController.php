@@ -45,7 +45,7 @@ class Articulo_InsumoController extends Controller
         $validatedRequest = $request->validate([
             'articulo_id' => 'numeric|required',
             'insumo_id' => 'numeric|required',
-            'cantidad' => 'numeric|required',
+            'cantidad' => 'numeric|min:0.01|required',
         ]);
 
         $articulo_insumo = new Articulo_Insumo();
@@ -96,7 +96,7 @@ class Articulo_InsumoController extends Controller
         $validatedRequest = $request->validate([
             'articulo_id' => 'numeric|required',
             'insumo_id' => 'numeric|required',
-            'cantidad' => 'numeric|required',
+            'cantidad' => 'numeric|min:0.01|required',
         ]);
 
         $articulo_insumo = Articulo_Insumo::find($id);
