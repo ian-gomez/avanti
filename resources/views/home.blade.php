@@ -13,11 +13,9 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    <a href="articulos">Articulos</a>
-                    <a href="clientes">Clientes</a>
-                    <a href="insumos">Insumos</a>
-                    <a href="ventas-cabecera">Ventas</a>
+                    <a href="user" class="btn btn-success btn-block btn-share pinterest" role="button">Empleados</a>
+                    <a href="proveedores" class="btn btn-success btn-block btn-share pinterest" role="button">Proveedores</a>
+                    <a href="remito-cabecera" class="btn btn-success btn-block btn-share pinterest" role="button">Remito</a>
                 </div>
             </div>
         </div>

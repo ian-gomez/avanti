@@ -104,7 +104,12 @@
                 formdata.append("proveedor_id", this.registroremitos.proveedor_id);
                 formdata.append("_method","PATCH");
                 axios.post('remitos-cabecera/'+this.registroremitos.id,formdata).then(response => {
-                this.$emit('remitoeditar', response.data);
+                this.$emit('remitoeditar',
+                {id:response.data.id,
+
+                 nombre:this.buscaprov(response.data.proveedor_id)[0].nombre}
+                );
+                console.log(response.data);
                 })
             },
 

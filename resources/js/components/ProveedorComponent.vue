@@ -1,6 +1,7 @@
 <template>
     <div class="container">
             <div>
+                <h1>Proveedores</h1>
                 <input type="text" class="form-control" name="busqueda" v-model="busqueda" placeholder="Buscar...">
             </div>
                 <div class="card">

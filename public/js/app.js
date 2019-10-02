@@ -3034,6 +3034,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3306,6 +3307,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3340,6 +3342,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     editarremito: function editarremito(dato) {
+      console.log(this.pos);
+      this.remitos[this.pos] = dato;
       this.operacion = 0;
     },
     bajaremito: function bajaremito() {
@@ -3347,7 +3351,6 @@ __webpack_require__.r(__webpack_exports__);
       this.operacion = 0;
     },
     actualizarImporte: function actualizarImporte(importe) {
-      console.log(this.pos);
       this.remitos[this.pos].importe = importe;
     },
     tabla: function tabla() {
@@ -3521,7 +3524,12 @@ __webpack_require__.r(__webpack_exports__);
       formdata.append("proveedor_id", this.registroremitos.proveedor_id);
       formdata.append("_method", "PATCH");
       axios.post('remitos-cabecera/' + this.registroremitos.id, formdata).then(function (response) {
-        _this3.$emit('remitoeditar', response.data);
+        _this3.$emit('remitoeditar', {
+          id: response.data.id,
+          nombre: _this3.buscaprov(response.data.proveedor_id)[0].nombre
+        });
+
+        console.log(response.data);
       });
     },
     bajaremito: function bajaremito() {
@@ -3837,6 +3845,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var datatables__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! datatables */ "./node_modules/datatables/media/js/jquery.dataTables.js");
 /* harmony import */ var datatables__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(datatables__WEBPACK_IMPORTED_MODULE_0__);
+//
 //
 //
 //
@@ -57963,6 +57972,8 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", [
+      _c("h1", [_vm._v("Proveedores")]),
+      _vm._v(" "),
       _c("input", {
         directives: [
           {
@@ -58370,6 +58381,8 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", [
+      _c("h1", [_vm._v("Remito Cabecera")]),
+      _vm._v(" "),
       _c("input", {
         directives: [
           {
@@ -58431,6 +58444,7 @@ var render = function() {
                       staticClass: "btn btn-warning btn-large",
                       on: {
                         click: function($event) {
+                          _vm.pos = index
                           _vm.operacion = 2
                           _vm.registroremitos = remito
                         }
@@ -58461,7 +58475,7 @@ var render = function() {
                       on: {
                         click: function($event) {
                           _vm.rdetalle = true
-                          _vm.asignardetalle(remito)
+                          _vm.asignardetalle(remito), (_vm.pos = index)
                         }
                       }
                     },
@@ -59108,6 +59122,8 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", [
+      _c("h1", [_vm._v("Empleados")]),
+      _vm._v(" "),
       _c("input", {
         directives: [
           {

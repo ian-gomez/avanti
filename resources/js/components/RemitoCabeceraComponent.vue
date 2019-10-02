@@ -1,6 +1,7 @@
 <template>
     <div class="container">
             <div>
+                <h1>Remito Cabecera</h1>
                 <input type="text" class="form-control" name="busqueda" v-model="busqueda" placeholder="Buscar...">
             </div>
                 <div class="card">
@@ -21,9 +22,9 @@
                             <td>{{remito.importe}}</td>
                             <td>{{remito.nombre}}</td>
                             <td>
-                                <button class="btn btn-warning btn-large" @click="operacion=2;registroremitos=remito">Editar</button>
+                                <button class="btn btn-warning btn-large" @click="pos=index;operacion=2;registroremitos=remito">Editar</button>
                                 <button class="btn btn-danger btn-large" @click="pos=index;operacion=3;registroremitos=remito">Borrar</button>
-                                <button class="btn btn-success" @click="rdetalle=true;asignardetalle(remito)">Detalle</button>
+                                <button class="btn btn-success" @click="rdetalle=true;asignardetalle(remito),pos=index">Detalle</button>
                             </td>
                         </tr>
                       </tbody>
@@ -78,6 +79,8 @@
                 });
             },
             editarremito:function(dato){ 
+                console.log(this.pos);
+                this.remitos[this.pos] = dato;
                 this.operacion=0;   
             },
             bajaremito:function(){
@@ -85,7 +88,6 @@
                 this.operacion=0;
             },
             actualizarImporte:function(importe) {
-                console.log(this.pos)
                 this.remitos[this.pos].importe = importe;
             },
             tabla:function(){
