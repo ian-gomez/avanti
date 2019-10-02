@@ -11,7 +11,6 @@
                 <tr>
                     <td>Nombre</td>
                     <td>Precio</td>
-                    <td>Cantidad</td>
                     <td>Acciones</td>
                 </tr>
             </thead>
@@ -19,7 +18,6 @@
                 <tr v-for="(insumo, index) in insumos">
                     <td>{{insumo.nombre}}</td>
                     <td>{{insumo.precio}}</td>
-                    <td>{{insumo.cantidad}}</td>
                     <td>
                         <button class="btn btn-warning" @click="formulario=2;asignar(insumo)">Editar</button>
                         <button class="btn btn-danger" @click="formulario=3;asignar(insumo);pos=index">Eliminar</button>

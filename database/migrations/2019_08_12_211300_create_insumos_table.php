@@ -17,7 +17,6 @@ class CreateInsumosTable extends Migration
             $table->bigIncrements('id');
             $table->string('nombre');
             $table->decimal('precio', 10, 2);
-            $table->decimal('cantidad', 10, 2);
         });
     }
 
