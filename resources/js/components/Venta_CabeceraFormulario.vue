@@ -82,7 +82,9 @@
                 }
                 axios.post('ventas-cabecera', params).then(response => {
                     this.$emit('alta', response.data);
-                })
+                }).catch(function (error) {
+                    alert("Los datos ingresados no son válidos.");
+                });
             },
             modificar:function(){
                 const params = {
@@ -91,7 +93,9 @@
                 };
                 axios.put('ventas-cabecera/'+this.ventaCabeceraRegistro.id, params).then(response => {
                     this.$emit('modificar', response.data);
-                })
+                }).catch(function (error) {
+                    alert("Los datos ingresados no son válidos.");
+                });
             },
             eliminar:function() {
                 axios.delete('ventas-cabecera/'+this.ventaCabeceraRegistro.id).then(response => {

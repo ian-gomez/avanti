@@ -2108,6 +2108,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.post('articulos', params).then(function (response) {
         _this2.$emit('alta', response.data);
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     modificar: function modificar() {
@@ -2121,6 +2123,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.put('articulos/' + this.articuloRegistro.id, params).then(function (response) {
         _this3.$emit('modificar');
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     eliminar: function eliminar() {
@@ -2482,6 +2486,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.post('articulos-insumos', params).then(function (response) {
         _this2.$emit('alta', response.data);
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     modificar: function modificar() {
@@ -2494,6 +2500,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.put('articulos-insumos/' + this.articuloInsumoRegistro.id, params).then(function (response) {
         _this3.$emit('modificar');
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     eliminar: function eliminar() {
@@ -2725,6 +2733,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.post('clientes', params).then(function (response) {
         _this.$emit('alta', response.data);
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     modificar: function modificar() {
@@ -2737,6 +2747,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.put('clientes/' + this.clienteRegistro.id, params).then(function (response) {
         _this2.$emit('modificar');
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     eliminar: function eliminar() {
@@ -2789,8 +2801,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var datatables__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! datatables */ "./node_modules/datatables/media/js/jquery.dataTables.js");
 /* harmony import */ var datatables__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(datatables__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
 //
 //
 //
@@ -2936,9 +2946,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['insumoRegistro', 'formulario'],
   data: function data() {
@@ -2990,11 +2997,12 @@ __webpack_require__.r(__webpack_exports__);
 
       var params = {
         nombre: this.insumoRegistro.nombre,
-        precio: this.insumoRegistro.precio,
-        cantidad: this.insumoRegistro.cantidad
+        precio: this.insumoRegistro.precio
       };
       axios.post('insumos', params).then(function (response) {
         _this.$emit('alta', response.data);
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     modificar: function modificar() {
@@ -3002,11 +3010,12 @@ __webpack_require__.r(__webpack_exports__);
 
       var params = {
         nombre: this.insumoRegistro.nombre,
-        precio: this.insumoRegistro.precio,
-        cantidad: this.insumoRegistro.cantidad
+        precio: this.insumoRegistro.precio
       };
       axios.put('insumos/' + this.insumoRegistro.id, params).then(function (response) {
         _this2.$emit('modificar');
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     eliminar: function eliminar() {
@@ -3280,6 +3289,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.post('ventas-cabecera', params).then(function (response) {
         _this2.$emit('alta', response.data);
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     modificar: function modificar() {
@@ -3291,6 +3302,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.put('ventas-cabecera/' + this.ventaCabeceraRegistro.id, params).then(function (response) {
         _this3.$emit('modificar', response.data);
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     eliminar: function eliminar() {
@@ -3559,6 +3572,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.post('ventas-detalle', params).then(function (response) {
         _this2.$emit('alta', response.data);
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     modificar: function modificar() {
@@ -3573,6 +3588,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.put('ventas-detalle/' + this.ventaDetalleRegistro.id, params).then(function (response) {
         _this3.$emit('modificar');
+      })["catch"](function (error) {
+        alert("Los datos ingresados no son válidos.");
       });
     },
     eliminar: function eliminar() {
@@ -56610,8 +56627,6 @@ var render = function() {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(insumo.precio))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(insumo.cantidad))]),
-              _vm._v(" "),
               _c("td", [
                 _c(
                   "button",
@@ -56703,8 +56718,6 @@ var staticRenderFns = [
         _c("td", [_vm._v("Nombre")]),
         _vm._v(" "),
         _c("td", [_vm._v("Precio")]),
-        _vm._v(" "),
-        _c("td", [_vm._v("Cantidad")]),
         _vm._v(" "),
         _c("td", [_vm._v("Acciones")])
       ])
@@ -56805,32 +56818,6 @@ var render = function() {
                   return
                 }
                 _vm.$set(_vm.insumoRegistro, "precio", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v("Cantidad:")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.insumoRegistro.cantidad,
-                expression: "insumoRegistro.cantidad"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { step: "0.01", type: "number" },
-            domProps: { value: _vm.insumoRegistro.cantidad },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.insumoRegistro, "cantidad", $event.target.value)
               }
             }
           })
@@ -78664,8 +78651,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('venta-detalle-formulario',
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\avanti\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\avanti\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /opt/lampp/htdocs/avanti/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /opt/lampp/htdocs/avanti/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

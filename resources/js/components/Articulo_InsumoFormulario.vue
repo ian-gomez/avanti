@@ -78,7 +78,9 @@
                 };
                 axios.post('articulos-insumos', params).then(response => {
                     this.$emit('alta', response.data);
-                })
+                }).catch(function (error) {
+                    alert("Los datos ingresados no son válidos.");
+                });
             },
             modificar:function(){
                 const params = {
@@ -88,7 +90,9 @@
                 };
                 axios.put('articulos-insumos/'+this.articuloInsumoRegistro.id, params).then(response => {
                     this.$emit('modificar');
-                })
+                }).catch(function (error) {
+                    alert("Los datos ingresados no son válidos.");
+                });
             },
             eliminar:function() {
                 axios.delete('articulos-insumos/'+this.articuloInsumoRegistro.id).then(response => {

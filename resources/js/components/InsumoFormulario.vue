@@ -15,9 +15,6 @@
             <br>
             <label>Precio:</label>
             <input class="form-control" step="0.01" type="number" v-model="insumoRegistro.precio">
-            <br>
-            <label>Cantidad:</label>
-            <input class="form-control" step="0.01" type="number" v-model="insumoRegistro.cantidad">
         </div>
         <div class="aceptar">
             <button class="bnt btn-success btn-block" @click="operacion()">Aceptar</button>
@@ -60,21 +57,23 @@
                 const params = {
                     nombre: this.insumoRegistro.nombre,
                     precio: this.insumoRegistro.precio,
-                    cantidad: this.insumoRegistro.cantidad,
                 };
                 axios.post('insumos', params).then(response => {
                     this.$emit('alta', response.data);
-                })
+                }).catch(function (error) {
+                    alert("Los datos ingresados no son válidos.");
+                });
             },
             modificar:function(){
                 const params = {
                     nombre: this.insumoRegistro.nombre,
                     precio: this.insumoRegistro.precio,
-                    cantidad: this.insumoRegistro.cantidad,
                 }
                 axios.put('insumos/'+this.insumoRegistro.id, params).then(response => {
                     this.$emit('modificar');
-                })
+                }).catch(function (error) {
+                    alert("Los datos ingresados no son válidos.");
+                });
             },
             eliminar:function() {
                 axios.delete('insumos/'+this.insumoRegistro.id).then(response => {

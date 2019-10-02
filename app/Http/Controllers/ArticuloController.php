@@ -42,11 +42,18 @@ class ArticuloController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedRequest = $request->validate([
+            'nombre' => 'string|required',
+            'tipo_id' => 'numeric|required',
+            'precio' => 'numeric|required',
+            'costo' => 'numeric|required',
+        ]);
+
         $articulo = new Articulo();
-        $articulo->nombre = $request->nombre;
-        $articulo->tipo_id = $request->tipo_id;
-        $articulo->precio = $request->precio;
-        $articulo->costo = $request->costo;
+        $articulo->nombre = $validatedRequest['nombre'];
+        $articulo->tipo_id = $validatedRequest['tipo_id'];
+        $articulo->precio = $validatedRequest['precio'];
+        $articulo->costo = $validatedRequest['costo'];
         $articulo->save();
 
         $tipo_nombre = Articulo::all();
@@ -87,11 +94,18 @@ class ArticuloController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validatedRequest = $request->validate([
+            'nombre' => 'string|required',
+            'tipo_id' => 'numeric|required',
+            'precio' => 'numeric|required',
+            'costo' => 'numeric|required',
+        ]);
+
         $articulo = Articulo::find($id);
-        $articulo->nombre = $request->nombre;
-        $articulo->tipo_id = $request->tipo_id;
-        $articulo->precio = $request->precio;
-        $articulo->costo = $request->costo;
+        $articulo->nombre = $validatedRequest['nombre'];
+        $articulo->tipo_id = $validatedRequest['tipo_id'];
+        $articulo->precio = $validatedRequest['precio'];
+        $articulo->costo = $validatedRequest['costo'];
         $articulo->save();
         return $articulo;
     }

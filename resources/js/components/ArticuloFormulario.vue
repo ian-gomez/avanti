@@ -98,7 +98,9 @@
                 };
                 axios.post('articulos', params).then(response => {
                     this.$emit('alta', response.data);
-                })
+                }).catch(function (error) {
+                    alert("Los datos ingresados no son válidos.");
+                });
             },
             modificar:function(){
                 const params = {
@@ -109,7 +111,9 @@
                 };
                 axios.put('articulos/'+this.articuloRegistro.id, params).then(response => {
                     this.$emit('modificar');
-                })
+                }).catch(function (error) {
+                    alert("Los datos ingresados no son válidos.");
+                });
             },
             eliminar:function() {
                 axios.delete('articulos/'+this.articuloRegistro.id).then(response =>{

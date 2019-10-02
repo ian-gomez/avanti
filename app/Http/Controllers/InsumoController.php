@@ -36,10 +36,14 @@ class InsumoController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedRequest = $request->validate([
+            'nombre' => 'string|required',
+            'precio' => 'numeric|required',
+        ]);
+
         $insumo = new Insumo();
-        $insumo->nombre = $request->nombre;
-        $insumo->precio = $request->precio;
-        $insumo->cantidad = $request->cantidad;
+        $insumo->nombre = $validatedRequest['nombre'];
+        $insumo->precio = $validatedRequest['precio'];
         $insumo->save();
         return $insumo;
     }
@@ -75,10 +79,14 @@ class InsumoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validatedRequest = $request->validate([
+            'nombre' => 'string|required',
+            'precio' => 'numeric|required',
+        ]);
+
         $insumo = Insumo::find($id);
-        $insumo->nombre = $request->nombre;
-        $insumo->precio = $request->precio;
-        $insumo->cantidad = $request->cantidad;
+        $insumo->nombre = $validatedRequest['nombre'];
+        $insumo->precio = $validatedRequest['precio'];
         $insumo->save();
         return $insumo;
     }

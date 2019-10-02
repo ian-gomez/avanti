@@ -42,11 +42,17 @@ class Venta_DetalleController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedRequest = $request->validate([
+            'venta_cabecera_id' => 'numeric|required',
+            'articulo_id' => 'numeric|required',
+            'cantidad' => 'numeric|required',
+        ]);
+
         $venta_detalle = new Venta_Detalle();
-        $venta_detalle->venta_cabecera_id = $request->venta_cabecera_id;
-        $venta_detalle->articulo_id = $request->articulo_id;
-        $venta_detalle->cantidad = $request->cantidad;
-        $articulo = Articulo::find($request->articulo_id);
+        $venta_detalle->venta_cabecera_id = $validatedRequest['venta_cabecera_id'];
+        $venta_detalle->articulo_id = $validatedRequest['articulo_id'];
+        $venta_detalle->cantidad = $validatedRequest['cantidad'];
+        $articulo = Articulo::find($validatedRequest['articulo_id']);
         $venta_detalle->precio = $articulo->precio;
         $venta_detalle->costo = $articulo->costo;
         $venta_detalle->save();
@@ -85,12 +91,20 @@ class Venta_DetalleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validatedRequest = $request->validate([
+            'venta_cabecera_id' => 'numeric|required',
+            'articulo_id' => 'numeric|required',
+            'cantidad' => 'numeric|required',
+            'precio' => 'numeric|required',
+            'costo' => 'numeric|required',
+        ]);
+
         $venta_detalle = Venta_Detalle::find($id);
-        $venta_detalle->venta_cabecera_id = $request->venta_cabecera_id;
-        $venta_detalle->articulo_id = $request->articulo_id;
-        $venta_detalle->cantidad = $request->cantidad;
-        $venta_detalle->precio = $request->precio;
-        $venta_detalle->costo = $request->costo;
+        $venta_detalle->venta_cabecera_id = $validatedRequest['venta_cabecera_id'];
+        $venta_detalle->articulo_id = $validatedRequest['articulo_id'];
+        $venta_detalle->cantidad = $validatedRequest['cantidad'];
+        $venta_detalle->precio = $validatedRequest['precio'];
+        $venta_detalle->costo = $validatedRequest['costo'];
         $venta_detalle->save();
         return $venta_detalle;
     }

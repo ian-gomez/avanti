@@ -36,10 +36,16 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedRequest = $request->validate([
+            'nombre' => 'string|required',
+            'direccion' => 'string|required',
+            'telefono' => 'string|required',
+        ]);
+
         $cliente = new Cliente();
-        $cliente->nombre = $request->nombre;
-        $cliente->direccion = $request->direccion;
-        $cliente->telefono = $request->telefono;
+        $cliente->nombre = $validatedRequest['nombre'];
+        $cliente->direccion = $validatedRequest['direccion'];
+        $cliente->telefono = $validatedRequest['telefono'];
         $cliente->save();
         return $cliente;
     }
@@ -75,10 +81,16 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validatedRequest = $request->validate([
+            'nombre' => 'string|required',
+            'direccion' => 'string|required',
+            'telefono' => 'string|required',
+        ]);
+
         $cliente = Cliente::find($id);
-        $cliente->nombre = $request->nombre;
-        $cliente->direccion = $request->direccion;
-        $cliente->telefono = $request->telefono;
+        $cliente->nombre = $validatedRequest['nombre'];
+        $cliente->direccion = $validatedRequest['direccion'];
+        $cliente->telefono = $validatedRequest['telefono'];
         $cliente->save();
         return $cliente;
     }
