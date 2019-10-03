@@ -43,9 +43,9 @@ class Articulo_InsumoController extends Controller
     public function store(Request $request)
     {
         $validatedRequest = $request->validate([
-            'articulo_id' => 'numeric|required',
-            'insumo_id' => 'numeric|required',
-            'cantidad' => 'numeric|min:0.01|required',
+            'articulo_id' => 'numeric|exists:articulos,id|required',
+            'insumo_id' => 'numeric|exists:insumos,id|required',
+            'cantidad' => 'numeric|min:0.01|max:9999|required',
         ]);
 
         $articulo_insumo = new Articulo_Insumo();
@@ -94,9 +94,9 @@ class Articulo_InsumoController extends Controller
     public function update(Request $request, $id)
     {
         $validatedRequest = $request->validate([
-            'articulo_id' => 'numeric|required',
-            'insumo_id' => 'numeric|required',
-            'cantidad' => 'numeric|min:0.01|required',
+            'articulo_id' => 'numeric|exists:articulos,id|required',
+            'insumo_id' => 'numeric|exists:insumos,id|required',
+            'cantidad' => 'numeric|min:0.01|max:9999|required',
         ]);
 
         $articulo_insumo = Articulo_Insumo::find($id);

@@ -55587,7 +55587,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { step: "0.01", min: "0.01", type: "number" },
+            attrs: { step: "0.01", min: "0.01", max: "9999", type: "number" },
             domProps: { value: _vm.articuloRegistro.precio },
             on: {
               input: function($event) {
@@ -55613,7 +55613,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { step: "0.01", min: "0.01", type: "number" },
+            attrs: { step: "0.01", min: "0.01", max: "9999", type: "number" },
             domProps: { value: _vm.articuloRegistro.costo },
             on: {
               input: function($event) {
@@ -55720,7 +55720,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { step: "0.01", min: "0.01", type: "number" },
+            attrs: { step: "0.01", min: "0.01", max: "9999", type: "number" },
             domProps: { value: _vm.articuloRegistro.precio },
             on: {
               input: function($event) {
@@ -55746,7 +55746,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { step: "0.01", min: "0.01", type: "number" },
+            attrs: { step: "0.01", min: "0.01", max: "9999", type: "number" },
             domProps: { value: _vm.articuloRegistro.costo },
             on: {
               input: function($event) {
@@ -56163,7 +56163,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { step: "0.01", min: "0.01", type: "number" },
+            attrs: { step: "0.01", min: "0.01", max: "9999", type: "number" },
             domProps: { value: _vm.articuloInsumoRegistro.cantidad },
             on: {
               input: function($event) {
@@ -56193,7 +56193,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { step: "0.01", min: "0.01", type: "number" },
+            attrs: { step: "0.01", min: "0.01", max: "9999", type: "number" },
             domProps: { value: _vm.articuloInsumoRegistro.cantidad },
             on: {
               input: function($event) {
@@ -56824,7 +56824,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { step: "0.01", min: "0.01", type: "number" },
+            attrs: { step: "0.01", min: "0.01", max: "9999", type: "number" },
             domProps: { value: _vm.insumoRegistro.precio },
             on: {
               input: function($event) {
@@ -57561,7 +57561,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "number", min: "1" },
+            attrs: { type: "number", min: "1", max: "99" },
             domProps: { value: _vm.ventaDetalleRegistro.cantidad },
             on: {
               input: function($event) {
@@ -57591,7 +57591,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "number", min: "1" },
+            attrs: { type: "number", min: "1", max: "99" },
             domProps: { value: _vm.ventaDetalleRegistro.cantidad },
             on: {
               input: function($event) {
@@ -78665,8 +78665,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('venta-detalle-formulario',
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\avanti\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\avanti\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /opt/lampp/htdocs/avanti/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /opt/lampp/htdocs/avanti/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

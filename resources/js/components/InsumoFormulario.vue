@@ -14,7 +14,7 @@
             <input class="form-control" type="text" v-model="insumoRegistro.nombre">
             <br>
             <label>Precio:</label>
-            <input class="form-control" step="0.01" min="0.01" type="number" v-model="insumoRegistro.precio">
+            <input class="form-control" step="0.01" min="0.01" max="9999" type="number" v-model="insumoRegistro.precio">
         </div>
         <div class="aceptar">
             <button class="bnt btn-success btn-block" @click="operacion()">Aceptar</button>

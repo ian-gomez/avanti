@@ -47,8 +47,8 @@ class Venta_CabeceraController extends Controller
     public function store(Request $request)
     {
         $validatedRequest = $request->validate([
-            'cliente_id' => 'numeric|required',
-            'numero_ticket' => 'numeric|min:1|required',
+            'cliente_id' => 'numeric|exists:clientes,id|required',
+            'numero_ticket' => 'numeric|min:1|unique:ventas_cabecera,numero_ticket|required',
         ]);
 
         $venta_cabecera = new Venta_Cabecera();
@@ -97,8 +97,8 @@ class Venta_CabeceraController extends Controller
     public function update(Request $request, $id)
     {
         $validatedRequest = $request->validate([
-            'cliente_id' => 'numeric|required',
-            'numero_ticket' => 'numeric|min:1|required',
+            'cliente_id' => 'numeric|exists:clientes,id|required',
+            'numero_ticket' => 'numeric|min:1|unique:ventas_cabecera,numero_ticket|required',
         ]);
 
         $venta_cabecera = Venta_Cabecera::find($id);
