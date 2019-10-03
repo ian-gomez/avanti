@@ -22,6 +22,7 @@ class Remito_CabeceraController extends Controller
                                    'proveedores.nombre',
                                    DB::raw("(SELECT SUM(remitos_detalle.cantidad * remitos_detalle.precio) FROM remitos_detalle WHERE remitos_detalle.remito_cabecera_id = remitos_cabecera.id) AS importe"))
                     ->get();
+                 
         return $remito;
        //$remito = Remito_Cabecera::get();
         //return $remito;

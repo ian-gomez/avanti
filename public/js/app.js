@@ -4050,7 +4050,7 @@ __webpack_require__.r(__webpack_exports__);
       if (document.getElementById('password').value == document.getElementById('confirm_password').value) {
         this.altauser();
       } else {
-        alert('Las contraseñas no son iguales');
+        alert('La contraseña no fue confirmada correctamente');
       }
     },
     operacionuser: function operacionuser() {

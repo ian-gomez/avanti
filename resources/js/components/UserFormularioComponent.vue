@@ -69,7 +69,7 @@
                 document.getElementById('confirm_password').value) {
                 this.altauser()
               } else {
-               alert('Las contraseñas no son iguales');
+               alert('La contraseña no fue confirmada correctamente');
               }
             },   
             operacionuser:function(){
