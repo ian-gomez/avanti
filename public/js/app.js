@@ -3342,7 +3342,6 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     editarremito: function editarremito(dato) {
-      console.log(this.pos);
       this.remitos[this.pos] = dato;
       this.operacion = 0;
     },
@@ -3526,10 +3525,9 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('remitos-cabecera/' + this.registroremitos.id, formdata).then(function (response) {
         _this3.$emit('remitoeditar', {
           id: response.data.id,
+          importe: _this3.registroremitos.importe,
           nombre: _this3.buscaprov(response.data.proveedor_id)[0].nombre
         });
-
-        console.log(response.data);
       });
     },
     bajaremito: function bajaremito() {
@@ -3637,6 +3635,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     editardetalle: function editardetalle(dato) {
       this.calculoImporte();
+      this.$emit('importe', this.importe);
       this.operacion = 0;
     },
     bajadetalle: function bajadetalle() {

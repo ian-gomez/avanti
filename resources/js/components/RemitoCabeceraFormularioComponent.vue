@@ -106,10 +106,9 @@
                 axios.post('remitos-cabecera/'+this.registroremitos.id,formdata).then(response => {
                 this.$emit('remitoeditar',
                 {id:response.data.id,
-
+                 importe:this.registroremitos.importe,
                  nombre:this.buscaprov(response.data.proveedor_id)[0].nombre}
                 );
-                console.log(response.data);
                 })
             },
 

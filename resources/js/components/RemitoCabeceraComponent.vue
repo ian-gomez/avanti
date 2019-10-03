@@ -79,7 +79,6 @@
                 });
             },
             editarremito:function(dato){ 
-                console.log(this.pos);
                 this.remitos[this.pos] = dato;
                 this.operacion=0;   
             },

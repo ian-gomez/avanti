@@ -79,7 +79,8 @@
             },
 
             editardetalle:function(dato){
-                this.calculoImporte(); 
+                this.calculoImporte();
+                this.$emit('importe', this.importe); 
                 this.operacion=0;   
             },
             bajadetalle:function(){
