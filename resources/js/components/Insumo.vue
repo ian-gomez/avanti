@@ -67,9 +67,11 @@
             },
             alta:function(datos) {
                 this.insumos.push(datos);
+                window.location.reload(true);
             },
             eliminar:function() {
-                this.insumos.splice(this.pos, 1)
+                this.insumos.splice(this.pos, 1);
+                window.location.reload(true);
             },
             tabla:function() {
                 $(document).ready(function() {

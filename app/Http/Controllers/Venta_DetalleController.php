@@ -43,9 +43,9 @@ class Venta_DetalleController extends Controller
     public function store(Request $request)
     {
         $validatedRequest = $request->validate([
-            'venta_cabecera_id' => 'numeric|required',
-            'articulo_id' => 'numeric|required',
-            'cantidad' => 'numeric|required',
+            'venta_cabecera_id' => 'numeric|exists:ventas_cabecera,id|required',
+            'articulo_id' => 'numeric|exists:articulos,id|required',
+            'cantidad' => 'numeric|min:1|max:99|required',
         ]);
 
         $venta_detalle = new Venta_Detalle();
@@ -92,11 +92,11 @@ class Venta_DetalleController extends Controller
     public function update(Request $request, $id)
     {
         $validatedRequest = $request->validate([
-            'venta_cabecera_id' => 'numeric|required',
-            'articulo_id' => 'numeric|required',
-            'cantidad' => 'numeric|required',
-            'precio' => 'numeric|required',
-            'costo' => 'numeric|required',
+            'venta_cabecera_id' => 'numeric|exists:ventas_cabecera,id|required',
+            'articulo_id' => 'numeric|exists:articulos,id|required',
+            'cantidad' => 'numeric|min:1|max:99|required',
+            'precio' => 'numeric|min:0.01|required',
+            'costo' => 'numeric|min:0.01|required',
         ]);
 
         $venta_detalle = Venta_Detalle::find($id);

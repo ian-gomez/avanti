@@ -43,10 +43,10 @@ class ArticuloController extends Controller
     public function store(Request $request)
     {
         $validatedRequest = $request->validate([
-            'nombre' => 'string|required',
-            'tipo_id' => 'numeric|required',
-            'precio' => 'numeric|required',
-            'costo' => 'numeric|required',
+            'nombre' => 'string|min:1|max:255|required',
+            'tipo_id' => 'numeric|exists:tipos,id|required',
+            'precio' => 'numeric|min:0.01|max:9999|required',
+            'costo' => 'numeric|min:0.01|max:9999|required',
         ]);
 
         $articulo = new Articulo();
@@ -95,10 +95,10 @@ class ArticuloController extends Controller
     public function update(Request $request, $id)
     {
         $validatedRequest = $request->validate([
-            'nombre' => 'string|required',
-            'tipo_id' => 'numeric|required',
-            'precio' => 'numeric|required',
-            'costo' => 'numeric|required',
+            'nombre' => 'string|min:1|max:255|required',
+            'tipo_id' => 'numeric|exists:tipos,id|required',
+            'precio' => 'numeric|min:0.01|max:9999|required',
+            'costo' => 'numeric|min:0.01|max:9999|required',
         ]);
 
         $articulo = Articulo::find($id);

@@ -37,8 +37,8 @@ class InsumoController extends Controller
     public function store(Request $request)
     {
         $validatedRequest = $request->validate([
-            'nombre' => 'string|required',
-            'precio' => 'numeric|required',
+            'nombre' => 'string|max:255|required',
+            'precio' => 'numeric|min:0.01|max:9999|required',
         ]);
 
         $insumo = new Insumo();
@@ -80,8 +80,8 @@ class InsumoController extends Controller
     public function update(Request $request, $id)
     {
         $validatedRequest = $request->validate([
-            'nombre' => 'string|required',
-            'precio' => 'numeric|required',
+            'nombre' => 'string|max:255|required',
+            'precio' => 'numeric|min:0.01|max:9999|required',
         ]);
 
         $insumo = Insumo::find($id);
