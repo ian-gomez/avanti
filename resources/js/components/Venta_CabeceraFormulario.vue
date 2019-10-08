@@ -10,7 +10,7 @@
             <input class="form-control" type="number" min="1" v-model="ventaCabeceraRegistro.numero_ticket">
             <label>Cliente:</label>
             <select class="form-control" v-model="opcionCliente">
-                <option v-for="cliente in clientes" v-bind:value="cliente.id" v-bind:selected="(cliente.id == opcionCliente)">
+                <option v-for="cliente in clientesOrdenados" v-bind:value="cliente.id" v-bind:selected="(cliente.id == opcionCliente)">
                     {{cliente.nombre}}
                 </option>
             </select>
@@ -21,7 +21,7 @@
             <input class="form-control" type="number" min="1" v-model="ventaCabeceraRegistro.numero_ticket">
             <label>Cliente:</label>
             <select class="form-control" v-model="ventaCabeceraRegistro.cliente_id">
-                <option v-for="cliente in clientes" v-bind:value="cliente.id" v-bind:selected="(cliente.id == ventaCabeceraRegistro.cliente_id)">
+                <option v-for="cliente in clientesOrdenados" v-bind:value="cliente.id" v-bind:selected="(cliente.id == ventaCabeceraRegistro.cliente_id)">
                     {{cliente.nombre}}
                 </option>
             </select>
@@ -57,6 +57,11 @@
             if (this.formulario==3) {
                 this.titulo='Eliminar venta'
             };
+        },
+        computed: {
+            clientesOrdenados: function() {
+                return _.sortBy(this.clientes, 'nombre');
+            }
         },
         methods: {
             cargarClientes:function() {

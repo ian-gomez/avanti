@@ -9,7 +9,7 @@
             <label>Insumo:</label>
             <br>
             <select class="form-control" v-model="opcionInsumo">
-                <option v-for="insumo in insumos" v-bind:value="insumo.id" v-bind:selected="(insumo.id == opcionInsumo)">
+                <option v-for="insumo in insumosOrdenados" v-bind:value="insumo.id" v-bind:selected="(insumo.id == opcionInsumo)">
                     {{insumo.nombre}}
                 </option>
             </select>
@@ -52,6 +52,11 @@
             if (this.formulario==3) {
                 this.titulo='Eliminar insumo'
             };
+        },
+        computed: {
+            insumosOrdenados: function() {
+                return _.sortBy(this.insumos, 'nombre');
+            }
         },
         methods: {
             cargarInsumos:function() {

@@ -2454,6 +2454,11 @@ __webpack_require__.r(__webpack_exports__);
 
     ;
   },
+  computed: {
+    insumosOrdenados: function insumosOrdenados() {
+      return _.sortBy(this.insumos, 'nombre');
+    }
+  },
   methods: {
     cargarInsumos: function cargarInsumos() {
       var _this = this;
@@ -3264,6 +3269,11 @@ __webpack_require__.r(__webpack_exports__);
 
     ;
   },
+  computed: {
+    clientesOrdenados: function clientesOrdenados() {
+      return _.sortBy(this.clientes, 'nombre');
+    }
+  },
   methods: {
     cargarClientes: function cargarClientes() {
       var _this = this;
@@ -3547,6 +3557,11 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     ;
+  },
+  computed: {
+    articulosOrdenados: function articulosOrdenados() {
+      return _.sortBy(this.articulos, 'nombre');
+    }
   },
   methods: {
     cargarArticulos: function cargarArticulos() {
@@ -56130,7 +56145,7 @@ var render = function() {
                 }
               }
             },
-            _vm._l(_vm.insumos, function(insumo) {
+            _vm._l(_vm.insumosOrdenados, function(insumo) {
               return _c(
                 "option",
                 {
@@ -57154,7 +57169,7 @@ var render = function() {
                 }
               }
             },
-            _vm._l(_vm.clientes, function(cliente) {
+            _vm._l(_vm.clientesOrdenados, function(cliente) {
               return _c(
                 "option",
                 {
@@ -57237,7 +57252,7 @@ var render = function() {
                 }
               }
             },
-            _vm._l(_vm.clientes, function(cliente) {
+            _vm._l(_vm.clientesOrdenados, function(cliente) {
               return _c(
                 "option",
                 {
@@ -57528,7 +57543,7 @@ var render = function() {
                 }
               }
             },
-            _vm._l(_vm.articulos, function(articulo) {
+            _vm._l(_vm.articulosOrdenados, function(articulo) {
               return _c(
                 "option",
                 {
@@ -78665,8 +78680,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('venta-detalle-formulario',
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /opt/lampp/htdocs/avanti/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /opt/lampp/htdocs/avanti/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\avanti\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\avanti\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -9,7 +9,7 @@
             <label>Articulo:</label>
             <br>
             <select class="form-control" v-model="opcionArticulo">
-                <option v-for="articulo in articulos" v-bind:value="articulo.id" v-bind:selected="(articulo.id == opcionArticulo)">
+                <option v-for="articulo in articulosOrdenados" v-bind:value="articulo.id" v-bind:selected="(articulo.id == opcionArticulo)">
                     {{articulo.nombre}}
                 </option>
             </select>
@@ -52,6 +52,11 @@
             if (this.formulario==3) {
                 this.titulo='Eliminar producto de la venta'
             };
+        },
+        computed: {
+            articulosOrdenados: function() {
+                return _.sortBy(this.articulos, 'nombre');
+            }
         },
         methods: {
             cargarArticulos:function() {
