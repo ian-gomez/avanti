@@ -42,10 +42,16 @@ class ProveedorController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedRequest = $request->validate([
+            'nombre' => 'string|min:2|max:255|required',
+            'telefono' => 'string|min:1|max:255|required',
+            'direccion' => 'string|min:1|max:255|required',
+            ]);
+
         $proveedor = new Proveedor();
-        $proveedor->nombre = $request->nombre;
-        $proveedor->telefono =$request->telefono;
-        $proveedor->direccion =$request->direccion;
+        $proveedor->nombre = $validatedRequest['nombre'];
+        $proveedor->telefono = $validatedRequest['telefono'];
+        $proveedor->direccion = $validatedRequest['direccion'];
         $proveedor->save();
         return $proveedor;
     }

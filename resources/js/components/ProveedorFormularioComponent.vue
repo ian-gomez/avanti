@@ -78,7 +78,6 @@
                 formdata.append("telefono", this.registroproveedores.telefono);
                 formdata.append("direccion", this.registroproveedores.direccion);
                 axios.post('proveedores',formdata).then(response => {
-                    
                 this.$emit('proveedoralta', response.data);
                 })
             },

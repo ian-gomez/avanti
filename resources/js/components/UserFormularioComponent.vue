@@ -89,7 +89,6 @@
                 formdata.append("email", this.registrousers.email);
                 formdata.append("password", this.registrousers.password);
                 axios.post('users',formdata).then(response => {
-                    
                 this.$emit('useralta', response.data);
                 })
             },
