@@ -3059,6 +3059,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    cargaproveedores: function cargaproveedores(datos) {
+      this.registroproveedores = datos;
+    },
     altaproveedor: function altaproveedor(dato) {
       this.proveedores.push(dato);
       this.operacion = 0;
@@ -3222,8 +3225,11 @@ __webpack_require__.r(__webpack_exports__);
       formdata.append("nombre", this.registroproveedores.nombre);
       formdata.append("telefono", this.registroproveedores.telefono);
       formdata.append("direccion", this.registroproveedores.direccion);
+      console.log(this.registroproveedores);
       axios.post('proveedores', formdata).then(function (response) {
         _this.$emit('proveedoralta', response.data);
+
+        console.log(response.data);
       });
     },
     editarproveedor: function editarproveedor() {

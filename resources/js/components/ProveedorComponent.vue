@@ -64,6 +64,9 @@
             }
         },
         methods:{
+            cargaproveedores:function(datos) {
+                this.registroproveedores = datos;
+            },
             altaproveedor:function(dato){
                this.proveedores.push(dato);
                this.operacion=0;
