@@ -2043,13 +2043,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['articuloRegistro', 'formulario'],
   data: function data() {
     return {
       titulo: '',
       opcionTipo: 1,
-      tipos: []
+      tipos: [],
+      existenErrores: false,
+      errores: []
     };
   },
   mounted: function mounted() {
@@ -2112,7 +2116,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('articulos', params).then(function (response) {
         _this2.$emit('alta', response.data);
       })["catch"](function (error) {
-        alert("Los datos ingresados no son válidos.");
+        _this2.existenErrores = true;
+
+        if (error.response.status === 422) {
+          _this2.errores = error.response.data.errors || {};
+        }
       });
     },
     modificar: function modificar() {
@@ -2127,7 +2135,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.put('articulos/' + this.articuloRegistro.id, params).then(function (response) {
         _this3.$emit('modificar');
       })["catch"](function (error) {
-        alert("Los datos ingresados no son válidos.");
+        _this3.existenErrores = true;
+
+        if (error.response.status === 422) {
+          _this3.errores = error.response.data.errors || {};
+        }
       });
     },
     eliminar: function eliminar() {
@@ -2424,13 +2436,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['articuloInsumoRegistro', 'articulo_id', 'formulario'],
   data: function data() {
     return {
       titulo: '',
       opcionInsumo: 1,
-      insumos: []
+      insumos: [],
+      existenErrores: false,
+      errores: []
     };
   },
   mounted: function mounted() {
@@ -2453,6 +2469,11 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     ;
+  },
+  computed: {
+    insumosOrdenados: function insumosOrdenados() {
+      return _.sortBy(this.insumos, 'nombre');
+    }
   },
   methods: {
     cargarInsumos: function cargarInsumos() {
@@ -2492,7 +2513,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('articulos-insumos', params).then(function (response) {
         _this2.$emit('alta', response.data);
       })["catch"](function (error) {
-        alert("Los datos ingresados no son válidos.");
+        _this2.existenErrores = true;
+
+        if (error.response.status === 422) {
+          _this2.errores = error.response.data.errors || {};
+        }
       });
     },
     modificar: function modificar() {
@@ -2506,7 +2531,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.put('articulos-insumos/' + this.articuloInsumoRegistro.id, params).then(function (response) {
         _this3.$emit('modificar');
       })["catch"](function (error) {
-        alert("Los datos ingresados no son válidos.");
+        _this3.existenErrores = true;
+
+        if (error.response.status === 422) {
+          _this3.errores = error.response.data.errors || {};
+        }
       });
     },
     eliminar: function eliminar() {
@@ -2684,11 +2713,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['clienteRegistro', 'formulario'],
   data: function data() {
     return {
-      titulo: ''
+      titulo: '',
+      existenErrores: false,
+      errores: []
     };
   },
   mounted: function mounted() {
@@ -2741,7 +2773,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('clientes', params).then(function (response) {
         _this.$emit('alta', response.data);
       })["catch"](function (error) {
-        alert("Los datos ingresados no son válidos.");
+        _this.existenErrores = true;
+
+        if (error.response.status === 422) {
+          _this.errores = error.response.data.errors || {};
+        }
       });
     },
     modificar: function modificar() {
@@ -2755,7 +2791,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.put('clientes/' + this.clienteRegistro.id, params).then(function (response) {
         _this2.$emit('modificar');
       })["catch"](function (error) {
-        alert("Los datos ingresados no son válidos.");
+        _this2.existenErrores = true;
+
+        if (error.response.status === 422) {
+          _this2.errores = error.response.data.errors || {};
+        }
       });
     },
     eliminar: function eliminar() {
@@ -2766,6 +2806,30 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Errores.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Errores.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['errores']
 });
 
 /***/ }),
@@ -2955,11 +3019,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['insumoRegistro', 'formulario'],
   data: function data() {
     return {
-      titulo: ''
+      titulo: '',
+      existenErrores: false,
+      errores: []
     };
   },
   mounted: function mounted() {
@@ -3011,7 +3078,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('insumos', params).then(function (response) {
         _this.$emit('alta', response.data);
       })["catch"](function (error) {
-        alert("Los datos ingresados no son válidos.");
+        _this.existenErrores = true;
+
+        if (error.response.status === 422) {
+          _this.errores = error.response.data.errors || {};
+        }
       });
     },
     modificar: function modificar() {
@@ -3024,7 +3095,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.put('insumos/' + this.insumoRegistro.id, params).then(function (response) {
         _this2.$emit('modificar');
       })["catch"](function (error) {
-        alert("Los datos ingresados no son válidos.");
+        _this2.existenErrores = true;
+
+        if (error.response.status === 422) {
+          _this2.errores = error.response.data.errors || {};
+        }
       });
     },
     eliminar: function eliminar() {
@@ -3234,13 +3309,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['ventaCabeceraRegistro', 'formulario'],
   data: function data() {
     return {
       titulo: '',
       opcionCliente: 1,
-      clientes: []
+      clientes: [],
+      existenErrores: false,
+      errores: []
     };
   },
   mounted: function mounted() {
@@ -3263,6 +3342,11 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     ;
+  },
+  computed: {
+    clientesOrdenados: function clientesOrdenados() {
+      return _.sortBy(this.clientes, 'nombre');
+    }
   },
   methods: {
     cargarClientes: function cargarClientes() {
@@ -3301,7 +3385,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('ventas-cabecera', params).then(function (response) {
         _this2.$emit('alta', response.data);
       })["catch"](function (error) {
-        alert("Los datos ingresados no son válidos.");
+        _this2.existenErrores = true;
+
+        if (error.response.status === 422) {
+          _this2.errores = error.response.data.errors || {};
+        }
       });
     },
     modificar: function modificar() {
@@ -3314,7 +3402,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.put('ventas-cabecera/' + this.ventaCabeceraRegistro.id, params).then(function (response) {
         _this3.$emit('modificar', response.data);
       })["catch"](function (error) {
-        alert("Los datos ingresados no son válidos.");
+        _this3.existenErrores = true;
+
+        if (error.response.status === 422) {
+          _this3.errores = error.response.data.errors || {};
+        }
       });
     },
     eliminar: function eliminar() {
@@ -3518,13 +3610,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['ventaDetalleRegistro', 'venta_cabecera_id', 'formulario'],
   data: function data() {
     return {
       titulo: '',
       opcionArticulo: 1,
-      articulos: []
+      articulos: [],
+      existenErrores: false,
+      errores: []
     };
   },
   mounted: function mounted() {
@@ -3547,6 +3643,11 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     ;
+  },
+  computed: {
+    articulosOrdenados: function articulosOrdenados() {
+      return _.sortBy(this.articulos, 'nombre');
+    }
   },
   methods: {
     cargarArticulos: function cargarArticulos() {
@@ -3586,7 +3687,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('ventas-detalle', params).then(function (response) {
         _this2.$emit('alta', response.data);
       })["catch"](function (error) {
-        alert("Los datos ingresados no son válidos.");
+        _this2.existenErrores = true;
+
+        if (error.response.status === 422) {
+          _this2.errores = error.response.data.errors || {};
+        }
       });
     },
     modificar: function modificar() {
@@ -3602,7 +3707,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.put('ventas-detalle/' + this.ventaDetalleRegistro.id, params).then(function (response) {
         _this3.$emit('modificar');
       })["catch"](function (error) {
-        alert("Los datos ingresados no son válidos.");
+        _this3.existenErrores = true;
+
+        if (error.response.status === 422) {
+          _this3.errores = error.response.data.errors || {};
+        }
       });
     },
     eliminar: function eliminar() {
@@ -55434,7 +55543,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("label", [_vm._v("Articulos")])])
+    return _c("div", [_c("h1", [_vm._v("Articulos")])])
   },
   function() {
     var _vm = this
@@ -55495,269 +55604,287 @@ var render = function() {
     ]),
     _vm._v(" "),
     _vm.formulario == 1
-      ? _c("div", { staticClass: "datos" }, [
-          _c("label", [_vm._v("Nombre:")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.articuloRegistro.nombre,
-                expression: "articuloRegistro.nombre"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text" },
-            domProps: { value: _vm.articuloRegistro.nombre },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.articuloRegistro, "nombre", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v("Tipo:")]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
+      ? _c(
+          "div",
+          { staticClass: "datos" },
+          [
+            _vm.existenErrores
+              ? _c("errores", { attrs: { errores: _vm.errores } })
+              : _vm._e(),
+            _vm._v(" "),
+            _c("label", [_vm._v("Nombre:")]),
+            _vm._v(" "),
+            _c("input", {
               directives: [
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.opcionTipo,
-                  expression: "opcionTipo"
+                  value: _vm.articuloRegistro.nombre,
+                  expression: "articuloRegistro.nombre"
                 }
               ],
               staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.articuloRegistro.nombre },
               on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.opcionTipo = $event.target.multiple
-                    ? $$selectedVal
-                    : $$selectedVal[0]
-                }
-              }
-            },
-            _vm._l(_vm.tipos, function(tipo) {
-              return _c(
-                "option",
-                {
-                  domProps: {
-                    value: tipo.id,
-                    selected: tipo.id == _vm.opcionTipo
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
                   }
-                },
-                [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(tipo.nombre) +
-                      "\n            "
-                  )
-                ]
-              )
+                  _vm.$set(_vm.articuloRegistro, "nombre", $event.target.value)
+                }
+              }
             }),
-            0
-          ),
-          _vm._v(" "),
-          _c("label", [_vm._v("Precio")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("label", [_vm._v("Tipo:")]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c(
+              "select",
               {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.articuloRegistro.precio,
-                expression: "articuloRegistro.precio"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { step: "0.01", min: "0.01", max: "9999", type: "number" },
-            domProps: { value: _vm.articuloRegistro.precio },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.opcionTipo,
+                    expression: "opcionTipo"
+                  }
+                ],
+                staticClass: "form-control",
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.opcionTipo = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
                 }
-                _vm.$set(_vm.articuloRegistro, "precio", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v("Costo:")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.articuloRegistro.costo,
-                expression: "articuloRegistro.costo"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { step: "0.01", min: "0.01", max: "9999", type: "number" },
-            domProps: { value: _vm.articuloRegistro.costo },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+              },
+              _vm._l(_vm.tipos, function(tipo) {
+                return _c(
+                  "option",
+                  {
+                    domProps: {
+                      value: tipo.id,
+                      selected: tipo.id == _vm.opcionTipo
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(tipo.nombre) +
+                        "\n            "
+                    )
+                  ]
+                )
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c("label", [_vm._v("Precio")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.articuloRegistro.precio,
+                  expression: "articuloRegistro.precio"
                 }
-                _vm.$set(_vm.articuloRegistro, "costo", $event.target.value)
+              ],
+              staticClass: "form-control",
+              attrs: { step: "0.01", min: "0.01", max: "9999", type: "number" },
+              domProps: { value: _vm.articuloRegistro.precio },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.articuloRegistro, "precio", $event.target.value)
+                }
               }
-            }
-          })
-        ])
+            }),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("label", [_vm._v("Costo:")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.articuloRegistro.costo,
+                  expression: "articuloRegistro.costo"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { step: "0.01", min: "0.01", max: "9999", type: "number" },
+              domProps: { value: _vm.articuloRegistro.costo },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.articuloRegistro, "costo", $event.target.value)
+                }
+              }
+            })
+          ],
+          1
+        )
       : _vm.formulario == 2
-      ? _c("div", { staticClass: "datos" }, [
-          _c("label", [_vm._v("Nombre:")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.articuloRegistro.nombre,
-                expression: "articuloRegistro.nombre"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text" },
-            domProps: { value: _vm.articuloRegistro.nombre },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.articuloRegistro, "nombre", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v("Tipo:")]),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
+      ? _c(
+          "div",
+          { staticClass: "datos" },
+          [
+            _vm.existenErrores
+              ? _c("errores", { attrs: { errores: _vm.errores } })
+              : _vm._e(),
+            _vm._v(" "),
+            _c("label", [_vm._v("Nombre:")]),
+            _vm._v(" "),
+            _c("input", {
               directives: [
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.articuloRegistro.tipo_id,
-                  expression: "articuloRegistro.tipo_id"
+                  value: _vm.articuloRegistro.nombre,
+                  expression: "articuloRegistro.nombre"
                 }
               ],
               staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.articuloRegistro.nombre },
               on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.$set(
-                    _vm.articuloRegistro,
-                    "tipo_id",
-                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                  )
-                }
-              }
-            },
-            _vm._l(_vm.tipos, function(tipo) {
-              return _c(
-                "option",
-                {
-                  domProps: {
-                    value: tipo.id,
-                    selected: tipo.id == _vm.articuloRegistro.tipo_id
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
                   }
-                },
-                [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(tipo.nombre) +
-                      "\n            "
-                  )
-                ]
-              )
+                  _vm.$set(_vm.articuloRegistro, "nombre", $event.target.value)
+                }
+              }
             }),
-            0
-          ),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v("Precio")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("label", [_vm._v("Tipo:")]),
+            _vm._v(" "),
+            _c(
+              "select",
               {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.articuloRegistro.precio,
-                expression: "articuloRegistro.precio"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { step: "0.01", min: "0.01", max: "9999", type: "number" },
-            domProps: { value: _vm.articuloRegistro.precio },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.articuloRegistro.tipo_id,
+                    expression: "articuloRegistro.tipo_id"
+                  }
+                ],
+                staticClass: "form-control",
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.articuloRegistro,
+                      "tipo_id",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
                 }
-                _vm.$set(_vm.articuloRegistro, "precio", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v("Costo:")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.articuloRegistro.costo,
-                expression: "articuloRegistro.costo"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { step: "0.01", min: "0.01", max: "9999", type: "number" },
-            domProps: { value: _vm.articuloRegistro.costo },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+              },
+              _vm._l(_vm.tipos, function(tipo) {
+                return _c(
+                  "option",
+                  {
+                    domProps: {
+                      value: tipo.id,
+                      selected: tipo.id == _vm.articuloRegistro.tipo_id
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(tipo.nombre) +
+                        "\n            "
+                    )
+                  ]
+                )
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("label", [_vm._v("Precio")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.articuloRegistro.precio,
+                  expression: "articuloRegistro.precio"
                 }
-                _vm.$set(_vm.articuloRegistro, "costo", $event.target.value)
+              ],
+              staticClass: "form-control",
+              attrs: { step: "0.01", min: "0.01", max: "9999", type: "number" },
+              domProps: { value: _vm.articuloRegistro.precio },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.articuloRegistro, "precio", $event.target.value)
+                }
               }
-            }
-          })
-        ])
+            }),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("label", [_vm._v("Costo:")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.articuloRegistro.costo,
+                  expression: "articuloRegistro.costo"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { step: "0.01", min: "0.01", max: "9999", type: "number" },
+              domProps: { value: _vm.articuloRegistro.costo },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.articuloRegistro, "costo", $event.target.value)
+                }
+              }
+            })
+          ],
+          1
+        )
       : _c("div", { staticClass: "datos" }, [
           _vm._v(
             "\n        ¿Está seguro que desea eliminar " +
@@ -56097,118 +56224,136 @@ var render = function() {
     ]),
     _vm._v(" "),
     _vm.formulario == 1
-      ? _c("div", { staticClass: "datos-formulario" }, [
-          _c("label", [_vm._v("Insumo:")]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
+      ? _c(
+          "div",
+          { staticClass: "datos-formulario" },
+          [
+            _vm.existenErrores
+              ? _c("errores", { attrs: { errores: _vm.errores } })
+              : _vm._e(),
+            _vm._v(" "),
+            _c("label", [_vm._v("Insumo:")]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.opcionInsumo,
+                    expression: "opcionInsumo"
+                  }
+                ],
+                staticClass: "form-control",
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.opcionInsumo = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
+                }
+              },
+              _vm._l(_vm.insumosOrdenados, function(insumo) {
+                return _c(
+                  "option",
+                  {
+                    domProps: {
+                      value: insumo.id,
+                      selected: insumo.id == _vm.opcionInsumo
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(insumo.nombre) +
+                        "\n            "
+                    )
+                  ]
+                )
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c("label", [_vm._v("Cantidad")]),
+            _vm._v(" "),
+            _c("input", {
               directives: [
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.opcionInsumo,
-                  expression: "opcionInsumo"
+                  value: _vm.articuloInsumoRegistro.cantidad,
+                  expression: "articuloInsumoRegistro.cantidad"
                 }
               ],
               staticClass: "form-control",
+              attrs: { step: "0.01", min: "0.01", max: "9999", type: "number" },
+              domProps: { value: _vm.articuloInsumoRegistro.cantidad },
               on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.opcionInsumo = $event.target.multiple
-                    ? $$selectedVal
-                    : $$selectedVal[0]
-                }
-              }
-            },
-            _vm._l(_vm.insumos, function(insumo) {
-              return _c(
-                "option",
-                {
-                  domProps: {
-                    value: insumo.id,
-                    selected: insumo.id == _vm.opcionInsumo
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
                   }
-                },
-                [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(insumo.nombre) +
-                      "\n            "
+                  _vm.$set(
+                    _vm.articuloInsumoRegistro,
+                    "cantidad",
+                    $event.target.value
                   )
-                ]
-              )
-            }),
-            0
-          ),
-          _vm._v(" "),
-          _c("label", [_vm._v("Cantidad")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.articuloInsumoRegistro.cantidad,
-                expression: "articuloInsumoRegistro.cantidad"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { step: "0.01", min: "0.01", max: "9999", type: "number" },
-            domProps: { value: _vm.articuloInsumoRegistro.cantidad },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
                 }
-                _vm.$set(
-                  _vm.articuloInsumoRegistro,
-                  "cantidad",
-                  $event.target.value
-                )
               }
-            }
-          })
-        ])
+            })
+          ],
+          1
+        )
       : _vm.formulario == 2
-      ? _c("div", { staticClass: "datos-formulario" }, [
-          _c("label", [_vm._v("Cantidad")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.articuloInsumoRegistro.cantidad,
-                expression: "articuloInsumoRegistro.cantidad"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { step: "0.01", min: "0.01", max: "9999", type: "number" },
-            domProps: { value: _vm.articuloInsumoRegistro.cantidad },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+      ? _c(
+          "div",
+          { staticClass: "datos-formulario" },
+          [
+            _vm.existenErrores
+              ? _c("errores", { attrs: { errores: _vm.errores } })
+              : _vm._e(),
+            _vm._v(" "),
+            _c("label", [_vm._v("Cantidad")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.articuloInsumoRegistro.cantidad,
+                  expression: "articuloInsumoRegistro.cantidad"
                 }
-                _vm.$set(
-                  _vm.articuloInsumoRegistro,
-                  "cantidad",
-                  $event.target.value
-                )
+              ],
+              staticClass: "form-control",
+              attrs: { step: "0.01", min: "0.01", max: "9999", type: "number" },
+              domProps: { value: _vm.articuloInsumoRegistro.cantidad },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.articuloInsumoRegistro,
+                    "cantidad",
+                    $event.target.value
+                  )
+                }
               }
-            }
-          })
-        ])
+            })
+          ],
+          1
+        )
       : _c("div", { staticClass: "datos-formulario" }, [
           _c("label", [_vm._v("¿Está seguro que desea eliminar este campo?")])
         ]),
@@ -56365,7 +56510,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("label", [_vm._v("Clientes")])])
+    return _c("div", [_c("h1", [_vm._v("Clientes")])])
   },
   function() {
     var _vm = this
@@ -56431,83 +56576,96 @@ var render = function() {
               "?\n    "
           )
         ])
-      : _c("div", { staticClass: "datos" }, [
-          _c("label", [_vm._v("Nombre:")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.clienteRegistro.nombre,
-                expression: "clienteRegistro.nombre"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text" },
-            domProps: { value: _vm.clienteRegistro.nombre },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+      : _c(
+          "div",
+          { staticClass: "datos" },
+          [
+            _vm.existenErrores
+              ? _c("errores", { attrs: { errores: _vm.errores } })
+              : _vm._e(),
+            _vm._v(" "),
+            _c("label", [_vm._v("Nombre:")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.clienteRegistro.nombre,
+                  expression: "clienteRegistro.nombre"
                 }
-                _vm.$set(_vm.clienteRegistro, "nombre", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v("Direccion:")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.clienteRegistro.direccion,
-                expression: "clienteRegistro.direccion"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text" },
-            domProps: { value: _vm.clienteRegistro.direccion },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.clienteRegistro.nombre },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.clienteRegistro, "nombre", $event.target.value)
                 }
-                _vm.$set(_vm.clienteRegistro, "direccion", $event.target.value)
               }
-            }
-          }),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v("Telefono:")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.clienteRegistro.telefono,
-                expression: "clienteRegistro.telefono"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text" },
-            domProps: { value: _vm.clienteRegistro.telefono },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+            }),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("label", [_vm._v("Direccion:")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.clienteRegistro.direccion,
+                  expression: "clienteRegistro.direccion"
                 }
-                _vm.$set(_vm.clienteRegistro, "telefono", $event.target.value)
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.clienteRegistro.direccion },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.clienteRegistro,
+                    "direccion",
+                    $event.target.value
+                  )
+                }
               }
-            }
-          })
-        ]),
+            }),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("label", [_vm._v("Telefono:")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.clienteRegistro.telefono,
+                  expression: "clienteRegistro.telefono"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.clienteRegistro.telefono },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.clienteRegistro, "telefono", $event.target.value)
+                }
+              }
+            })
+          ],
+          1
+        ),
     _vm._v(" "),
     _c("div", { staticClass: "aceptar" }, [
       _c(
@@ -56523,6 +56681,40 @@ var render = function() {
         [_vm._v("Aceptar")]
       )
     ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Errores.vue?vue&type=template&id=9e3749ca&":
+/*!**********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Errores.vue?vue&type=template&id=9e3749ca& ***!
+  \**********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("label", [_vm._v("Se han encontrado algunos errores:")]),
+    _vm._v(" "),
+    _c(
+      "ul",
+      _vm._l(_vm.errores, function(error) {
+        return _c("li", [_vm._v(_vm._s(error[0]))])
+      }),
+      0
+    )
   ])
 }
 var staticRenderFns = []
@@ -56721,7 +56913,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("label", [_vm._v("Insumos")])])
+    return _c("div", [_c("h1", [_vm._v("Insumos")])])
   },
   function() {
     var _vm = this
@@ -56785,57 +56977,66 @@ var render = function() {
               "?\n    "
           )
         ])
-      : _c("div", { staticClass: "datos" }, [
-          _c("label", [_vm._v("Nombre:")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.insumoRegistro.nombre,
-                expression: "insumoRegistro.nombre"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text" },
-            domProps: { value: _vm.insumoRegistro.nombre },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+      : _c(
+          "div",
+          { staticClass: "datos" },
+          [
+            _vm.existenErrores
+              ? _c("errores", { attrs: { errores: _vm.errores } })
+              : _vm._e(),
+            _vm._v(" "),
+            _c("label", [_vm._v("Nombre:")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.insumoRegistro.nombre,
+                  expression: "insumoRegistro.nombre"
                 }
-                _vm.$set(_vm.insumoRegistro, "nombre", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v("Precio:")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.insumoRegistro.precio,
-                expression: "insumoRegistro.precio"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { step: "0.01", min: "0.01", max: "9999", type: "number" },
-            domProps: { value: _vm.insumoRegistro.precio },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.insumoRegistro.nombre },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.insumoRegistro, "nombre", $event.target.value)
                 }
-                _vm.$set(_vm.insumoRegistro, "precio", $event.target.value)
               }
-            }
-          })
-        ]),
+            }),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("label", [_vm._v("Precio:")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.insumoRegistro.precio,
+                  expression: "insumoRegistro.precio"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { step: "0.01", min: "0.01", max: "9999", type: "number" },
+              domProps: { value: _vm.insumoRegistro.precio },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.insumoRegistro, "precio", $event.target.value)
+                }
+              }
+            })
+          ],
+          1
+        ),
     _vm._v(" "),
     _c("div", { staticClass: "aceptar" }, [
       _c(
@@ -57032,7 +57233,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("label", [_vm._v("Ventas")])])
+    return _c("div", [_c("h1", [_vm._v("Ventas")])])
   },
   function() {
     var _vm = this
@@ -57095,169 +57296,188 @@ var render = function() {
     ]),
     _vm._v(" "),
     _vm.formulario == 1
-      ? _c("div", { staticClass: "datos" }, [
-          _c("label", [_vm._v("Número de Ticket")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.ventaCabeceraRegistro.numero_ticket,
-                expression: "ventaCabeceraRegistro.numero_ticket"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "number", min: "1" },
-            domProps: { value: _vm.ventaCabeceraRegistro.numero_ticket },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(
-                  _vm.ventaCabeceraRegistro,
-                  "numero_ticket",
-                  $event.target.value
-                )
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("label", [_vm._v("Cliente:")]),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
+      ? _c(
+          "div",
+          { staticClass: "datos" },
+          [
+            _vm.existenErrores
+              ? _c("errores", { attrs: { errores: _vm.errores } })
+              : _vm._e(),
+            _vm._v(" "),
+            _c("label", [_vm._v("Número de Ticket")]),
+            _vm._v(" "),
+            _c("input", {
               directives: [
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.opcionCliente,
-                  expression: "opcionCliente"
+                  value: _vm.ventaCabeceraRegistro.numero_ticket,
+                  expression: "ventaCabeceraRegistro.numero_ticket"
                 }
               ],
               staticClass: "form-control",
+              attrs: { type: "number", min: "1" },
+              domProps: { value: _vm.ventaCabeceraRegistro.numero_ticket },
               on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.opcionCliente = $event.target.multiple
-                    ? $$selectedVal
-                    : $$selectedVal[0]
-                }
-              }
-            },
-            _vm._l(_vm.clientes, function(cliente) {
-              return _c(
-                "option",
-                {
-                  domProps: {
-                    value: cliente.id,
-                    selected: cliente.id == _vm.opcionCliente
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
                   }
-                },
-                [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(cliente.nombre) +
-                      "\n            "
-                  )
-                ]
-              )
-            }),
-            0
-          )
-        ])
-      : _vm.formulario == 2
-      ? _c("div", { staticClass: "datos" }, [
-          _c("label", [_vm._v("Número de Ticket")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.ventaCabeceraRegistro.numero_ticket,
-                expression: "ventaCabeceraRegistro.numero_ticket"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "number", min: "1" },
-            domProps: { value: _vm.ventaCabeceraRegistro.numero_ticket },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(
-                  _vm.ventaCabeceraRegistro,
-                  "numero_ticket",
-                  $event.target.value
-                )
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("label", [_vm._v("Cliente:")]),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.ventaCabeceraRegistro.cliente_id,
-                  expression: "ventaCabeceraRegistro.cliente_id"
-                }
-              ],
-              staticClass: "form-control",
-              on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
                   _vm.$set(
                     _vm.ventaCabeceraRegistro,
-                    "cliente_id",
-                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    "numero_ticket",
+                    $event.target.value
                   )
                 }
               }
-            },
-            _vm._l(_vm.clientes, function(cliente) {
-              return _c(
-                "option",
-                {
-                  domProps: {
-                    value: cliente.id,
-                    selected: cliente.id == _vm.ventaCabeceraRegistro.cliente_id
-                  }
-                },
-                [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(cliente.nombre) +
-                      "\n            "
-                  )
-                ]
-              )
             }),
-            0
-          )
-        ])
+            _vm._v(" "),
+            _c("label", [_vm._v("Cliente:")]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.opcionCliente,
+                    expression: "opcionCliente"
+                  }
+                ],
+                staticClass: "form-control",
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.opcionCliente = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
+                }
+              },
+              _vm._l(_vm.clientesOrdenados, function(cliente) {
+                return _c(
+                  "option",
+                  {
+                    domProps: {
+                      value: cliente.id,
+                      selected: cliente.id == _vm.opcionCliente
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(cliente.nombre) +
+                        "\n            "
+                    )
+                  ]
+                )
+              }),
+              0
+            )
+          ],
+          1
+        )
+      : _vm.formulario == 2
+      ? _c(
+          "div",
+          { staticClass: "datos" },
+          [
+            _vm.existenErrores
+              ? _c("errores", { attrs: { errores: _vm.errores } })
+              : _vm._e(),
+            _vm._v(" "),
+            _c("label", [_vm._v("Número de Ticket")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.ventaCabeceraRegistro.numero_ticket,
+                  expression: "ventaCabeceraRegistro.numero_ticket"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "number", min: "1" },
+              domProps: { value: _vm.ventaCabeceraRegistro.numero_ticket },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.ventaCabeceraRegistro,
+                    "numero_ticket",
+                    $event.target.value
+                  )
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("label", [_vm._v("Cliente:")]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.ventaCabeceraRegistro.cliente_id,
+                    expression: "ventaCabeceraRegistro.cliente_id"
+                  }
+                ],
+                staticClass: "form-control",
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.ventaCabeceraRegistro,
+                      "cliente_id",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              _vm._l(_vm.clientesOrdenados, function(cliente) {
+                return _c(
+                  "option",
+                  {
+                    domProps: {
+                      value: cliente.id,
+                      selected:
+                        cliente.id == _vm.ventaCabeceraRegistro.cliente_id
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(cliente.nombre) +
+                        "\n            "
+                    )
+                  ]
+                )
+              }),
+              0
+            )
+          ],
+          1
+        )
       : _c("div", { staticClass: "datos" }, [
           _vm._v("\n        ¿Está seguro que desea eliminar esta venta?\n    ")
         ]),
@@ -57495,118 +57715,136 @@ var render = function() {
     ]),
     _vm._v(" "),
     _vm.formulario == 1
-      ? _c("div", { staticClass: "datos-formulario" }, [
-          _c("label", [_vm._v("Articulo:")]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
+      ? _c(
+          "div",
+          { staticClass: "datos-formulario" },
+          [
+            _vm.existenErrores
+              ? _c("errores", { attrs: { errores: _vm.errores } })
+              : _vm._e(),
+            _vm._v(" "),
+            _c("label", [_vm._v("Articulo:")]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.opcionArticulo,
+                    expression: "opcionArticulo"
+                  }
+                ],
+                staticClass: "form-control",
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.opcionArticulo = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
+                }
+              },
+              _vm._l(_vm.articulosOrdenados, function(articulo) {
+                return _c(
+                  "option",
+                  {
+                    domProps: {
+                      value: articulo.id,
+                      selected: articulo.id == _vm.opcionArticulo
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(articulo.nombre) +
+                        "\n            "
+                    )
+                  ]
+                )
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c("label", [_vm._v("Cantidad")]),
+            _vm._v(" "),
+            _c("input", {
               directives: [
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.opcionArticulo,
-                  expression: "opcionArticulo"
+                  value: _vm.ventaDetalleRegistro.cantidad,
+                  expression: "ventaDetalleRegistro.cantidad"
                 }
               ],
               staticClass: "form-control",
+              attrs: { type: "number", min: "1", max: "99" },
+              domProps: { value: _vm.ventaDetalleRegistro.cantidad },
               on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.opcionArticulo = $event.target.multiple
-                    ? $$selectedVal
-                    : $$selectedVal[0]
-                }
-              }
-            },
-            _vm._l(_vm.articulos, function(articulo) {
-              return _c(
-                "option",
-                {
-                  domProps: {
-                    value: articulo.id,
-                    selected: articulo.id == _vm.opcionArticulo
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
                   }
-                },
-                [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(articulo.nombre) +
-                      "\n            "
+                  _vm.$set(
+                    _vm.ventaDetalleRegistro,
+                    "cantidad",
+                    $event.target.value
                   )
-                ]
-              )
-            }),
-            0
-          ),
-          _vm._v(" "),
-          _c("label", [_vm._v("Cantidad")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.ventaDetalleRegistro.cantidad,
-                expression: "ventaDetalleRegistro.cantidad"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "number", min: "1", max: "99" },
-            domProps: { value: _vm.ventaDetalleRegistro.cantidad },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
                 }
-                _vm.$set(
-                  _vm.ventaDetalleRegistro,
-                  "cantidad",
-                  $event.target.value
-                )
               }
-            }
-          })
-        ])
+            })
+          ],
+          1
+        )
       : _vm.formulario == 2
-      ? _c("div", { staticClass: "datos-formulario" }, [
-          _c("label", [_vm._v("Cantidad")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.ventaDetalleRegistro.cantidad,
-                expression: "ventaDetalleRegistro.cantidad"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "number", min: "1", max: "99" },
-            domProps: { value: _vm.ventaDetalleRegistro.cantidad },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+      ? _c(
+          "div",
+          { staticClass: "datos-formulario" },
+          [
+            _vm.existenErrores
+              ? _c("errores", { attrs: { errores: _vm.errores } })
+              : _vm._e(),
+            _vm._v(" "),
+            _c("label", [_vm._v("Cantidad")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.ventaDetalleRegistro.cantidad,
+                  expression: "ventaDetalleRegistro.cantidad"
                 }
-                _vm.$set(
-                  _vm.ventaDetalleRegistro,
-                  "cantidad",
-                  $event.target.value
-                )
+              ],
+              staticClass: "form-control",
+              attrs: { type: "number", min: "1", max: "99" },
+              domProps: { value: _vm.ventaDetalleRegistro.cantidad },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.ventaDetalleRegistro,
+                    "cantidad",
+                    $event.target.value
+                  )
+                }
               }
-            }
-          })
-        ])
+            })
+          ],
+          1
+        )
       : _c("div", { staticClass: "datos-formulario" }, [
           _c("label", [_vm._v("¿Está seguro que desea eliminar este campo?")])
         ]),
@@ -78034,6 +78272,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Errores.vue":
+/*!*********************************************!*\
+  !*** ./resources/js/components/Errores.vue ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Errores_vue_vue_type_template_id_9e3749ca___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Errores.vue?vue&type=template&id=9e3749ca& */ "./resources/js/components/Errores.vue?vue&type=template&id=9e3749ca&");
+/* harmony import */ var _Errores_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Errores.vue?vue&type=script&lang=js& */ "./resources/js/components/Errores.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Errores_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Errores_vue_vue_type_template_id_9e3749ca___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Errores_vue_vue_type_template_id_9e3749ca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Errores.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Errores.vue?vue&type=script&lang=js&":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/Errores.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Errores_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Errores.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Errores.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Errores_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Errores.vue?vue&type=template&id=9e3749ca&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/Errores.vue?vue&type=template&id=9e3749ca& ***!
+  \****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Errores_vue_vue_type_template_id_9e3749ca___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Errores.vue?vue&type=template&id=9e3749ca& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Errores.vue?vue&type=template&id=9e3749ca&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Errores_vue_vue_type_template_id_9e3749ca___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Errores_vue_vue_type_template_id_9e3749ca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Indice.vue":
 /*!********************************************!*\
   !*** ./resources/js/components/Indice.vue ***!
@@ -78613,6 +78920,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('indice', __webpack_require__(/*! ./components/Indice.vue */ "./resources/js/components/Indice.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('errores', __webpack_require__(/*! ./components/Errores.vue */ "./resources/js/components/Errores.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('articulo-formulario', __webpack_require__(/*! ./components/ArticuloFormulario.vue */ "./resources/js/components/ArticuloFormulario.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('articulo-eliminado', __webpack_require__(/*! ./components/Articulo_Eliminado.vue */ "./resources/js/components/Articulo_Eliminado.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('articulo-insumo', __webpack_require__(/*! ./components/Articulo_Insumo.vue */ "./resources/js/components/Articulo_Insumo.vue")["default"]);
@@ -78665,8 +78973,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('venta-detalle-formulario',
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /opt/lampp/htdocs/avanti/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /opt/lampp/htdocs/avanti/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\avanti\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\avanti\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

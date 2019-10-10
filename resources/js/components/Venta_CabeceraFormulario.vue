@@ -6,22 +6,24 @@
         </div>
         <!-- En caso de alta -->
         <div class="datos" v-if="formulario==1">
+            <errores v-if="existenErrores" :errores="errores"></errores>
             <label>Número de Ticket</label>
             <input class="form-control" type="number" min="1" v-model="ventaCabeceraRegistro.numero_ticket">
             <label>Cliente:</label>
             <select class="form-control" v-model="opcionCliente">
-                <option v-for="cliente in clientes" v-bind:value="cliente.id" v-bind:selected="(cliente.id == opcionCliente)">
+                <option v-for="cliente in clientesOrdenados" v-bind:value="cliente.id" v-bind:selected="(cliente.id == opcionCliente)">
                     {{cliente.nombre}}
                 </option>
             </select>
         </div>
         <!-- En caso de modificacion -->
         <div class="datos" v-else-if="formulario==2">
+            <errores v-if="existenErrores" :errores="errores"></errores>
             <label>Número de Ticket</label>
             <input class="form-control" type="number" min="1" v-model="ventaCabeceraRegistro.numero_ticket">
             <label>Cliente:</label>
             <select class="form-control" v-model="ventaCabeceraRegistro.cliente_id">
-                <option v-for="cliente in clientes" v-bind:value="cliente.id" v-bind:selected="(cliente.id == ventaCabeceraRegistro.cliente_id)">
+                <option v-for="cliente in clientesOrdenados" v-bind:value="cliente.id" v-bind:selected="(cliente.id == ventaCabeceraRegistro.cliente_id)">
                     {{cliente.nombre}}
                 </option>
             </select>
@@ -43,7 +45,9 @@
             return{
                 titulo:'',
                 opcionCliente:1,
-                clientes:[]
+                clientes:[],
+                existenErrores:false,
+                errores: []
             }
         },
         mounted() {
@@ -57,6 +61,11 @@
             if (this.formulario==3) {
                 this.titulo='Eliminar venta'
             };
+        },
+        computed: {
+            clientesOrdenados: function() {
+                return _.sortBy(this.clientes, 'nombre');
+            }
         },
         methods: {
             cargarClientes:function() {
@@ -82,8 +91,11 @@
                 }
                 axios.post('ventas-cabecera', params).then(response => {
                     this.$emit('alta', response.data);
-                }).catch(function (error) {
-                    alert("Los datos ingresados no son válidos.");
+                }).catch(error => {
+                    this.existenErrores = true;
+                    if(error.response.status === 422) {
+                        this.errores = error.response.data.errors || {};
+                    }
                 });
             },
             modificar:function(){
@@ -93,8 +105,11 @@
                 };
                 axios.put('ventas-cabecera/'+this.ventaCabeceraRegistro.id, params).then(response => {
                     this.$emit('modificar', response.data);
-                }).catch(function (error) {
-                    alert("Los datos ingresados no son válidos.");
+                }).catch(error => {
+                    this.existenErrores = true;
+                    if(error.response.status === 422) {
+                        this.errores = error.response.data.errors || {};
+                    }
                 });
             },
             eliminar:function() {

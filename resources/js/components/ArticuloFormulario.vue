@@ -6,6 +6,7 @@
         </div>
         <!-- En caso de alta -->
         <div class="datos" v-if="formulario==1">
+            <errores v-if="existenErrores" :errores="errores"></errores>
             <label>Nombre:</label>
             <input class="form-control" type="text" v-model="articuloRegistro.nombre">
             <br>
@@ -24,6 +25,7 @@
         </div>
         <!-- En caso de modificacion -->
         <div class="datos" v-else-if="formulario==2">
+            <errores v-if="existenErrores" :errores="errores"></errores>
             <label>Nombre:</label>
             <input class="form-control" type="text" v-model="articuloRegistro.nombre">
             <br>
@@ -57,7 +59,9 @@
             return{
                 titulo:'',
                 opcionTipo:1,
-                tipos:[]
+                tipos:[],
+                existenErrores:false,
+                errores: []
             }
         },
         mounted() {
@@ -98,8 +102,11 @@
                 };
                 axios.post('articulos', params).then(response => {
                     this.$emit('alta', response.data);
-                }).catch(function (error) {
-                    alert("Los datos ingresados no son válidos.");
+                }).catch(error => {
+                    this.existenErrores = true;
+                    if(error.response.status === 422) {
+                        this.errores = error.response.data.errors || {};
+                    }
                 });
             },
             modificar:function(){
@@ -111,8 +118,11 @@
                 };
                 axios.put('articulos/'+this.articuloRegistro.id, params).then(response => {
                     this.$emit('modificar');
-                }).catch(function (error) {
-                    alert("Los datos ingresados no son válidos.");
+                }).catch(error => {
+                    this.existenErrores = true;
+                    if(error.response.status === 422) {
+                        this.errores = error.response.data.errors || {};
+                    }
                 });
             },
             eliminar:function() {
