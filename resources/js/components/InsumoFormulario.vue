@@ -10,6 +10,7 @@
         </div>
         <!-- En caso de alta -->
         <div class="datos" v-else>
+            <errores v-if="existenErrores" :errores="errores"></errores>
             <label>Nombre:</label>
             <input class="form-control" type="text" v-model="insumoRegistro.nombre">
             <br>
@@ -28,6 +29,8 @@
         data: function() {
             return{
                 titulo:'',
+                existenErrores:false,
+                errores: []
             }
         },
         mounted() {
@@ -60,8 +63,11 @@
                 };
                 axios.post('insumos', params).then(response => {
                     this.$emit('alta', response.data);
-                }).catch(function (error) {
-                    alert("Los datos ingresados no son válidos.");
+                }).catch(error => {
+                    this.existenErrores = true;
+                    if(error.response.status === 422) {
+                        this.errores = error.response.data.errors || {};
+                    }
                 });
             },
             modificar:function(){
@@ -71,8 +77,11 @@
                 }
                 axios.put('insumos/'+this.insumoRegistro.id, params).then(response => {
                     this.$emit('modificar');
-                }).catch(function (error) {
-                    alert("Los datos ingresados no son válidos.");
+                }).catch(error => {
+                    this.existenErrores = true;
+                    if(error.response.status === 422) {
+                        this.errores = error.response.data.errors || {};
+                    }
                 });
             },
             eliminar:function() {

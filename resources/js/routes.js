@@ -10,6 +10,8 @@ import VentasCabecera from './components/Venta_Cabecera'
 
 Vue.component('indice', require('./components/Indice.vue').default);
 
+Vue.component('errores', require('./components/Errores.vue').default);
+
 Vue.component('articulo-formulario', require('./components/ArticuloFormulario.vue').default);
 Vue.component('articulo-eliminado', require('./components/Articulo_Eliminado.vue').default);
 Vue.component('articulo-insumo', require('./components/Articulo_Insumo.vue').default);

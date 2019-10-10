@@ -6,6 +6,7 @@
         </div>
         <!-- En caso de alta -->
         <div class="datos-formulario" v-if="formulario==1">
+            <errores v-if="existenErrores" :errores="errores"></errores>
             <label>Articulo:</label>
             <br>
             <select class="form-control" v-model="opcionArticulo">
@@ -18,6 +19,7 @@
         </div>
         <!-- En caso de modificacion -->
         <div class="datos-formulario" v-else-if="formulario==2">
+            <errores v-if="existenErrores" :errores="errores"></errores>
             <label>Cantidad</label>
             <input class="form-control" type="number" min="1" max="99" v-model="ventaDetalleRegistro.cantidad">
         </div>
@@ -38,7 +40,9 @@
             return{
                 titulo:'',
                 opcionArticulo:1,
-                articulos:[]
+                articulos:[],
+                existenErrores:false,
+                errores: []
             }
         },
         mounted() {
@@ -83,8 +87,11 @@
                 }
                 axios.post('ventas-detalle', params).then(response => {
                     this.$emit('alta', response.data);
-                }).catch(function (error) {
-                    alert("Los datos ingresados no son válidos.");
+                }).catch(error => {
+                    this.existenErrores = true;
+                    if(error.response.status === 422) {
+                        this.errores = error.response.data.errors || {};
+                    }
                 });
             },
             modificar:function(){
@@ -97,8 +104,11 @@
                 }
                 axios.put('ventas-detalle/'+this.ventaDetalleRegistro.id, params).then(response => {
                     this.$emit('modificar');
-                }).catch(function (error) {
-                    alert("Los datos ingresados no son válidos.");
+                }).catch(error => {
+                    this.existenErrores = true;
+                    if(error.response.status === 422) {
+                        this.errores = error.response.data.errors || {};
+                    }
                 });
             },
             eliminar:function() {
