@@ -43,7 +43,9 @@
         props: ['operacion',"registroproveedores"],
         data:function(){
             return{
-             titulo:''   
+             titulo:'',
+             existenErrores:false,
+             errores:[]   
             }
         },
         mounted() {
@@ -80,8 +82,13 @@
                 }
                 axios.post('proveedores',params).then(response => {
                 this.$emit('proveedoralta', response.data);
-                console.log(response.data);
-                })
+                }).catch(error => {
+                    this.existenErrores = true;
+                    if(error.response.status === 422) {
+                        alert("campo/s incompletos")
+                    }
+                });
+
             },
              editarproveedor:function(){
                 let formdata = new FormData();

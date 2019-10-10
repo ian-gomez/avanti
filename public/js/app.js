@@ -3173,7 +3173,9 @@ __webpack_require__.r(__webpack_exports__);
   props: ['operacion', "registroproveedores"],
   data: function data() {
     return {
-      titulo: ''
+      titulo: '',
+      existenErrores: false,
+      errores: []
     };
   },
   mounted: function mounted() {
@@ -3228,8 +3230,12 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.post('proveedores', params).then(function (response) {
         _this.$emit('proveedoralta', response.data);
+      })["catch"](function (error) {
+        _this.existenErrores = true;
 
-        console.log(response.data);
+        if (error.response.status === 422) {
+          alert("campo/s incompletos");
+        }
       });
     },
     editarproveedor: function editarproveedor() {
