@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div>
-            <label>Ventas</label>
+            <h1>Ventas</h1>
         </div>
         <div>
             <button class="btn btn-primary btn-block" @click="formulario=1">Ingresar</button>

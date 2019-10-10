@@ -55449,7 +55449,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("label", [_vm._v("Articulos")])])
+    return _c("div", [_c("h1", [_vm._v("Articulos")])])
   },
   function() {
     var _vm = this
@@ -56380,7 +56380,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("label", [_vm._v("Clientes")])])
+    return _c("div", [_c("h1", [_vm._v("Clientes")])])
   },
   function() {
     var _vm = this
@@ -56736,7 +56736,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("label", [_vm._v("Insumos")])])
+    return _c("div", [_c("h1", [_vm._v("Insumos")])])
   },
   function() {
     var _vm = this
@@ -57047,7 +57047,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("label", [_vm._v("Ventas")])])
+    return _c("div", [_c("h1", [_vm._v("Ventas")])])
   },
   function() {
     var _vm = this
