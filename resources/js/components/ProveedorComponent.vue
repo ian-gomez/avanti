@@ -48,7 +48,7 @@
                 operacion:0,
                 proveedores:[],
                 busqueda:'',
-                registroproveedores:[],
+                registroproveedores:'',
                 pos:0,
 
             }

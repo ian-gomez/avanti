@@ -48,12 +48,13 @@ class UserController extends Controller
             $validatedRequest = $request->validate([
             'name' => 'string|min:1|max:255|required',
             'email' => 'email:rfc',
+            'password' => 'string|min:1|max:255|required',
         ]);
 
         $user = new User();
-        $user->name = $request->name;
-        $user->email =$request->email;
-        $user->password =Hash::make($request->password);
+        $user->name = $validatedRequest['name'];
+        $user->email =$validatedRequest['email'];
+        $user->password =Hash::make($validatedRequest['password']);
         $user->rol=2;
         $user->save();
         return $user;

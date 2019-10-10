@@ -3042,7 +3042,7 @@ __webpack_require__.r(__webpack_exports__);
       operacion: 0,
       proveedores: [],
       busqueda: '',
-      registroproveedores: [],
+      registroproveedores: '',
       pos: 0
     };
   },
@@ -3221,12 +3221,12 @@ __webpack_require__.r(__webpack_exports__);
     altaproveedor: function altaproveedor() {
       var _this = this;
 
-      var formdata = new FormData();
-      formdata.append("nombre", this.registroproveedores.nombre);
-      formdata.append("telefono", this.registroproveedores.telefono);
-      formdata.append("direccion", this.registroproveedores.direccion);
-      console.log(this.registroproveedores);
-      axios.post('proveedores', formdata).then(function (response) {
+      var params = {
+        nombre: this.registroproveedores.nombre,
+        direccion: this.registroproveedores.direccion,
+        telefono: this.registroproveedores.telefono
+      };
+      axios.post('proveedores', params).then(function (response) {
         _this.$emit('proveedoralta', response.data);
 
         console.log(response.data);
@@ -4081,11 +4081,12 @@ __webpack_require__.r(__webpack_exports__);
     altauser: function altauser() {
       var _this = this;
 
-      var formdata = new FormData();
-      formdata.append("name", this.registrousers.name);
-      formdata.append("email", this.registrousers.email);
-      formdata.append("password", this.registrousers.password);
-      axios.post('users', formdata).then(function (response) {
+      var params = {
+        name: this.registrousers.name,
+        email: this.registrousers.email,
+        password: this.registrousers.password
+      };
+      axios.post('users', params).then(function (response) {
         _this.$emit('useralta', response.data);
       });
     },
@@ -58171,7 +58172,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "text" },
+            attrs: { type: "text", required: "" },
             domProps: { value: _vm.registroproveedores.nombre },
             on: {
               input: function($event) {
@@ -58197,7 +58198,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "text" },
+            attrs: { type: "text", required: "" },
             domProps: { value: _vm.registroproveedores.telefono },
             on: {
               input: function($event) {
@@ -58227,7 +58228,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "text" },
+            attrs: { type: "text", required: "" },
             domProps: { value: _vm.registroproveedores.direccion },
             on: {
               input: function($event) {

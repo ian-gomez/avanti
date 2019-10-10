@@ -84,11 +84,12 @@
                 };
             },
             altauser:function(){
-                let formdata = new FormData();
-                formdata.append("name", this.registrousers.name);
-                formdata.append("email", this.registrousers.email);
-                formdata.append("password", this.registrousers.password);
-                axios.post('users',formdata).then(response => {
+                const params = {
+                    name: this.registrousers.name,
+                    email: this.registrousers.email,
+                    password: this.registrousers.password,
+                }
+                axios.post('users',params).then(response => {
                 this.$emit('useralta', response.data);
                 })
             },

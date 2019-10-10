@@ -7,13 +7,13 @@
         <!-- Alta -->
         <div class="dato" v-if="operacion==1">
             <label>Nombre:</label>
-            <input class="form-control" type="text" v-model="registroproveedores.nombre">
+            <input class="form-control" type="text"  v-model="registroproveedores.nombre" required>
             <br>
             <label>Telefono</label>
-            <input class="form-control" type="text" v-model="registroproveedores.telefono">
+            <input class="form-control" type="text" v-model="registroproveedores.telefono" required>
             <br>
             <label>Direccion</label>
-            <input class="form-control" type="text" v-model="registroproveedores.direccion">
+            <input class="form-control" type="text" v-model="registroproveedores.direccion" required>
             <br>
         </div>
         <!-- Editar -->
@@ -73,12 +73,12 @@
                 };
             },
             altaproveedor:function(){
-                let formdata = new FormData();
-                formdata.append("nombre", this.registroproveedores.nombre);
-                formdata.append("telefono", this.registroproveedores.telefono);
-                formdata.append("direccion", this.registroproveedores.direccion);
-                console.log(this.registroproveedores);
-                axios.post('proveedores',formdata).then(response => {
+                const params = {
+                    nombre: this.registroproveedores.nombre,
+                    direccion: this.registroproveedores.direccion,
+                    telefono: this.registroproveedores.telefono,
+                }
+                axios.post('proveedores',params).then(response => {
                 this.$emit('proveedoralta', response.data);
                 console.log(response.data);
                 })
