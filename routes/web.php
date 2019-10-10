@@ -35,5 +35,5 @@ Route::middleware(['auth'])->group(function() {
 });
 
 Auth::routes();
-Route::get('login/github', 'Auth\LoginController@redirectToGitHub');
-Route::get('login/github/callback', 'Auth\LoginController@handleGitHubCallback');
+Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider');
+Route::get('login/{provider}/callback','Auth\LoginController@handleProviderCallback');
