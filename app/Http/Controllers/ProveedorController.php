@@ -90,6 +90,12 @@ class ProveedorController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validatedRequest = $request->validate([
+            'nombre' => 'string|min:1|max:255|required',
+            'telefono' => 'string|min:1|max:255|required',
+            'direccion' => 'string|min:1|max:255|required',
+            ]);
+        
         $proveedor= Proveedor::find($id);
         $proveedor->nombre =$request->nombre;
         $proveedor->telefono =$request->telefono;

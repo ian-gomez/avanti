@@ -27,8 +27,10 @@
             <input class="form-control" type="text" v-model="registrousers.email">
             <br>
             <label>Password</label>
-            <input class="form-control" type="password" v-model="registrousers.password">
+            <input class="form-control" id="password" type="password" v-model="registrousers.password">
             <br>
+            <label>Confirmar password</label>
+            <input class="form-control" type="password" name="confirm_password" id="confirm_password">
         </div>
          <!-- Baja -->
         <div class="dato" v-if="operacion==3">

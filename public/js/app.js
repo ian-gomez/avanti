@@ -3241,13 +3241,13 @@ __webpack_require__.r(__webpack_exports__);
     editarproveedor: function editarproveedor() {
       var _this2 = this;
 
-      var formdata = new FormData();
-      formdata.append("nombre", this.registroproveedores.nombre);
-      formdata.append("telefono", this.registroproveedores.telefono);
-      formdata.append("direccion", this.registroproveedores.direccion);
-      formdata.append("_method", "PATCH");
-      axios.post('proveedores/' + this.registroproveedores.id, formdata).then(function (response) {
-        _this2.$emit('proveedoreditar', response.data);
+      var params = {
+        nombre: this.registroproveedores.nombre,
+        direccion: this.registroproveedores.direccion,
+        telefono: this.registroproveedores.telefono
+      };
+      axios.put('proveedores/' + this.registroproveedores.id, params).then(function (response) {
+        _this2.$emit('proveedoreditar');
       });
     },
     bajaproveedor: function bajaproveedor() {
@@ -3543,10 +3543,11 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     bajaremito: function bajaremito() {
-      axios.post('remitos-cabecera/' + this.registroremitos.id, {
-        _method: 'delete'
+      var _this4 = this;
+
+      axios["delete"]('remitos-cabecera/' + this.registroremitos.id).then(function (response) {
+        _this4.$emit('remitobaja');
       });
-      this.$emit('remitobaja');
     }
   }
 });
@@ -3986,6 +3987,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -59469,7 +59472,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "password" },
+            attrs: { id: "password", type: "password" },
             domProps: { value: _vm.registrousers.password },
             on: {
               input: function($event) {
@@ -59481,7 +59484,18 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("br")
+          _c("br"),
+          _vm._v(" "),
+          _c("label", [_vm._v("Confirmar password")]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: {
+              type: "password",
+              name: "confirm_password",
+              id: "confirm_password"
+            }
+          })
         ])
       : _vm._e(),
     _vm._v(" "),

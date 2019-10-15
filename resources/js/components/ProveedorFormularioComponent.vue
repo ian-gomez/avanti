@@ -91,13 +91,13 @@
 
             },
              editarproveedor:function(){
-                let formdata = new FormData();
-                formdata.append("nombre",this.registroproveedores.nombre);
-                formdata.append("telefono",this.registroproveedores.telefono);
-                formdata.append("direccion",this.registroproveedores.direccion);
-                formdata.append("_method","PATCH");
-                axios.post('proveedores/'+this.registroproveedores.id,formdata).then(response => {
-                this.$emit('proveedoreditar', response.data);
+                 const params = {
+                    nombre: this.registroproveedores.nombre,
+                    direccion: this.registroproveedores.direccion,
+                    telefono: this.registroproveedores.telefono,
+                }
+                axios.put('proveedores/'+this.registroproveedores.id, params).then(response => {
+                    this.$emit('proveedoreditar');
                 })
             },
 

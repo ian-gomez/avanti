@@ -113,8 +113,9 @@
             },
 
             bajaremito:function(){
-                axios.post('remitos-cabecera/'+this.registroremitos.id, {_method: 'delete'});
-                this.$emit('remitobaja');
+                axios.delete('remitos-cabecera/'+this.registroremitos.id).then(response => {
+                    this.$emit('remitobaja');
+                })
             },
         }
       }  
