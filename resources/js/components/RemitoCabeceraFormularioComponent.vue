@@ -83,6 +83,7 @@
             },
 
             buscaprov:function(dato){
+                console.log(this.proveedores.filter((prov)=>prov.id==dato));
                 return this.proveedores.filter((prov)=>prov.id==dato);
             },            
 
@@ -90,13 +91,15 @@
                 let formdata = new FormData();
                 formdata.append("proveedor_id", this.registroremitos.proveedor_id);
                 axios.post('remitos-cabecera',formdata).then(response => {
-              
-                this.$emit('remitoalta',
+                    this.$emit('remitoalta',
                     {id:response.data.id,
                      nombre:this.buscaprov(response.data.proveedor_id)[0].nombre}
                    );
-
-                })
+                }).catch(error => {
+                    if(error.response.status === 422) {
+                        alert("campo/s incompletos")
+                    }
+                });
 
             },
              editarremito:function(){

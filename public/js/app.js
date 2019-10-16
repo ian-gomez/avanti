@@ -3248,6 +3248,12 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.put('proveedores/' + this.registroproveedores.id, params).then(function (response) {
         _this2.$emit('proveedoreditar');
+      })["catch"](function (error) {
+        _this2.existenErrores = true;
+
+        if (error.response.status === 422) {
+          alert("campo/s incompletos");
+        }
       });
     },
     bajaproveedor: function bajaproveedor() {
@@ -3512,6 +3518,9 @@ __webpack_require__.r(__webpack_exports__);
       ;
     },
     buscaprov: function buscaprov(dato) {
+      console.log(this.proveedores.filter(function (prov) {
+        return prov.id == dato;
+      }));
       return this.proveedores.filter(function (prov) {
         return prov.id == dato;
       });
@@ -3526,6 +3535,10 @@ __webpack_require__.r(__webpack_exports__);
           id: response.data.id,
           nombre: _this2.buscaprov(response.data.proveedor_id)[0].nombre
         });
+      })["catch"](function (error) {
+        if (error.response.status === 422) {
+          alert("campo/s incompletos");
+        }
       });
     },
     editarremito: function editarremito() {
@@ -4097,18 +4110,26 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.post('users', params).then(function (response) {
         _this.$emit('useralta', response.data);
+      })["catch"](function (error) {
+        if (error.response.status === 422) {
+          alert("campo/s incompletos");
+        }
       });
     },
     editaruser: function editaruser() {
       var _this2 = this;
 
-      var formdata = new FormData();
-      formdata.append("name", this.registrousers.name);
-      formdata.append("email", this.registrousers.email);
-      formdata.append("password", this.registrousers.password);
-      formdata.append("_method", "PATCH");
-      axios.post('users/' + this.registrousers.id, formdata).then(function (response) {
+      var params = {
+        name: this.registrousers.name,
+        email: this.registrousers.email,
+        password: this.registrousers.password
+      };
+      axios.put('users/' + this.registrousers.id, params).then(function (response) {
         _this2.$emit('usereditar', response.data);
+      })["catch"](function (error) {
+        if (error.response.status === 422) {
+          alert("campo/s incompletos");
+        }
       });
     },
     bajauser: function bajauser() {

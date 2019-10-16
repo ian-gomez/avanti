@@ -98,7 +98,12 @@
                 }
                 axios.put('proveedores/'+this.registroproveedores.id, params).then(response => {
                     this.$emit('proveedoreditar');
-                })
+                }).catch(error => {
+                    this.existenErrores = true;
+                    if(error.response.status === 422) {
+                        alert("campo/s incompletos")
+                    }
+                });
             },
 
             bajaproveedor:function(){

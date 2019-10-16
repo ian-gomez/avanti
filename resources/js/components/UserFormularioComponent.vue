@@ -93,17 +93,26 @@
                 }
                 axios.post('users',params).then(response => {
                 this.$emit('useralta', response.data);
-                })
+                }).catch(error => {
+                    if(error.response.status === 422) {
+                        alert("campo/s incompletos")
+                    }
+                });
+
             },
              editaruser:function(){
-                let formdata = new FormData();
-                formdata.append("name",this.registrousers.name);
-                formdata.append("email",this.registrousers.email);
-				formdata.append("password",this.registrousers.password);
-                formdata.append("_method","PATCH");
-                axios.post('users/'+this.registrousers.id,formdata).then(response => {
+                const params = {
+                    name: this.registrousers.name,
+                    email: this.registrousers.email,
+                    password: this.registrousers.password,
+                }
+                axios.put('users/'+this.registrousers.id, params).then(response => {
                 this.$emit('usereditar', response.data);
-                })
+                }).catch(error => {
+                    if(error.response.status === 422) {
+                        alert("campo/s incompletos")
+                    }
+                });
             },
 
             bajauser:function(){
