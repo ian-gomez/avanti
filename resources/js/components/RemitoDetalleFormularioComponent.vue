@@ -84,7 +84,11 @@
                 formdata.append("articulo_id", this.opcionArticulo);
                 axios.post('remitos-detalle',formdata).then(response => {
                 this.$emit('detallealta', response.data);
-                })
+                }).catch(error => {
+                    if(error.response.status === 422) {
+                        alert("ingrese una cantidad")
+                    }
+                });
             },
             editardetalle:function(){
                 let formdata = new FormData();

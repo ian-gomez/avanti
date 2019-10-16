@@ -97,7 +97,7 @@
                    );
                 }).catch(error => {
                     if(error.response.status === 422) {
-                        alert("campo/s incompletos")
+                        alert("seleccione un proveedor")
                     }
                 });
 

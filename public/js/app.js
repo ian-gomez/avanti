@@ -3537,7 +3537,7 @@ __webpack_require__.r(__webpack_exports__);
         });
       })["catch"](function (error) {
         if (error.response.status === 422) {
-          alert("campo/s incompletos");
+          alert("seleccione un proveedor");
         }
       });
     },
@@ -3832,6 +3832,10 @@ __webpack_require__.r(__webpack_exports__);
       formdata.append("articulo_id", this.opcionArticulo);
       axios.post('remitos-detalle', formdata).then(function (response) {
         _this2.$emit('detallealta', response.data);
+      })["catch"](function (error) {
+        if (error.response.status === 422) {
+          alert("ingrese una cantidad");
+        }
       });
     },
     editardetalle: function editardetalle() {

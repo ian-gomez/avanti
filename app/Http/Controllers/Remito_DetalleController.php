@@ -43,6 +43,11 @@ class Remito_DetalleController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedRequest = $request->validate([
+            'cantidad' => 'integer|min:1|max:255|required',
+            ]);
+        
+
         $remitodetalle = new Remito_Detalle();
         $remitodetalle->remito_cabecera_id = $request->remito_cabecera_id;
         $remitodetalle->articulo_id = $request->articulo_id;
