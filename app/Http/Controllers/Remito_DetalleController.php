@@ -90,6 +90,10 @@ class Remito_DetalleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validatedRequest = $request->validate([
+            'cantidad' => 'integer|min:1|max:255|required',
+            ]);
+        
         $remitodetalle = Remito_Detalle::find($id);
         $remitodetalle->remito_cabecera_id = $request->remito_cabecera_id;
         $remitodetalle->articulo_id = $request->articulo_id;

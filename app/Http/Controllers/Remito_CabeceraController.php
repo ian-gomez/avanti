@@ -93,6 +93,10 @@ class Remito_CabeceraController extends Controller
      */
     public function update(Request $request, $id)
     {
+         $validatedRequest = $request->validate([
+            'proveedor_id' => 'numeric|exists:proveedores,id|required'
+        ]);
+         
         $remito= Remito_Cabecera::find($id);
         $remito->user_id = auth()->user()['id'];
         $remito->proveedor_id = $request->proveedor_id;

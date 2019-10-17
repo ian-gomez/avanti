@@ -9,6 +9,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 Vue.use(require('vue-moment'));
 
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -19,6 +20,7 @@ Vue.use(require('vue-moment'));
 
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
+Vue.component('errores', require('./components/Errores.vue').default);
 
 Vue.component('user-component', require('./components/UserComponent.vue').default);
 Vue.component('user-formulario-component', require('./components/UserFormularioComponent.vue').default);

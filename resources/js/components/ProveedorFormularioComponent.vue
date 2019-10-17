@@ -6,6 +6,7 @@
         </div>
         <!-- Alta -->
         <div class="dato" v-if="operacion==1">
+            <errores v-if="existenErrores" :errores="errores"></errores>
             <label>Nombre:</label>
             <input class="form-control" type="text"  v-model="registroproveedores.nombre" required>
             <br>
@@ -85,7 +86,7 @@
                 }).catch(error => {
                     this.existenErrores = true;
                     if(error.response.status === 422) {
-                        alert("campo/s incompletos")
+                       this.errores = error.response.data.errors || {};
                     }
                 });
 
