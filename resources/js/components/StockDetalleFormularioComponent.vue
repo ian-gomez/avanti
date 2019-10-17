@@ -1,127 +1,100 @@
 <template>
-	<div class="contenedor">
+	<div class="contenedor-detalle1">
+    	<div class="datos-formulario-detalle-" v-if="operaciond==1">
+            <errores v-if="existenErrores" :errores="errores"></errores>
+            <label>Articulo:</label>
+                <select class="form-control"v-model='opcionArticulo'>
+                    <option v-for="articulo in articulos" v-bind:value='articulo.id' v-bind:selected='(articulo.id == det.articulo_id)'>{{articulo.nombre}}</option>
+                </select>
+            <br>
+            <label>Cantidad:</label>
+            <input class="form-control" v-model="det.cantidad" placeholder="Ingrese la cantidad" type="number" autofocus>
+            <br>
+            <button class="botondetalleform btn-block" @click="operaciondetalle()">Aceptar</button>
+            <button @click="cerrar()" class="botondetalleform btn-block">X</button>
+        </div>
 
-		<div class="dato">
-			<button class="btn btn-success btn-block">Ingresar</button>
-			<table class="display" id="tabla-detalle">
-				<thead>
-                	<tr>
-                		<td>Articulo</td>
-                    	<td>Cantidad</td>
-                    	<td>Precio</td>
-                    	<td>Operaciones</td>
-                	</tr>
-            	</thead>
-            	<tbody>
-            		<tr v-for="(detalle, index) in detalleR">
-	                    <td>{{detalle.nombre}}</td>
-	                    <td>{{detalle.cantidad}}</td>
-	                    <td>{{detalle.precio}}</td>
-            			<button class="btn btn-danger">Borrar</button>
-                	</tr>
-            	</tbody>
-			</table>
-			<button @click="cerrar()" class="boton">X</button>
-			<div style="background-color: white; border-radius: 10px;">
-				<pre>{{$data}}</pre>
-			</div>	
-		</div>
-		<stock-detalle-component
-				@altad='altadetalle($event)'
-				@bajad="bajadetalle()"
-				v-if="operaciond>0"
-				@cerrar-ventana="operaciond=0">
-		</stock-detalle-component>
-	</div>
+        <div class="datos-formulario-detalle-" v-else-if="operaciond==2">
+                <h2>¿Desea eliminar?</h2>
+                <br><button class="botondetalleform btn-block" @click="operaciondetalle()">Aceptar</button>
+                <button @click="cerrar()" class="botondetalleform btn-block">X</button>  
+        </div>
+    </div>
 </template>
 
 <script>
-	import datatables from 'datatables'
-	export default{
-		props: ["detallev"],		
+    export default{
+    	props: ["detalled","cabecera",'operaciond',"det"],		
 		data:function(){
             return{
-            	detalleR:[],
-            	pos:0,
-            	operaciond:0
+            	articulos:[],
+                existenErrores:false,
+                errores: [],
+            	opcionArticulo:1
             }
         },
-        mounted() {
-
+         mounted() {
             console.log('Component mounted.')
-            this.mostrard();
+            this.articulonombre();
+        },
+
+        methods:{ 
+        	cerrar:function(){
+                this.$emit('cerrar-ventana');
             },
-
-        methods:{
-
-        	mostrard:function()
-            {
-                axios.get('stock-detalle/'+this.detallev.id).then(respose =>{
-                	console.log(respose.data);
-                    this.detalleR = respose.data;
-                    this.tabla();
+            buscart:function(dato){
+                return this.articulos.filter((art)=>art.id==dato);
+            },      
+            altad:function(){
+                let formdata = new FormData();
+                formdata.append("cantidad", this.det.cantidad);
+                formdata.append("articulos_id", this.opcionArticulo);
+                formdata.append("stock_cabecera_id", this.cabecera);
+                axios.post('stock-detalle',formdata).then(response =>{
+                this.$emit('altad',
+                    {id:response.data.id,
+                    cantidad:response.data.cantidad,
+                    precio:response.data.precio,
+                    nombre:this.buscart(response.data.articulo_id)[0].nombre}
+                   );
+                }).catch(error => {
+                    this.existenErrores = true;
+                    if(error.response.status === 422) {
+                        this.errores = error.response.data.errors || {};
+                    }
                 });
             },
-            altadetalle:function(dato)
-            {
-                this.detalleR.push(dato);
-                this.operaciond=0;
+            bajad:function(){
+                axios.delete('stock-detalle/'+this.detalled).then(response => {
+                    this.$emit('bajad');
+                })
             },
-            bajadetalle:function()
-            {
-                this.detalleR.splice(this.pos,1);
-                this.operaciond=0;
+
+            operaciondetalle:function(){
+                if (this.operaciond == 1){
+                    this.altad();
+                };
+                if (this.operaciond == 2){
+                    this.bajad();            
+                };
             },
-       	 	cerrar:function(){
-                this.$emit('cerrar-detalle');
-            },
-        	
-        	tabla:function(){
-                $(document).ready(function(){
-                    $('#tabla-detalle').DataTable({
-                        "lengthMenu": [[5, 25, 50], [5, 25, 50]],
-                        "pagingType": "full_numbers",
-                        language: {
-                            "sProcessing":     "Procesando...",
-                            "sLengthMenu":     "Mostrar _MENU_ registros",
-                            "sZeroRecords":    "No se encontraron resultados",
-                            "sEmptyTable":     "Ningún dato disponible en esta tabla-detalle",
-                            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-                            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-                            "sInfoPostFix":    "",
-                            "sSearch":         "Buscar:",
-                            "sUrl":            "",
-                            "sInfoThousands":  ",",
-                            "sLoadingRecords": "Cargando...",
-                            "oPaginate": {
-                                "sFirst":    "Primero",
-                                "sLast":     "Último",
-                                "sNext":     "Siguiente",
-                                "sPrevious": "Anterior"
-                            },
-                            "oAria": {
-                                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                            }
-                        }
-                    });
+            articulonombre:function(){
+                axios.get('articulos').then(respose =>{
+                this.articulos = respose.data;
                 });
             }
-      	}  
-	}
-
+        }
+    }
 </script>
 
 <style type="text/css">
-    .contenedor{
+    .contenedor-detalle1{
         display: grid;
-        grid-template-columns: 1fr 3fr 1fr;
-        grid-template-rows: 1fr 1fr 3fr 1fr 1fr;
+        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-rows: 1fr 2fr 1fr;
         grid-template-areas: 
         " . . ."
-        " . dato ."
-        " . aceptar ."
+        " . datos-formulario-detalle- ."
         " . . .";
         position: fixed;
         top: 0;
@@ -134,22 +107,15 @@
         width: 28%;
         margin: 20% auto;
     }    
-    .boton{
+    .botondetalleform{
         font-weight: bold;
-        font-size: 10px;
-        width: 400px;
-        border: solid gainsboro 20px;
+        font-size: 14px;
+        height: 10%;
+        border: solid gainsboro;
         background-color: ghostwhite;
     }
-    .dato {
+    .datos-formulario-detalle- {
         background-color: gainsboro;
-        grid-area: dato;
-    }
-    .vista-eliminar{
-        background-color: green;
-        grid-area: vista-eliminar;    
-    }
-    .vista-select{
-
+        grid-area: datos-formulario-detalle-;
     }
 </style>

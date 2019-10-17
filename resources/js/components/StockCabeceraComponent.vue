@@ -1,5 +1,8 @@
 <template>
     <div class="container">
+        <div>
+            <h1>Stock</h1>
+        </div>
         <button @click="operacion=1;cabecerasR=[]" class="btn btn-success btn-block">Ingresar</button>
         <table class="display" id="tabla">
             <thead>
@@ -8,6 +11,7 @@
                     <td>Usuario</td>
                     <td>Fecha</td>
                     <td>Proveedor</td>
+                    <td>Numero Remito</td>
                     <td>Operaciones</td>
                 </tr>
             </thead>
@@ -17,11 +21,12 @@
                     <td>{{cabecera.name}}</td>
                     <td>{{cabecera.fecha}}</td>
                     <td>{{cabecera.nombre}}</td>
+                    <td>{{cabecera.numero_remito}}</td>
                     <td><button class="btn btn-info"
                     @click="pos=index;operacion=2;cabecerasR=cabecera">Editar</button>
                     <button class="btn btn-danger" 
                     @click="pos=index;operacion=3;cabecerasR=cabecera">Borrar</button>
-                    <button @click="detalle=true"class="btn btn-success">Detalle</button>
+                    <button @click="detalle=true;asignardetalle(cabecera)"class="btn btn-success">Detalle</button>
                 </td>
                 </tr>
             </tbody>    
@@ -35,15 +40,14 @@
                 :cabecerasR="cabecerasR"
                 :operacion="operacion">
         </stock-formulario-component>
-            <div class="datosm">
+            <!--div class="datosm">
                 <pre>{{$data}}</pre>
-            </div>
-        <stock-detalle-formulario-component
+            </div-->
+        <stock-detalle-component
                 @cerrar-detalle="detalle=false"
                 v-if="detalle"
-                :detallev="detallev"
-                :operacion="operacion">
-        </stock-detalle-formulario-component>
+                :cabecera="cabecera">
+        </stock-detalle-component>
     </div>
 
 </template>
@@ -57,8 +61,7 @@
                 operacion:0,
                 pos:0,
                 cabeceras:[],
-                cabecerasR:[],
-                detallev:[],
+                detallev:"",
                 detalle:false
                }
         },
@@ -70,7 +73,7 @@
         methods:{
             asignardetalle:function(dato)
             {
-                this.detallev = dato;
+                this.cabecera = dato;
             },
             mostrar:function()
             {
@@ -83,6 +86,7 @@
             {
                 this.cabeceras.push(dato);
                 this.operacion=0;
+                window.location.reload(true);
             },
             editarcabecera:function(dato)
             {
@@ -93,6 +97,7 @@
             {
                 this.cabeceras.splice(this.pos,1);
                 this.operacion=0;
+                window.location.reload(true);
             },
 
             tabla:function(){

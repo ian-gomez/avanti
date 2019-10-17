@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Stock_Detalle;
-use App\articulos;
+use App\Articulo;
 use App\Stock_Cabecera;   
 
 class Stock_DetalleController extends Controller
@@ -17,12 +17,12 @@ class Stock_DetalleController extends Controller
      */
     public function index($stockcabecera)
     {
-        $Stock_Detalle = DB::table('Stock_Detalle')
-                    ->join('articulos','Stock_Detalle.articulo_id','=','articulos.id')
-                    ->where('Stock_Detalle.stock_cabecera_id','=', $stockcabecera)
-                    ->select('Stock_Detalle.*','articulos.nombre')
+        $stock_detalle = DB::table('stock_detalle')
+                    ->join('articulos','articulos.id','=','stock_detalle.articulo_id')
+                    ->where('stock_detalle.stock_cabecera_id','=', $stockcabecera)
+                    ->select('stock_detalle.*','articulos.nombre')
                     ->get();
-        return $Stock_Detalle; 
+        return $stock_detalle; 
     }
 
     /**
@@ -43,18 +43,26 @@ class Stock_DetalleController extends Controller
      */
     public function store(Request $request)
     {
-        $Stock_Detalle = new Stock_Detalle(); 
-        $Stock_Detalle->cantidad = $request->cantidad;
-        $Stock_Detalle->precio = $request->precio;
-        $Stock_Detalle->costo = $request->costo;
-        $Stock_Detalle->save();
-        return $Stock_Detalle;
+        $validatedRequest = $request->validate([
+            'cantidad' => 'numeric|min:1|',
+        ]);
+
+        $stock_detalle = new stock_detalle(); 
+        $stock_detalle->stock_cabecera_id = $request->stock_cabecera_id;
+        $stock_detalle->cantidad = $request->cantidad;
+        $articulo = Articulo::find($request->articulos_id);
+        $stock_detalle->articulo_id = $request->articulos_id;
+        $stock_detalle->precio = $articulo->precio;
+        $stock_detalle->fecha = date('Y-m-d H:i:s');
+        $stock_detalle->save();
+        
+        return $stock_detalle;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $id 
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -93,7 +101,8 @@ class Stock_DetalleController extends Controller
      */
     public function destroy($id)
     {
-        $Stock_Detalle = Stock_Detalle::find($id);
-        $Stock_Detalle->delete();
+        $stock_detalle = Stock_Detalle::find($id);
+        $stock_detalle->delete();
+        return $stock_detalle;
     }
 }

@@ -11,6 +11,8 @@ import StockCabecera from './components/StockCabeceraComponent.vue'
 
 Vue.component('indice', require('./components/Indice.vue').default);
 
+Vue.component('errores', require('./components/Errores.vue').default);
+
 Vue.component('stock-formulario-component', require('./components/StockFormularioComponent.vue').default);
 Vue.component('stock-detalle-formulario-component', require('./components/StockDetalleFormularioComponent.vue').default);
 Vue.component('stock-detalle-component', require('./components/StockDetalleComponent').default);

@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Stock_Cabecera;
-use App\proveedores;  
+use App\proveedores;
+use App\Stock_Detalle;  
 
 class Stock_CabeceraController extends Controller
 {
@@ -47,13 +48,19 @@ class Stock_CabeceraController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedRequest = $request->validate([
+            'numero_remito' => 'numeric|min:1|required',
+          //  'fecha' => 'date_format:after:Yesterday|before:tomorrow',
+        ]);
+        
         $cabecera = new Stock_Cabecera();
-        $cabecera->fecha = $request->fecha;
+        $cabecera->fecha = date('Y-m-d H:i:s');
         $cabecera->proveedor_id = $request->proveedor_id;
         $cabecera->numero_remito = $request->numero_remito;
         $cabecera->user_id = auth()->user()['id'];
         //dd($user);0
         $cabecera->save();
+
         return $cabecera;
     }
     
@@ -88,9 +95,15 @@ class Stock_CabeceraController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $vpalidatedRequest = $request->validate([
+        'numero_remito' => 'numeric|min:1|required',
+    //    'fecha' => 'date_format:after:12/3/2006',
+         ]);
         $cabecera = Stock_Cabecera::find($id);
-        $cabecera->fecha = $request->fecha;
+        $cabecera->fecha = date('Y-m-d H:i:s');
         $cabecera->user_id = auth()->user()['id'];
+        $cabecera->proveedor_id = $request->proveedor_id;
+        $cabecera->numero_remito = $request->numero_remito;
         $cabecera->save();
         return $cabecera;
     }
@@ -103,7 +116,12 @@ class Stock_CabeceraController extends Controller
      */
     public function destroy($id)
     {
+        $detalle = Stock_Detalle::where('stock_cabecera_id', $id);
         $cabecera = Stock_Cabecera::find($id);
-        $cabecera->delete();
+        DB::transaction(function() use ($detalle, $cabecera) {
+            $detalle->delete();
+            $cabecera->delete();
+        });
+        return $cabecera;   
     }
 }
