@@ -114,4 +114,4 @@ class Remito_DetalleController extends Controller
         $remitodetalle = Remito_Detalle::find($id);
         $remitodetalle->delete();
     }
-}
+} 

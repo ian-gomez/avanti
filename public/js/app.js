@@ -3194,6 +3194,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['operacion', "registroproveedores"],
   data: function data() {
@@ -3277,7 +3278,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.existenErrores = true;
 
         if (error.response.status === 422) {
-          alert("campo/s incompletos");
+          _this2.errores = error.response.data.errors || {};
         }
       });
     },
@@ -3553,9 +3554,10 @@ __webpack_require__.r(__webpack_exports__);
     altaremito: function altaremito() {
       var _this2 = this;
 
-      var formdata = new FormData();
-      formdata.append("proveedor_id", this.registroremitos.proveedor_id);
-      axios.post('remitos-cabecera', formdata).then(function (response) {
+      var params = {
+        proveedor_id: this.registroremitos.proveedor_id
+      };
+      axios.post('remitos-cabecera', params).then(function (response) {
         _this2.$emit('remitoalta', {
           id: response.data.id,
           nombre: _this2.buscaprov(response.data.proveedor_id)[0].nombre
@@ -3569,10 +3571,10 @@ __webpack_require__.r(__webpack_exports__);
     editarremito: function editarremito() {
       var _this3 = this;
 
-      var formdata = new FormData();
-      formdata.append("proveedor_id", this.registroremitos.proveedor_id);
-      formdata.append("_method", "PATCH");
-      axios.post('remitos-cabecera/' + this.registroremitos.id, formdata).then(function (response) {
+      var params = {
+        proveedor_id: this.registroremitos.proveedor_id
+      };
+      axios.put('remitos-cabecera/' + this.registroremitos.id, params).then(function (response) {
         _this3.$emit('remitoeditar', {
           id: response.data.id,
           importe: _this3.registroremitos.importe,
@@ -3851,11 +3853,12 @@ __webpack_require__.r(__webpack_exports__);
     altadetalle: function altadetalle() {
       var _this2 = this;
 
-      var formdata = new FormData();
-      formdata.append("remito_cabecera_id", this.remito_cabecera_id);
-      formdata.append("cantidad", this.registrodetalles.cantidad);
-      formdata.append("articulo_id", this.opcionArticulo);
-      axios.post('remitos-detalle', formdata).then(function (response) {
+      var params = {
+        remito_cabecera_id: this.remito_cabecera_id,
+        cantidad: this.registrodetalles.cantidad,
+        articulo_id: this.opcionArticulo
+      };
+      axios.post('remitos-detalle', params).then(function (response) {
         _this2.$emit('detallealta', response.data);
       })["catch"](function (error) {
         if (error.response.status === 422) {
@@ -3866,13 +3869,13 @@ __webpack_require__.r(__webpack_exports__);
     editardetalle: function editardetalle() {
       var _this3 = this;
 
-      var formdata = new FormData();
-      formdata.append("remito_cabecera_id", this.remito_cabecera_id);
-      formdata.append("cantidad", this.registrodetalles.cantidad);
-      formdata.append("articulo_id", this.registrodetalles.articulo_id);
-      formdata.append("precio", this.registrodetalles.precio);
-      formdata.append("_method", "PATCH");
-      axios.post('remitos-detalle/' + this.registrodetalles.id, formdata).then(function (response) {
+      var params = {
+        remito_cabecera_id: this.remito_cabecera_id,
+        cantidad: this.registrodetalles.cantidad,
+        articulo_id: this.registrodetalles.articulo_id,
+        precio: this.registrodetalles.precio
+      };
+      axios.put('remitos-detalle/' + this.registrodetalles.id, params).then(function (response) {
         _this3.$emit('detalleeditar', response.data);
       });
     },
@@ -4073,11 +4076,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['operacion', "registrousers"],
   data: function data() {
     return {
-      titulo: ''
+      titulo: '',
+      existenErrores: false,
+      checkeado: false
     };
   },
   mounted: function mounted() {
@@ -4105,14 +4112,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     check: function check() {
       if (document.getElementById('password').value == document.getElementById('confirm_password').value) {
-        this.altauser();
+        this.checkeado = true;
       } else {
-        alert('La contraseña no fue confirmada correctamente');
+        this.checkeado = false;
       }
     },
     operacionuser: function operacionuser() {
       if (this.operacion == 1) {
-        this.check();
+        this.altauser();
       }
 
       ;
@@ -4132,34 +4139,47 @@ __webpack_require__.r(__webpack_exports__);
     altauser: function altauser() {
       var _this = this;
 
-      var params = {
-        name: this.registrousers.name,
-        email: this.registrousers.email,
-        password: this.registrousers.password
-      };
-      axios.post('users', params).then(function (response) {
-        _this.$emit('useralta', response.data);
-      })["catch"](function (error) {
-        if (error.response.status === 422) {
-          alert("campo/s incompletos");
-        }
-      });
+      this.check();
+
+      if (this.checkeado) {
+        var params = {
+          name: this.registrousers.name,
+          email: this.registrousers.email,
+          password: this.registrousers.password
+        };
+        axios.post('users', params).then(function (response) {
+          _this.$emit('useralta', response.data);
+        })["catch"](function (error) {
+          if (error.response.status === 422) {
+            _this.errores = error.response.data.errors || {};
+          }
+        });
+      } else {
+        alert('La contraseña no fue confirmada correctamente');
+      }
     },
     editaruser: function editaruser() {
       var _this2 = this;
 
-      var params = {
-        name: this.registrousers.name,
-        email: this.registrousers.email,
-        password: this.registrousers.password
-      };
-      axios.put('users/' + this.registrousers.id, params).then(function (response) {
-        _this2.$emit('usereditar', response.data);
-      })["catch"](function (error) {
-        if (error.response.status === 422) {
-          alert("campo/s incompletos");
-        }
-      });
+      this.check();
+      console.log(this.checkeado);
+
+      if (this.checkeado) {
+        var params = {
+          name: this.registrousers.name,
+          email: this.registrousers.email,
+          password: this.registrousers.password
+        };
+        axios.put('users/' + this.registrousers.id, params).then(function (response) {
+          _this2.$emit('usereditar', response.data);
+        })["catch"](function (error) {
+          if (error.response.status === 422) {
+            alert("campo/s incompletos");
+          }
+        });
+      } else {
+        alert('La contraseña no fue confirmada correctamente');
+      }
     },
     bajauser: function bajauser() {
       var _this3 = this;
@@ -58355,93 +58375,106 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _vm.operacion == 2
-      ? _c("div", { staticClass: "dato" }, [
-          _c("label", [_vm._v("Nombre:")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.registroproveedores.nombre,
-                expression: "registroproveedores.nombre"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text" },
-            domProps: { value: _vm.registroproveedores.nombre },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+      ? _c(
+          "div",
+          { staticClass: "dato" },
+          [
+            _vm.existenErrores
+              ? _c("errores", { attrs: { errores: _vm.errores } })
+              : _vm._e(),
+            _vm._v(" "),
+            _c("label", [_vm._v("Nombre:")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.registroproveedores.nombre,
+                  expression: "registroproveedores.nombre"
                 }
-                _vm.$set(_vm.registroproveedores, "nombre", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v("Telefono")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.registroproveedores.telefono,
-                expression: "registroproveedores.telefono"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text" },
-            domProps: { value: _vm.registroproveedores.telefono },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.registroproveedores.nombre },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.registroproveedores,
+                    "nombre",
+                    $event.target.value
+                  )
                 }
-                _vm.$set(
-                  _vm.registroproveedores,
-                  "telefono",
-                  $event.target.value
-                )
               }
-            }
-          }),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v("Direccion")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.registroproveedores.direccion,
-                expression: "registroproveedores.direccion"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text" },
-            domProps: { value: _vm.registroproveedores.direccion },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+            }),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("label", [_vm._v("Telefono")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.registroproveedores.telefono,
+                  expression: "registroproveedores.telefono"
                 }
-                _vm.$set(
-                  _vm.registroproveedores,
-                  "direccion",
-                  $event.target.value
-                )
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.registroproveedores.telefono },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.registroproveedores,
+                    "telefono",
+                    $event.target.value
+                  )
+                }
               }
-            }
-          }),
-          _vm._v(" "),
-          _c("br")
-        ])
+            }),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("label", [_vm._v("Direccion")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.registroproveedores.direccion,
+                  expression: "registroproveedores.direccion"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.registroproveedores.direccion },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.registroproveedores,
+                    "direccion",
+                    $event.target.value
+                  )
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("br")
+          ],
+          1
+        )
       : _vm._e(),
     _vm._v(" "),
     _vm.operacion == 3
@@ -59411,189 +59444,207 @@ var render = function() {
     ]),
     _vm._v(" "),
     _vm.operacion == 1
-      ? _c("div", { staticClass: "dato" }, [
-          _c("label", [_vm._v("Nombre:")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.registrousers.name,
-                expression: "registrousers.name"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text" },
-            domProps: { value: _vm.registrousers.name },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+      ? _c(
+          "div",
+          { staticClass: "dato" },
+          [
+            _vm.existenErrores
+              ? _c("errores", { attrs: { errores: _vm.errores } })
+              : _vm._e(),
+            _vm._v(" "),
+            _c("label", [_vm._v("Nombre:")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.registrousers.name,
+                  expression: "registrousers.name"
                 }
-                _vm.$set(_vm.registrousers, "name", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v("Email")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.registrousers.email,
-                expression: "registrousers.email"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text" },
-            domProps: { value: _vm.registrousers.email },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.registrousers.name },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.registrousers, "name", $event.target.value)
                 }
-                _vm.$set(_vm.registrousers, "email", $event.target.value)
               }
-            }
-          }),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v("Password")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.registrousers.password,
-                expression: "registrousers.password"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { id: "password", type: "password" },
-            domProps: { value: _vm.registrousers.password },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+            }),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("label", [_vm._v("Email")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.registrousers.email,
+                  expression: "registrousers.email"
                 }
-                _vm.$set(_vm.registrousers, "password", $event.target.value)
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.registrousers.email },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.registrousers, "email", $event.target.value)
+                }
               }
-            }
-          }),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v("Confirmar password")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: {
-              type: "password",
-              name: "confirm_password",
-              id: "confirm_password"
-            }
-          })
-        ])
+            }),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("label", [_vm._v("Password")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.registrousers.password,
+                  expression: "registrousers.password"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { id: "password", type: "password" },
+              domProps: { value: _vm.registrousers.password },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.registrousers, "password", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("label", [_vm._v("Confirmar password")]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "form-control",
+              attrs: {
+                type: "password",
+                name: "confirm_password",
+                id: "confirm_password"
+              }
+            })
+          ],
+          1
+        )
       : _vm._e(),
     _vm._v(" "),
     _vm.operacion == 2
-      ? _c("div", { staticClass: "dato" }, [
-          _c("label", [_vm._v("Nombre:")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.registrousers.name,
-                expression: "registrousers.name"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text" },
-            domProps: { value: _vm.registrousers.name },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+      ? _c(
+          "div",
+          { staticClass: "dato" },
+          [
+            _vm.existenErrores
+              ? _c("errores", { attrs: { errores: _vm.errores } })
+              : _vm._e(),
+            _vm._v(" "),
+            _c("label", [_vm._v("Nombre:")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.registrousers.name,
+                  expression: "registrousers.name"
                 }
-                _vm.$set(_vm.registrousers, "name", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v("Email")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.registrousers.email,
-                expression: "registrousers.email"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text" },
-            domProps: { value: _vm.registrousers.email },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.registrousers.name },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.registrousers, "name", $event.target.value)
                 }
-                _vm.$set(_vm.registrousers, "email", $event.target.value)
               }
-            }
-          }),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v("Password")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.registrousers.password,
-                expression: "registrousers.password"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { id: "password", type: "password" },
-            domProps: { value: _vm.registrousers.password },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+            }),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("label", [_vm._v("Email")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.registrousers.email,
+                  expression: "registrousers.email"
                 }
-                _vm.$set(_vm.registrousers, "password", $event.target.value)
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.registrousers.email },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.registrousers, "email", $event.target.value)
+                }
               }
-            }
-          }),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("label", [_vm._v("Confirmar password")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: {
-              type: "password",
-              name: "confirm_password",
-              id: "confirm_password"
-            }
-          })
-        ])
+            }),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("label", [_vm._v("Password")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.registrousers.password,
+                  expression: "registrousers.password"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { id: "password", type: "password" },
+              domProps: { value: _vm.registrousers.password },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.registrousers, "password", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("label", [_vm._v("Confirmar password")]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "form-control",
+              attrs: {
+                type: "password",
+                name: "confirm_password",
+                id: "confirm_password"
+              }
+            })
+          ],
+          1
+        )
       : _vm._e(),
     _vm._v(" "),
     _vm.operacion == 3

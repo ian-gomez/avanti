@@ -78,11 +78,12 @@
                 };
             },
             altadetalle:function(){
-                let formdata = new FormData();
-                formdata.append("remito_cabecera_id", this.remito_cabecera_id);
-                formdata.append("cantidad", this.registrodetalles.cantidad);
-                formdata.append("articulo_id", this.opcionArticulo);
-                axios.post('remitos-detalle',formdata).then(response => {
+                const params = {
+                remito_cabecera_id:this.remito_cabecera_id,
+                cantidad:this.registrodetalles.cantidad,
+                articulo_id:this.opcionArticulo,
+                }
+                axios.post('remitos-detalle',params).then(response => {
                 this.$emit('detallealta', response.data);
                 }).catch(error => {
                     if(error.response.status === 422) {
@@ -91,13 +92,13 @@
                 });
             },
             editardetalle:function(){
-                let formdata = new FormData();
-                formdata.append("remito_cabecera_id", this.remito_cabecera_id);
-                formdata.append("cantidad", this.registrodetalles.cantidad);
-                formdata.append("articulo_id", this.registrodetalles.articulo_id);
-                formdata.append("precio", this.registrodetalles.precio);
-                formdata.append("_method","PATCH");
-                axios.post('remitos-detalle/'+this.registrodetalles.id,formdata).then(response => {
+                const params = {
+                remito_cabecera_id: this.remito_cabecera_id,
+                cantidad: this.registrodetalles.cantidad,
+                articulo_id: this.registrodetalles.articulo_id,
+                precio: this.registrodetalles.precio,
+            }
+                axios.put('remitos-detalle/'+this.registrodetalles.id, params).then(response => {
                 this.$emit('detalleeditar', response.data);
                 })
             },

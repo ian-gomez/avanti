@@ -6,6 +6,7 @@
     	</div>
         <!-- Alta -->
         <div class="dato" v-if="operacion==1">
+            <errores v-if="existenErrores" :errores="errores"></errores>
             <label>Nombre:</label>
             <input class="form-control" type="text" v-model="registrousers.name">
             <br>
@@ -20,6 +21,7 @@
         </div>
         <!-- Editar -->
         <div class="dato" v-if="operacion==2">
+            <errores v-if="existenErrores" :errores="errores"></errores>
             <label>Nombre:</label>
             <input class="form-control" type="text" v-model="registrousers.name">
             <br>
@@ -47,7 +49,9 @@
         props: ['operacion',"registrousers"],
         data:function(){
             return{
-             titulo:''   
+             titulo:'',
+             existenErrores:false,
+             checkeado:false,   
             }
         },
         mounted() {
@@ -69,14 +73,14 @@
             check:function() {
               if (document.getElementById('password').value ==
                 document.getElementById('confirm_password').value) {
-                this.altauser()
+                this.checkeado=true
               } else {
-               alert('La contraseña no fue confirmada correctamente');
+               this.checkeado=false
               }
             },   
             operacionuser:function(){
                 if (this.operacion==1) {
-                    this.check();
+                    this.altauser();
                 };
                 if (this.operacion==2) {
                     this.editaruser();
@@ -86,33 +90,46 @@
                 };
             },
             altauser:function(){
-                const params = {
-                    name: this.registrousers.name,
-                    email: this.registrousers.email,
-                    password: this.registrousers.password,
-                }
-                axios.post('users',params).then(response => {
-                this.$emit('useralta', response.data);
-                }).catch(error => {
-                    if(error.response.status === 422) {
-                        alert("campo/s incompletos")
+                this.check();
+                if (this.checkeado) {
+                    const params = {
+                        name: this.registrousers.name,
+                        email: this.registrousers.email,
+                        password: this.registrousers.password,
                     }
-                });
+                    axios.post('users',params).then(response => {
+                    this.$emit('useralta', response.data);
+                    }).catch(error => {
+                        if(error.response.status === 422) {
+                            this.errores = error.response.data.errors || {};
+                        }
+                    });
+                }
+                else  {
+                    alert('La contraseña no fue confirmada correctamente');
+                }
 
             },
              editaruser:function(){
-                const params = {
-                    name: this.registrousers.name,
-                    email: this.registrousers.email,
-                    password: this.registrousers.password,
-                }
-                axios.put('users/'+this.registrousers.id, params).then(response => {
-                this.$emit('usereditar', response.data);
-                }).catch(error => {
-                    if(error.response.status === 422) {
-                        alert("campo/s incompletos")
+                this.check();
+                console.log(this.checkeado);
+                if (this.checkeado) {
+                    const params = {
+                        name: this.registrousers.name,
+                        email: this.registrousers.email,
+                        password: this.registrousers.password,
                     }
-                });
+                    axios.put('users/'+this.registrousers.id, params).then(response => {
+                    this.$emit('usereditar', response.data);
+                    }).catch(error => {
+                        if(error.response.status === 422) {
+                            alert("campo/s incompletos")
+                        }
+                    });
+                 }
+                else  {
+                    alert('La contraseña no fue confirmada correctamente');
+                }
             },
 
             bajauser:function(){
