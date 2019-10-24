@@ -1,6 +1,9 @@
 <template>
     <div class="container">
         <div>
+            <h1>Clientes</h1>
+        </div>
+        <div>
             <button class="btn btn-primary btn-block" @click="formulario=1">Ingresar</button>
         </div>
         <table class="display" id="tabla">
@@ -56,7 +59,7 @@
         },
         methods: {
             mostrar:function() {
-                axios.get('clientes-datos').then(response=>{
+                axios.get('clientes').then(response=>{
                     this.clientes = response.data;
                     this.tabla();
                 })
@@ -66,9 +69,11 @@
             },
             alta:function(datos) {
                 this.clientes.push(datos);
+                window.location.reload(true);
             },
             eliminar:function() {
-                this.clientes.splice(this.pos, 1)
+                this.clientes.splice(this.pos, 1);
+                window.location.reload(true);
             },
             tabla:function() {
                 $(document).ready(function() {

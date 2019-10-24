@@ -6,20 +6,22 @@
         </div>
         <!-- En caso de alta -->
         <div class="datos-formulario" v-if="formulario==1">
+            <errores v-if="existenErrores" :errores="errores"></errores>
             <label>Insumo:</label>
             <br>
             <select class="form-control" v-model="opcionInsumo">
-                <option v-for="insumo in insumos" v-bind:value="insumo.id" v-bind:selected="(insumo.id == opcionInsumo)">
+                <option v-for="insumo in insumosOrdenados" v-bind:value="insumo.id" v-bind:selected="(insumo.id == opcionInsumo)">
                     {{insumo.nombre}}
                 </option>
             </select>
             <label>Cantidad</label>
-            <input class="form-control" step="0.01" type="number" v-model="articuloInsumoRegistro.cantidad">
+            <input class="form-control" step="0.01" min="0.01" max="9999" type="number" v-model="articuloInsumoRegistro.cantidad">
         </div>
         <!-- En caso de modificacion -->
         <div class="datos-formulario" v-else-if="formulario==2">
+            <errores v-if="existenErrores" :errores="errores"></errores>
             <label>Cantidad</label>
-            <input class="form-control" step="0.01" type="number" v-model="articuloInsumoRegistro.cantidad">
+            <input class="form-control" step="0.01" min="0.01" max="9999" type="number" v-model="articuloInsumoRegistro.cantidad">
         </div>
         <!-- En caso de baja -->
         <div class="datos-formulario" v-else>
@@ -38,7 +40,9 @@
             return{
                 titulo:'',
                 opcionInsumo:1,
-                insumos:[]
+                insumos:[],
+                existenErrores:false,
+                errores: []
             }
         },
         mounted() {
@@ -53,9 +57,14 @@
                 this.titulo='Eliminar insumo'
             };
         },
+        computed: {
+            insumosOrdenados: function() {
+                return _.sortBy(this.insumos, 'nombre');
+            }
+        },
         methods: {
             cargarInsumos:function() {
-                axios.get('insumos-datos').then(response=>{
+                axios.get('insumos').then(response=>{
                     this.insumos = response.data
                 })
             },
@@ -78,7 +87,12 @@
                 };
                 axios.post('articulos-insumos', params).then(response => {
                     this.$emit('alta', response.data);
-                })
+                }).catch(error => {
+                    this.existenErrores = true;
+                    if(error.response.status === 422) {
+                        this.errores = error.response.data.errors || {};
+                    }
+                });
             },
             modificar:function(){
                 const params = {
@@ -88,7 +102,12 @@
                 };
                 axios.put('articulos-insumos/'+this.articuloInsumoRegistro.id, params).then(response => {
                     this.$emit('modificar');
-                })
+                }).catch(error => {
+                    this.existenErrores = true;
+                    if(error.response.status === 422) {
+                        this.errores = error.response.data.errors || {};
+                    }
+                });
             },
             eliminar:function() {
                 axios.delete('articulos-insumos/'+this.articuloInsumoRegistro.id).then(response => {

@@ -10,6 +10,7 @@
         </div>
         <!-- En caso de alta -->
         <div class="datos" v-else>
+            <errores v-if="existenErrores" :errores="errores"></errores>
             <label>Nombre:</label>
             <input class="form-control" type="text" v-model="clienteRegistro.nombre">
             <br>
@@ -31,6 +32,8 @@
         data: function() {
             return{
                 titulo:'',
+                existenErrores:false,
+                errores: []
             }
         },
         mounted() {
@@ -64,7 +67,12 @@
                 }
                 axios.post('clientes', params).then(response => {
                     this.$emit('alta', response.data);
-                })
+                }).catch(error => {
+                    this.existenErrores = true;
+                    if(error.response.status === 422) {
+                        this.errores = error.response.data.errors || {};
+                    }
+                });
             },
             modificar:function(){
                 const params = {
@@ -74,7 +82,12 @@
                 }
                 axios.put('clientes/'+this.clienteRegistro.id, params).then(response => {
                     this.$emit('modificar');
-                })
+                }).catch(error => {
+                    this.existenErrores = true;
+                    if(error.response.status === 422) {
+                        this.errores = error.response.data.errors || {};
+                    }
+                });
             },
             eliminar:function() {
                 axios.delete('clientes/'+this.clienteRegistro.id).then(response => {

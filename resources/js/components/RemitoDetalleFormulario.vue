@@ -59,7 +59,7 @@
         },
         methods:{
             cargarArticulos:function() {
-                axios.get('articulos-datos').then(response=>{
+                axios.get('articulos').then(response=>{
                     this.articulos = response.data
                 })
             },

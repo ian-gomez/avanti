@@ -70,6 +70,7 @@
             altaproveedor:function(dato){
                this.proveedores.push(dato);
                this.operacion=0;
+               window.location.reload(true);
             },
             mostrarproveedor:function(){
                 axios.get('proveedores-datos').then(response =>{
@@ -83,6 +84,7 @@
             bajaproveedor:function(){
                 this.proveedores.splice(this.pos,1);
                 this.operacion=0;
+                window.location.reload(true);
             },
             tabla:function(){
                 $(document).ready( function () {

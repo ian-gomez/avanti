@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVentasCabeceraTable extends Migration
+class CreateSocialIdentitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateVentasCabeceraTable extends Migration
      */
     public function up()
     {
-        Schema::create('ventas_cabecera', function (Blueprint $table) {
+        Schema::create('social_identities', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('cliente_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
-            $table->integer('numero_ticket')->unique();
+            $table->string('provider_name')->nullable();
+            $table->string('provider_id')->unique()->nullable();          
             $table->timestamps();
 
-            $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
@@ -32,6 +31,6 @@ class CreateVentasCabeceraTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ventas_cabecera');
+        Schema::dropIfExists('social_identities');
     }
 }

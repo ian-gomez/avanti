@@ -42,10 +42,16 @@ class Articulo_InsumoController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedRequest = $request->validate([
+            'articulo_id' => 'numeric|exists:articulos,id|required',
+            'insumo_id' => 'numeric|exists:insumos,id|required',
+            'cantidad' => 'numeric|min:0.01|max:9999|required',
+        ]);
+
         $articulo_insumo = new Articulo_Insumo();
-        $articulo_insumo->articulo_id = $request->articulo_id;
-        $articulo_insumo->insumo_id = $request->insumo_id;
-        $articulo_insumo->cantidad = $request->cantidad;
+        $articulo_insumo->articulo_id = $validatedRequest['articulo_id'];
+        $articulo_insumo->insumo_id = $validatedRequest['insumo_id'];
+        $articulo_insumo->cantidad = $validatedRequest['cantidad'];
         $articulo_insumo->save();
         // TODO buscar si hay mejor forma de obtener el nombre del insumo
         $insumo_nombre = Articulo::find($request->articulo_id);
@@ -87,10 +93,16 @@ class Articulo_InsumoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validatedRequest = $request->validate([
+            'articulo_id' => 'numeric|exists:articulos,id|required',
+            'insumo_id' => 'numeric|exists:insumos,id|required',
+            'cantidad' => 'numeric|min:0.01|max:9999|required',
+        ]);
+
         $articulo_insumo = Articulo_Insumo::find($id);
-        $articulo_insumo->articulo_id = $request->articulo_id;
-        $articulo_insumo->insumo_id = $request->insumo_id;
-        $articulo_insumo->cantidad = $request->cantidad;
+        $articulo_insumo->articulo_id = $validatedRequest['articulo_id'];
+        $articulo_insumo->insumo_id = $validatedRequest['insumo_id'];
+        $articulo_insumo->cantidad = $validatedRequest['cantidad'];
         $articulo_insumo->save();
         return $articulo_insumo;
     }

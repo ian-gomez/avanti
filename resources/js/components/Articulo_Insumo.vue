@@ -71,9 +71,11 @@
             },
             alta:function(datos) {
                 this.articulosInsumos.push(datos);
+                window.location.reload(true);
             },
             eliminar:function() {
-                this.articulosInsumos.splice(this.pos, 1)
+                this.articulosInsumos.splice(this.pos, 1);
+                window.location.reload(true);
             },
             tabla:function() {
                 $(document).ready(function() {

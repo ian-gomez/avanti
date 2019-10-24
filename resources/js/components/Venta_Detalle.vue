@@ -76,6 +76,7 @@
             alta:function(datos) {
                 this.ventasDetalle.push(datos);
                 this.calculoImporte();
+                window.location.reload(true);
             },
             modificar:function() {
                 this.calculoImporte();
@@ -83,6 +84,7 @@
             eliminar:function() {
                 this.ventasDetalle.splice(this.pos, 1)
                 this.calculoImporte();
+                window.location.reload(true);
             },
             calculoImporte:function() {
                 this.importe = 0;

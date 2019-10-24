@@ -10,14 +10,12 @@
         </div>
         <!-- En caso de alta -->
         <div class="datos" v-else>
+            <errores v-if="existenErrores" :errores="errores"></errores>
             <label>Nombre:</label>
             <input class="form-control" type="text" v-model="insumoRegistro.nombre">
             <br>
             <label>Precio:</label>
-            <input class="form-control" step="0.01" type="number" v-model="insumoRegistro.precio">
-            <br>
-            <label>Cantidad:</label>
-            <input class="form-control" step="0.01" type="number" v-model="insumoRegistro.cantidad">
+            <input class="form-control" step="0.01" min="0.01" max="9999" type="number" v-model="insumoRegistro.precio">
         </div>
         <div class="aceptar">
             <button class="bnt btn-success btn-block" @click="operacion()">Aceptar</button>
@@ -31,6 +29,8 @@
         data: function() {
             return{
                 titulo:'',
+                existenErrores:false,
+                errores: []
             }
         },
         mounted() {
@@ -60,21 +60,29 @@
                 const params = {
                     nombre: this.insumoRegistro.nombre,
                     precio: this.insumoRegistro.precio,
-                    cantidad: this.insumoRegistro.cantidad,
                 };
                 axios.post('insumos', params).then(response => {
                     this.$emit('alta', response.data);
-                })
+                }).catch(error => {
+                    this.existenErrores = true;
+                    if(error.response.status === 422) {
+                        this.errores = error.response.data.errors || {};
+                    }
+                });
             },
             modificar:function(){
                 const params = {
                     nombre: this.insumoRegistro.nombre,
                     precio: this.insumoRegistro.precio,
-                    cantidad: this.insumoRegistro.cantidad,
                 }
                 axios.put('insumos/'+this.insumoRegistro.id, params).then(response => {
                     this.$emit('modificar');
-                })
+                }).catch(error => {
+                    this.existenErrores = true;
+                    if(error.response.status === 422) {
+                        this.errores = error.response.data.errors || {};
+                    }
+                });
             },
             eliminar:function() {
                 axios.delete('insumos/'+this.insumoRegistro.id).then(response => {

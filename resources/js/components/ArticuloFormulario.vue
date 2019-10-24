@@ -6,6 +6,7 @@
         </div>
         <!-- En caso de alta -->
         <div class="datos" v-if="formulario==1">
+            <errores v-if="existenErrores" :errores="errores"></errores>
             <label>Nombre:</label>
             <input class="form-control" type="text" v-model="articuloRegistro.nombre">
             <br>
@@ -17,13 +18,14 @@
                 </option>
             </select>
             <label>Precio</label>
-            <input class="form-control" step="0.01" type="number" v-model="articuloRegistro.precio">
+            <input class="form-control" step="0.01" min="0.01" max="9999" type="number" v-model="articuloRegistro.precio">
             <br>
             <label>Costo:</label>
-            <input class="form-control" step="0.01" type="number" v-model="articuloRegistro.costo">
+            <input class="form-control" step="0.01" min="0.01" max="9999" type="number" v-model="articuloRegistro.costo">
         </div>
         <!-- En caso de modificacion -->
         <div class="datos" v-else-if="formulario==2">
+            <errores v-if="existenErrores" :errores="errores"></errores>
             <label>Nombre:</label>
             <input class="form-control" type="text" v-model="articuloRegistro.nombre">
             <br>
@@ -35,10 +37,10 @@
             </select>
             <br>
             <label>Precio</label>
-            <input class="form-control" step="0.01" type="number" v-model="articuloRegistro.precio">
+            <input class="form-control" step="0.01" min="0.01" max="9999" type="number" v-model="articuloRegistro.precio">
             <br>
             <label>Costo:</label>
-            <input class="form-control" step="0.01" type="number" v-model="articuloRegistro.costo">
+            <input class="form-control" step="0.01" min="0.01" max="9999" type="number" v-model="articuloRegistro.costo">
         </div>
         <!-- En caso de baja -->
         <div class="datos" v-else>
@@ -57,7 +59,9 @@
             return{
                 titulo:'',
                 opcionTipo:1,
-                tipos:[]
+                tipos:[],
+                existenErrores:false,
+                errores: []
             }
         },
         mounted() {
@@ -98,7 +102,12 @@
                 };
                 axios.post('articulos', params).then(response => {
                     this.$emit('alta', response.data);
-                })
+                }).catch(error => {
+                    this.existenErrores = true;
+                    if(error.response.status === 422) {
+                        this.errores = error.response.data.errors || {};
+                    }
+                });
             },
             modificar:function(){
                 const params = {
@@ -109,7 +118,12 @@
                 };
                 axios.put('articulos/'+this.articuloRegistro.id, params).then(response => {
                     this.$emit('modificar');
-                })
+                }).catch(error => {
+                    this.existenErrores = true;
+                    if(error.response.status === 422) {
+                        this.errores = error.response.data.errors || {};
+                    }
+                });
             },
             eliminar:function() {
                 axios.delete('articulos/'+this.articuloRegistro.id).then(response =>{

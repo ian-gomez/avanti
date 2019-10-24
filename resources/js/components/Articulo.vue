@@ -1,6 +1,9 @@
 <template>
     <div class="container">
         <div>
+            <h1>Articulos</h1>
+        </div>
+        <div>
             <button class="btn btn-primary btn-block" @click="formulario=1">Ingresar</button>
         </div>
         <table class="display" id="tabla">
@@ -52,11 +55,12 @@
          <articulo-eliminado
           v-if="eliminados"
           @cerrar-eliminados="eliminados=false"
-          @restaurar="restaurar($event)"></articulo-eliminado>
+          @restaurar="eliminados=false;restaurar($event)"></articulo-eliminado>
     </div>
 </template>
 
 <script>
+    import datatables from 'datatables'
     export default {
         data: function() {
             return{
@@ -74,7 +78,7 @@
         },
         methods: {
             mostrar:function() {
-                axios.get('articulos-datos').then(response=>{
+                axios.get('articulos').then(response=>{
                     this.articulos = response.data;
                     this.tabla();
                 })
@@ -87,12 +91,15 @@
             },
             alta:function(datos) {
                 this.articulos.push(datos);
+                window.location.reload(true);
             },
             eliminar:function() {
                 this.articulos.splice(this.pos, 1)
+                window.location.reload(true);
             },
             restaurar:function(datos) {
                 this.articulos.push(datos);
+                window.location.reload(true);
             },
             tabla:function() {
                 $(document).ready(function() {

@@ -71,6 +71,7 @@
             altaremito:function(dato){
                this.remitos.push(dato);
                this.operacion=0;
+               window.location.reload(true);
             },
             mostrarremito:function(){
                 axios.get('remitos-cabecera').then(response =>{
@@ -85,6 +86,7 @@
             bajaremito:function(){
                 this.remitos.splice(this.pos,1);
                 this.operacion=0;
+                window.location.reload(true);
             },
             actualizarImporte:function(importe) {
                 this.remitos[this.pos].importe = importe;

@@ -6,20 +6,22 @@
         </div>
         <!-- En caso de alta -->
         <div class="datos-formulario" v-if="formulario==1">
+            <errores v-if="existenErrores" :errores="errores"></errores>
             <label>Articulo:</label>
             <br>
             <select class="form-control" v-model="opcionArticulo">
-                <option v-for="articulo in articulos" v-bind:value="articulo.id" v-bind:selected="(articulo.id == opcionArticulo)">
+                <option v-for="articulo in articulosOrdenados" v-bind:value="articulo.id" v-bind:selected="(articulo.id == opcionArticulo)">
                     {{articulo.nombre}}
                 </option>
             </select>
             <label>Cantidad</label>
-            <input class="form-control" type="number" v-model="ventaDetalleRegistro.cantidad">
+            <input class="form-control" type="number" min="1" max="99" v-model="ventaDetalleRegistro.cantidad">
         </div>
         <!-- En caso de modificacion -->
         <div class="datos-formulario" v-else-if="formulario==2">
+            <errores v-if="existenErrores" :errores="errores"></errores>
             <label>Cantidad</label>
-            <input class="form-control" type="number" v-model="ventaDetalleRegistro.cantidad">
+            <input class="form-control" type="number" min="1" max="99" v-model="ventaDetalleRegistro.cantidad">
         </div>
         <!-- En caso de baja -->
         <div class="datos-formulario" v-else>
@@ -38,7 +40,9 @@
             return{
                 titulo:'',
                 opcionArticulo:1,
-                articulos:[]
+                articulos:[],
+                existenErrores:false,
+                errores: []
             }
         },
         mounted() {
@@ -53,9 +57,14 @@
                 this.titulo='Eliminar producto de la venta'
             };
         },
+        computed: {
+            articulosOrdenados: function() {
+                return _.sortBy(this.articulos, 'nombre');
+            }
+        },
         methods: {
             cargarArticulos:function() {
-                axios.get('articulos-datos').then(response=>{
+                axios.get('articulos').then(response=>{
                     this.articulos = response.data
                 })
             },
@@ -78,7 +87,12 @@
                 }
                 axios.post('ventas-detalle', params).then(response => {
                     this.$emit('alta', response.data);
-                })
+                }).catch(error => {
+                    this.existenErrores = true;
+                    if(error.response.status === 422) {
+                        this.errores = error.response.data.errors || {};
+                    }
+                });
             },
             modificar:function(){
                 const params = {
@@ -90,7 +104,12 @@
                 }
                 axios.put('ventas-detalle/'+this.ventaDetalleRegistro.id, params).then(response => {
                     this.$emit('modificar');
-                })
+                }).catch(error => {
+                    this.existenErrores = true;
+                    if(error.response.status === 422) {
+                        this.errores = error.response.data.errors || {};
+                    }
+                });
             },
             eliminar:function() {
                 axios.delete('ventas-detalle/'+this.ventaDetalleRegistro.id).then(response => {

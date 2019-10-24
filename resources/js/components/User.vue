@@ -64,6 +64,7 @@
             altauser:function(dato){
                this.users.push(dato);
                this.operacion=0;
+               window.location.reload(true);
             },
             mostraruser:function(){
                 axios.get('users').then(response =>{
@@ -77,6 +78,7 @@
             bajauser:function(){
                 this.users.splice(this.pos,1);
                 this.operacion=0;
+                window.location.reload(true);
             },
             tabla:function(){
                 $(document).ready( function () {

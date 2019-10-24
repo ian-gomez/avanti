@@ -1,6 +1,9 @@
 <template>
     <div class="container">
         <div>
+            <h1>Insumos</h1>
+        </div>
+        <div>
             <button class="btn btn-primary btn-block" @click="formulario=1">Ingresar</button>
         </div>
         <table class="display" id="tabla">
@@ -8,7 +11,6 @@
                 <tr>
                     <td>Nombre</td>
                     <td>Precio</td>
-                    <td>Cantidad</td>
                     <td>Acciones</td>
                 </tr>
             </thead>
@@ -16,7 +18,6 @@
                 <tr v-for="(insumo, index) in insumos">
                     <td>{{insumo.nombre}}</td>
                     <td>{{insumo.precio}}</td>
-                    <td>{{insumo.cantidad}}</td>
                     <td>
                         <button class="btn btn-warning" @click="formulario=2;asignar(insumo)">Editar</button>
                         <button class="btn btn-danger" @click="formulario=3;asignar(insumo);pos=index">Eliminar</button>
@@ -56,7 +57,7 @@
         },
         methods: {
             mostrar:function() {
-                axios.get('insumos-datos').then(response=>{
+                axios.get('insumos').then(response=>{
                     this.insumos = response.data;
                     this.tabla();
                 })
@@ -66,9 +67,11 @@
             },
             alta:function(datos) {
                 this.insumos.push(datos);
+                window.location.reload(true);
             },
             eliminar:function() {
-                this.insumos.splice(this.pos, 1)
+                this.insumos.splice(this.pos, 1);
+                window.location.reload(true);
             },
             tabla:function() {
                 $(document).ready(function() {

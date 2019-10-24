@@ -15,7 +15,7 @@ class Venta_CabeceraController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function datos()
+    public function index()
     {
         $venta_cabecera = DB::table('ventas_cabecera')
                           ->join('clientes', 'ventas_cabecera.cliente_id', '=', 'clientes.id')
@@ -26,11 +26,6 @@ class Venta_CabeceraController extends Controller
                                    DB::raw("(SELECT SUM(ventas_detalle.cantidad * ventas_detalle.precio) FROM ventas_detalle WHERE ventas_detalle.venta_cabecera_id = ventas_cabecera.id) AS importe"))
                           ->get();
         return $venta_cabecera;
-    }
-    
-    public function index()
-    {
-        return view('ventas-cabecera');
     }
 
     /**
@@ -51,10 +46,15 @@ class Venta_CabeceraController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedRequest = $request->validate([
+            'cliente_id' => 'numeric|exists:clientes,id|required',
+            'numero_ticket' => 'numeric|min:1|max:2147483647|unique:ventas_cabecera,numero_ticket|required',
+        ]);
+
         $venta_cabecera = new Venta_Cabecera();
-        $venta_cabecera->cliente_id = $request->cliente_id;
+        $venta_cabecera->cliente_id = $validatedRequest['cliente_id'];
         $venta_cabecera->user_id = Auth::id();
-        $venta_cabecera->numero_ticket = $request->numero_ticket;
+        $venta_cabecera->numero_ticket = $validatedRequest['numero_ticket'];
         $venta_cabecera->save();
 
         $cabecera = Venta_Cabecera::where('numero_ticket', $request->numero_ticket)->first();
@@ -96,9 +96,14 @@ class Venta_CabeceraController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validatedRequest = $request->validate([
+            'cliente_id' => 'numeric|exists:clientes,id|required',
+            'numero_ticket' => 'numeric|min:1|max:2147483647|unique:ventas_cabecera,numero_ticket|required',
+        ]);
+
         $venta_cabecera = Venta_Cabecera::find($id);
-        $venta_cabecera->cliente_id = $request->cliente_id;
-        $venta_cabecera->numero_ticket = $request->numero_ticket;
+        $venta_cabecera->cliente_id = $validatedRequest['cliente_id'];
+        $venta_cabecera->numero_ticket = $validatedRequest['numero_ticket'];
         $venta_cabecera->save();
 
         $cabecera = Venta_Cabecera::find($id);

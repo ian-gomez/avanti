@@ -14,7 +14,7 @@ class ArticuloController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function datos()
+    public function index()
     {
         $articulo = DB::table('articulos')
                     ->join('tipos', 'articulos.tipo_id', '=', 'tipos.id')
@@ -22,11 +22,6 @@ class ArticuloController extends Controller
                     ->where('articulos.deleted_at', '=', null)
                     ->get();
         return $articulo;
-    }
-
-    public function index()
-    {
-        return view('articulos');
     }
 
     /**
@@ -47,11 +42,18 @@ class ArticuloController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedRequest = $request->validate([
+            'nombre' => 'string|min:1|max:255|required',
+            'tipo_id' => 'numeric|exists:tipos,id|required',
+            'precio' => 'numeric|min:0.01|max:9999|required',
+            'costo' => 'numeric|min:0.01|max:9999|required',
+        ]);
+
         $articulo = new Articulo();
-        $articulo->nombre = $request->nombre;
-        $articulo->tipo_id = $request->tipo_id;
-        $articulo->precio = $request->precio;
-        $articulo->costo = $request->costo;
+        $articulo->nombre = $validatedRequest['nombre'];
+        $articulo->tipo_id = $validatedRequest['tipo_id'];
+        $articulo->precio = $validatedRequest['precio'];
+        $articulo->costo = $validatedRequest['costo'];
         $articulo->save();
 
         $tipo_nombre = Articulo::all();
@@ -92,11 +94,18 @@ class ArticuloController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validatedRequest = $request->validate([
+            'nombre' => 'string|min:1|max:255|required',
+            'tipo_id' => 'numeric|exists:tipos,id|required',
+            'precio' => 'numeric|min:0.01|max:9999|required',
+            'costo' => 'numeric|min:0.01|max:9999|required',
+        ]);
+
         $articulo = Articulo::find($id);
-        $articulo->nombre = $request->nombre;
-        $articulo->tipo_id = $request->tipo_id;
-        $articulo->precio = $request->precio;
-        $articulo->costo = $request->costo;
+        $articulo->nombre = $validatedRequest['nombre'];
+        $articulo->tipo_id = $validatedRequest['tipo_id'];
+        $articulo->precio = $validatedRequest['precio'];
+        $articulo->costo = $validatedRequest['costo'];
         $articulo->save();
         return $articulo;
     }

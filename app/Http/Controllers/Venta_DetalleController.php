@@ -14,11 +14,11 @@ class Venta_DetalleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($cabecera_id)
+    public function index($venta_cabecera_id)
     {
         $venta_detalle = DB::table('ventas_detalle')
                     ->join('articulos', 'ventas_detalle.articulo_id', '=', 'articulos.id')
-                    ->where('ventas_detalle.venta_cabecera_id', '=', $cabecera_id)
+                    ->where('ventas_detalle.venta_cabecera_id', '=', $venta_cabecera_id)
                     ->select('ventas_detalle.*', 'articulos.nombre')
                     ->get();
         return $venta_detalle;
@@ -42,11 +42,17 @@ class Venta_DetalleController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedRequest = $request->validate([
+            'venta_cabecera_id' => 'numeric|exists:ventas_cabecera,id|required',
+            'articulo_id' => 'numeric|exists:articulos,id|required',
+            'cantidad' => 'numeric|min:1|max:99|required',
+        ]);
+
         $venta_detalle = new Venta_Detalle();
-        $venta_detalle->venta_cabecera_id = $request->venta_cabecera_id;
-        $venta_detalle->articulo_id = $request->articulo_id;
-        $venta_detalle->cantidad = $request->cantidad;
-        $articulo = Articulo::find($request->articulo_id);
+        $venta_detalle->venta_cabecera_id = $validatedRequest['venta_cabecera_id'];
+        $venta_detalle->articulo_id = $validatedRequest['articulo_id'];
+        $venta_detalle->cantidad = $validatedRequest['cantidad'];
+        $articulo = Articulo::find($validatedRequest['articulo_id']);
         $venta_detalle->precio = $articulo->precio;
         $venta_detalle->costo = $articulo->costo;
         $venta_detalle->save();
@@ -85,12 +91,20 @@ class Venta_DetalleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validatedRequest = $request->validate([
+            'venta_cabecera_id' => 'numeric|exists:ventas_cabecera,id|required',
+            'articulo_id' => 'numeric|exists:articulos,id|required',
+            'cantidad' => 'numeric|min:1|max:99|required',
+            'precio' => 'numeric|min:0.01|required',
+            'costo' => 'numeric|min:0.01|required',
+        ]);
+
         $venta_detalle = Venta_Detalle::find($id);
-        $venta_detalle->venta_cabecera_id = $request->venta_cabecera_id;
-        $venta_detalle->articulo_id = $request->articulo_id;
-        $venta_detalle->cantidad = $request->cantidad;
-        $venta_detalle->precio = $request->precio;
-        $venta_detalle->costo = $request->costo;
+        $venta_detalle->venta_cabecera_id = $validatedRequest['venta_cabecera_id'];
+        $venta_detalle->articulo_id = $validatedRequest['articulo_id'];
+        $venta_detalle->cantidad = $validatedRequest['cantidad'];
+        $venta_detalle->precio = $validatedRequest['precio'];
+        $venta_detalle->costo = $validatedRequest['costo'];
         $venta_detalle->save();
         return $venta_detalle;
     }

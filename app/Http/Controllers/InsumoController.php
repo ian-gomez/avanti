@@ -12,15 +12,10 @@ class InsumoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function datos()
+    public function index()
     {
         $insumo = Insumo::get();
         return $insumo;
-    }
-
-    public function index()
-    {
-        return view('insumos');
     }
 
     /**
@@ -41,10 +36,14 @@ class InsumoController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedRequest = $request->validate([
+            'nombre' => 'string|max:255|required',
+            'precio' => 'numeric|min:0.01|max:9999|required',
+        ]);
+
         $insumo = new Insumo();
-        $insumo->nombre = $request->nombre;
-        $insumo->precio = $request->precio;
-        $insumo->cantidad = $request->cantidad;
+        $insumo->nombre = $validatedRequest['nombre'];
+        $insumo->precio = $validatedRequest['precio'];
         $insumo->save();
         return $insumo;
     }
@@ -80,10 +79,14 @@ class InsumoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validatedRequest = $request->validate([
+            'nombre' => 'string|max:255|required',
+            'precio' => 'numeric|min:0.01|max:9999|required',
+        ]);
+
         $insumo = Insumo::find($id);
-        $insumo->nombre = $request->nombre;
-        $insumo->precio = $request->precio;
-        $insumo->cantidad = $request->cantidad;
+        $insumo->nombre = $validatedRequest['nombre'];
+        $insumo->precio = $validatedRequest['precio'];
         $insumo->save();
         return $insumo;
     }

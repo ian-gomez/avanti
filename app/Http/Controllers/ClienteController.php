@@ -12,15 +12,10 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function datos()
+    public function index()
     {
         $cliente = Cliente::get();
         return $cliente;
-    }
-
-    public function index()
-    {
-        return view('clientes');
     }
 
     /**
@@ -41,10 +36,16 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedRequest = $request->validate([
+            'nombre' => 'string|min:1|max:255|required',
+            'direccion' => 'string|min:1|max:255|required',
+            'telefono' => 'string|min:1|max:255|required',
+        ]);
+
         $cliente = new Cliente();
-        $cliente->nombre = $request->nombre;
-        $cliente->direccion = $request->direccion;
-        $cliente->telefono = $request->telefono;
+        $cliente->nombre = $validatedRequest['nombre'];
+        $cliente->direccion = $validatedRequest['direccion'];
+        $cliente->telefono = $validatedRequest['telefono'];
         $cliente->save();
         return $cliente;
     }
@@ -80,10 +81,16 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validatedRequest = $request->validate([
+            'nombre' => 'string|min:1|max:255|required',
+            'direccion' => 'string|min:1|max:255|required',
+            'telefono' => 'string|min:1|max:255|required',
+        ]);
+
         $cliente = Cliente::find($id);
-        $cliente->nombre = $request->nombre;
-        $cliente->direccion = $request->direccion;
-        $cliente->telefono = $request->telefono;
+        $cliente->nombre = $validatedRequest['nombre'];
+        $cliente->direccion = $validatedRequest['direccion'];
+        $cliente->telefono = $validatedRequest['telefono'];
         $cliente->save();
         return $cliente;
     }

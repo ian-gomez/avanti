@@ -68,6 +68,12 @@
                                 </button>
                             </div>
                         </div>
+                        <hr>
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <a href="{{ url('/login/github') }}" class="btn btn-github"><i class="fa fa-github"></i>Registrarse con Github</a>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
