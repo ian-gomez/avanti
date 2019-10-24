@@ -22,14 +22,14 @@ Vue.use(require('vue-moment'));
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 Vue.component('errores', require('./components/Errores.vue').default);
 
-Vue.component('user-component', require('./components/UserComponent.vue').default);
-Vue.component('user-formulario-component', require('./components/UserFormularioComponent.vue').default);
-Vue.component('proveedor-component', require('./components/ProveedorComponent.vue').default);
-Vue.component('proveedor-formulario-component', require('./components/ProveedorFormularioComponent.vue').default);
-Vue.component('remito-cabecera-component', require('./components/RemitoCabeceraComponent.vue').default);
-Vue.component('remito-cabecera-formulario-component', require('./components/RemitoCabeceraFormularioComponent.vue').default);
-Vue.component('remito-detalle-component', require('./components/RemitoDetalleComponent.vue').default);
-Vue.component('remito-detalle-formulario-component', require('./components/RemitoDetalleFormularioComponent.vue').default);
+Vue.component('user', require('./components/User.vue').default);
+Vue.component('user-formulario', require('./components/UserFormulario.vue').default);
+Vue.component('proveedor', require('./components/Proveedor.vue').default);
+Vue.component('proveedor-formulario', require('./components/ProveedorFormulario.vue').default);
+Vue.component('remito-cabecera', require('./components/RemitoCabecera.vue').default);
+Vue.component('remito-cabecera-formulario', require('./components/RemitoCabeceraFormulario.vue').default);
+Vue.component('remito-detalle', require('./components/RemitoDetalle.vue').default);
+Vue.component('remito-detalle-formulario', require('./components/RemitoDetalleFormulario.vue').default);
 
 Vue.component('articulo', require('./components/Articulo.vue').default);
 Vue.component('articulo-formulario', require('./components/ArticuloFormulario.vue').default);

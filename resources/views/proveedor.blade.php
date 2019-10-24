@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-<proveedor-component></proveedor-component>
+<proveedor></proveedor>
 @endsection

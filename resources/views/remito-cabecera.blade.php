@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-<remito-cabecera-component></remito-cabecera-component>
+<remito-cabecera></remito-cabecera>
 @endsection

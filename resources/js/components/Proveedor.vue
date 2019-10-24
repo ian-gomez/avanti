@@ -1,41 +1,44 @@
 <template>
     <div class="container">
             <div>
-                <h1>Empleados</h1>
+                <h1>Proveedores</h1>
                 <input type="text" class="form-control" name="busqueda" v-model="busqueda" placeholder="Buscar...">
             </div>
                 <div class="card">
-                  <button class="btn btn-info btn-block" @click="operacion=1; registrousers=[]">Ingresar</button>
+                  <button class="btn btn-info btn-block" @click="operacion=1; registroproveedores=[]">Ingresar</button>
                    <table id="tabla" class="display; color">
                     <thead>
                        <tr>
                            <td>ID</td>
-                           <td>Name</td>
-                           <td>Email</td>
+                           <td>Nombre</td>
+                           <td>Telefono</td>
+                           <td>Direccion</td>
                            <td>Acciones</td>
                        </tr>
                     </thead>
                       <tbody>
-                        <tr v-for="(user, index) in buscausers">
-                            <td>{{user.id}}</td>
-                            <td>{{user.name}}</td>
-                            <td>{{user.email}}</td>
+                        <tr v-for="(proveedor, index) in buscaproveedores">
+                            <td>{{proveedor.id}}</td>
+                            <td>{{proveedor.nombre}}</td>
+                            <td>{{proveedor.telefono}}</td>
+                            <td>{{proveedor.direccion}}</td>
                             <td>
-                                <button class="btn btn-warning btn-large" @click="operacion=2;registrousers=user">Editar</button>
-                                <button class="btn btn-danger btn-large" @click="pos=index;operacion=3;registrousers=user">Borrar</button>
+                                <button class="btn btn-warning btn-large" @click="operacion=2;registroproveedores=proveedor">Editar</button>
+                                <button class="btn btn-danger btn-large" @click="pos=index;operacion=3;registroproveedores=proveedor">Borrar</button>
                             </td>
                         </tr>
                       </tbody>
                   </table>
-                  <user-formulario-component @useralta="altauser($event)" @userbaja="bajauser()" @usereditar="editaruser($event)"
+                  <proveedor-formulario @proveedoralta="altaproveedor($event)" @proveedorbaja="bajaproveedor()" @proveedoreditar="editarproveedor($event)"
                   @cerrar-ventana="operacion=0"
                         v-if="operacion>0" 
                         :operacion="operacion"
-                        :registrousers="registrousers">
-                    </user-formulario-component>
+                        :registroproveedores="registroproveedores">
+            </proveedor-formulario>
                 </div>
     </div>
 </template>
+
 
 <script>
     import datatables from 'datatables'
@@ -43,39 +46,42 @@
         data(){
             return{
                 operacion:0,
-                users:[],
+                proveedores:[],
                 busqueda:'',
-                registrousers:[],
+                registroproveedores:'',
                 pos:0,
 
             }
         },
         mounted() {
-            this.mostraruser();
+            this.mostrarproveedor();
         },
         computed:{
-            buscausers:function(){
-            return this.users.filter(
-            (user)=>user.name.includes(this.busqueda)
+            buscaproveedores:function(){
+            return this.proveedores.filter(
+            (proveedor)=>proveedor.nombre.includes(this.busqueda)
                 );
             }
         },
         methods:{
-            altauser:function(dato){
-               this.users.push(dato);
+            cargaproveedores:function(datos) {
+                this.registroproveedores = datos;
+            },
+            altaproveedor:function(dato){
+               this.proveedores.push(dato);
                this.operacion=0;
             },
-            mostraruser:function(){
-                axios.get('users').then(response =>{
-                    this.users = response.data;
+            mostrarproveedor:function(){
+                axios.get('proveedores-datos').then(response =>{
+                    this.proveedores = response.data;
                     this.tabla();
                 });
             },
-            editaruser:function(dato){
+            editarproveedor:function(dato){ 
                 this.operacion=0;   
             },
-            bajauser:function(){
-                this.users.splice(this.pos,1);
+            bajaproveedor:function(){
+                this.proveedores.splice(this.pos,1);
                 this.operacion=0;
             },
             tabla:function(){

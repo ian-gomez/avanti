@@ -29,18 +29,18 @@
                         </tr>
                       </tbody>
                   </table>
-                  <remito-cabecera-formulario-component @remitoalta="altaremito($event)" @remitobaja="bajaremito()" @remitoeditar="editarremito($event)"
+                  <remito-cabecera-formulario @remitoalta="altaremito($event)" @remitobaja="bajaremito()" @remitoeditar="editarremito($event)"
                   @cerrar-ventana="operacion=0"
                         v-if="operacion>0" 
                         :operacion="operacion"
                         :registroremitos="registroremitos">
-                  </remito-cabecera-formulario-component>
-                  <remito-detalle-component 
+                  </remito-cabecera-formulario>
+                  <remito-detalle
                   v-if='rdetalle'
                   :registroremitosb="registroremitosb"
                   @cerrar-detalle="rdetalle=false"
                     @importe="actualizarImporte($event)">
-                  </remito-detalle-component>
+                  </remito-detalle>
                 </div>
     </div>
 </template>

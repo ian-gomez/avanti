@@ -26,12 +26,12 @@
                     </tr>
                 </tbody>
             </table>
-            <remito-detalle-formulario-component @detallealta="altadetalle($event)" @detallebaja="bajadetalle()" @detalleeditar="editardetalle($event)"
+            <remito-detalle-formulario @detallealta="altadetalle($event)" @detallebaja="bajadetalle()" @detalleeditar="editardetalle($event)"
                   @cerrar-ventana="operacion=0"
                         v-if="operacion>0" 
                         :remito_cabecera_id="registroremitosb.id"
                         :operacion="operacion"
-                        :registrodetalles="registrodetalles"></remito-detalle-formulario-component>
+                        :registrodetalles="registrodetalles"></remito-detalle-formulario>
         </div>
     </div>
 </template>

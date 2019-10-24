@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-<user-component></user-component>
+<user></user>
 @endsection
